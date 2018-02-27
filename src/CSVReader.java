@@ -36,7 +36,7 @@ public class CSVReader {
                             new Profesor(
                                     split[0],
                                     Integer.parseInt(split[1]),
-                                    Boolean.parseBoolean(split[2]),
+                                    parseBoolean(split[2]),
                                     split[3]
                             )
                     );
@@ -54,47 +54,58 @@ public class CSVReader {
         return profesores;
     }
 
-        public static List<GrupoAsignatura> CsvLoadAsignaturas () {
-            BufferedReader br = null;
-            String line = "";
-            List<GrupoAsignatura> asignaturas = new ArrayList<>();
-            try {
+    private static Boolean parseBoolean(String s) {
+        switch (s) {
+            case "SI":
+                return true;
+            case "NO":
+                return false;
+            default:
+                throw new ClassCastException("La columna no contenía valores SI/NO");
 
-                br = new BufferedReader(new FileReader(ASIGNATURAS_PATH));
-                br.readLine(); // la primera linea es la cabecera, se salta
-
-                while ((line = br.readLine()) != null) {
-
-                    // use comma as separator
-                    String[] split = line.split(SPLITTER);
-                    try {
-                        asignaturas.add(
-                                new GrupoAsignatura(
-                                        split[0],
-                                        split[1],
-                                        Integer.parseInt(split[2]),
-                                        horarioProvider(split[3]), // tipo horario
-                                        split[4],
-                                        split[5],
-                                        Float.parseFloat(split[6]),
-                                        Boolean.parseBoolean(split[7]),
-                                        split[8].split(AREA_SPLITTER)
-                                )
-                        );
-                    } catch (ClassCastException e) {
-                        e.printStackTrace();
-                        System.exit(-1);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                for (GrupoAsignatura a : asignaturas) System.out.println(a);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-            return asignaturas;
         }
+    }
+
+    public static List<GrupoAsignatura> CsvLoadAsignaturas() {
+        BufferedReader br = null;
+        String line = "";
+        List<GrupoAsignatura> asignaturas = new ArrayList<>();
+        try {
+
+            br = new BufferedReader(new FileReader(ASIGNATURAS_PATH));
+            br.readLine(); // la primera linea es la cabecera, se salta
+
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] split = line.split(SPLITTER);
+                try {
+                    asignaturas.add(
+                            new GrupoAsignatura(
+                                    split[0],
+                                    split[1],
+                                    Integer.parseInt(split[2]),
+                                    horarioProvider(split[3]), // tipo horario
+                                    split[4],
+                                    split[5],
+                                    Float.parseFloat(split[6]),
+                                    parseBoolean(split[7]),
+                                    split[8].split(AREA_SPLITTER)
+                            )
+                    );
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (GrupoAsignatura a : asignaturas) System.out.println(a);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        return asignaturas;
+    }
 
     private static Horario horarioProvider(String string) throws ParseException {
         String[] diaIntervalo = string.split(" ");

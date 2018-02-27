@@ -17,7 +17,7 @@ public class GrupoAsignatura {
     private Boolean bilingue;
     private String[] areas;
 
-    public GrupoAsignatura(String grupo, String nombre, int semestre, Horario horario,
+    public GrupoAsignatura(String nombre, String grupo, int semestre, Horario horario,
                            String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
         this.id = contador++;
         this.grupo = grupo;
