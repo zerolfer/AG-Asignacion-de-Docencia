@@ -19,6 +19,9 @@ public class CSVReader {
     private static final String PROFESORES_PATH = "files/Profesores.csv";
     private static final String ASIGNATURAS_PATH = "files/Asignaturas.csv";
 
+    private static final boolean debug=false;
+
+    //TODO: ordenar la lista por orden de prioridades de asignación
     public static List<Profesor> CsvLoadProfesores() {
         BufferedReader br = null;
         String line = "";
@@ -35,7 +38,7 @@ public class CSVReader {
                     profesores.add(
                             new Profesor(
                                     split[0],
-                                    Integer.parseInt(split[1]),
+                                    Float.parseFloat(split[1]),
                                     parseBoolean(split[2]),
                                     split[3]
                             )
@@ -44,7 +47,7 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
-            for (Profesor p : profesores) System.out.println(p);
+            if(debug) for (Profesor p : profesores) System.out.println(p);
 
             return profesores;
         } catch (IOException e) {
@@ -99,7 +102,7 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
-            for (GrupoAsignatura a : asignaturas) System.out.println(a);
+            if(debug) for (GrupoAsignatura a : asignaturas) System.out.println(a);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

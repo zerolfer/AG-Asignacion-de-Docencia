@@ -36,6 +36,45 @@ public class GrupoAsignatura {
         return contador;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Integer getSemestre() {
+        return semestre;
+    }
+
+    public Horario getHorario() {
+        return horario;
+    }
+
+    public String getEscuela() {
+        return escuela;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public Float getHoras() {
+        return horas;
+    }
+
+    public Boolean getBilingue() {
+        return bilingue;
+    }
+
+    public String[] getAreas() {
+        return areas;
+    }
 
     @Override
     public String toString() {

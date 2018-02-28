@@ -1,21 +1,32 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Profesor {
 
     private static Integer contador = 0;
 
     private final Integer id;
-    private String  nombre;
-    private Integer capacidad;
+    private String nombre;
+    private Float capacidad;
     private Boolean bilingue;
-    private String  area; // solo puede tener un área
+    private String area; // solo puede tener un área
 
-    public Profesor(String nombre, Integer capacidad, Boolean bilingue, String area) {
-        this.id=contador++;
+    // ASIGNACIONES
+    private List<GrupoAsignatura> asignadas;
+
+
+    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area) {
+        this.id = contador++;
         this.nombre = nombre;
         this.capacidad = capacidad;
         this.bilingue = bilingue;
         this.area = area;
+
+        asignadas = new ArrayList<>();
     }
 
     public static Integer getUltimoId() {
@@ -30,11 +41,11 @@ public class Profesor {
         this.nombre = nombre;
     }
 
-    public Integer getCapacidad() {
+    public Float getCapacidad() {
         return capacidad;
     }
 
-    public void setCapacidad(Integer capacidad) {
+    public void setCapacidad(Float capacidad) {
         this.capacidad = capacidad;
     }
 
@@ -54,14 +65,23 @@ public class Profesor {
         this.area = area;
     }
 
+    public List<GrupoAsignatura> getAsignadas() {
+        return asignadas;
+    }
+
+
     @Override
     public String toString() {
-        return "Profesor{" +
+        String s = "Profesor{" +
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", capacidad=" + capacidad +
                 ", bilingue=" + bilingue +
-                ", area='" + area + '\'' +
-                '}';
+                ", area='" + area + '\'';
+        if (!asignadas.isEmpty())
+            s += ", asignadas{ " + asignadas.stream().map(GrupoAsignatura::getId).collect(Collectors.toList());;
+            //Arrays.toString(asignadas.toArray(new GrupoAsignatura[asignadas.size()])) + " }";
+        s += '}';
+        return s;
     }
 }
