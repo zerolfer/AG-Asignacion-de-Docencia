@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 public class GrupoAsignatura {
 
-    private static long contador = 0;
+    public static final int INICIO = 0;
+    private static int contador = 0;
 
-    private final Long id;
+    private final Integer id;
     private String grupo;
     private String nombre;
     private Integer semestre;
@@ -30,6 +31,11 @@ public class GrupoAsignatura {
         this.bilingue = bilingue;
         this.areas = areas;
     }
+
+    public static Integer getUltimoId() {
+        return contador;
+    }
+
 
     @Override
     public String toString() {

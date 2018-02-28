@@ -93,7 +93,7 @@ public class CSVReader {
                                     split[8].split(AREA_SPLITTER)
                             )
                     );
-                } catch (ClassCastException e) {
+                } catch (ClassCastException e) { // TODO: si existe alguna erronea se salta y sigue el algortmo
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();

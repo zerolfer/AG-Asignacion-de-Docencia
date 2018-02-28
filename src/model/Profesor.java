@@ -2,16 +2,24 @@ package model;
 
 public class Profesor {
 
+    private static Integer contador = 0;
+
+    private final Integer id;
     private String  nombre;
     private Integer capacidad;
     private Boolean bilingue;
     private String  area; // solo puede tener un área
 
     public Profesor(String nombre, Integer capacidad, Boolean bilingue, String area) {
+        this.id=contador++;
         this.nombre = nombre;
         this.capacidad = capacidad;
         this.bilingue = bilingue;
         this.area = area;
+    }
+
+    public static Integer getUltimoId() {
+        return contador;
     }
 
     public String getNombre() {
@@ -49,7 +57,8 @@ public class Profesor {
     @Override
     public String toString() {
         return "Profesor{" +
-                "nombre='" + nombre + '\'' +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
                 ", capacidad=" + capacidad +
                 ", bilingue=" + bilingue +
                 ", area='" + area + '\'' +
