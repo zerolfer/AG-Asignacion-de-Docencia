@@ -1,5 +1,7 @@
-import model.GrupoAsignatura;
-import model.Profesor;
+package es.uniovi.plandocencia;
+
+import es.uniovi.plandocencia.model.GrupoAsignatura;
+import es.uniovi.plandocencia.model.Profesor;
 
 import java.util.List;
 

@@ -1,6 +1,9 @@
-import model.GrupoAsignatura;
-import model.Profesor;
-import util.Util;
+package es.uniovi.plandocencia;
+
+import es.uniovi.plandocencia.model.GrupoAsignatura;
+import es.uniovi.plandocencia.model.Profesor;
+import es.uniovi.plandocencia.util.CromosomaUtils;
+import es.uniovi.plandocencia.util.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +21,7 @@ public class AlgoritmoGenetico {
     public static void main(String[] args) {
         iniciacilizacion();
 
-        for (Cromosoma c : codificacion()) {
+        for (Individuo c : codificacion()) {
             AlgoritmoGenetico.decodificar(c);
         }
     }
@@ -28,14 +31,14 @@ public class AlgoritmoGenetico {
         profesores = CSVReader.CsvLoadProfesores();
     }
 
-    private static Cromosoma[] codificacion() {
-        return Cromosoma.generateRandomPopulation(POPULATION_SIZE);
+    private static Individuo[] codificacion() {
+        return CromosomaUtils.generateRandomPopulation(POPULATION_SIZE);
     }
 
-    private static void decodificar(Cromosoma cromosoma) {// O(n^2)
+    private static void decodificar(Individuo cromosoma) {// O(n^2)
         System.out.println(cromosoma);
         int n=0;
-        for (int idAsignatura : cromosoma.getElementos()) {
+        for (int idAsignatura : cromosoma.getCromosoma()) {
             // las asignaturas no tienen por que estar ordenadas por ID
             GrupoAsignatura asignatura = getAsignaturaById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);

@@ -1,4 +1,4 @@
-package util;
+package es.uniovi.plandocencia.util;
 
 import java.util.List;
 import java.util.Random;

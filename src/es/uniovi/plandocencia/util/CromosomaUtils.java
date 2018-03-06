@@ -1,30 +1,17 @@
-import model.GrupoAsignatura;
-import util.Util;
+package es.uniovi.plandocencia.util;
+
+import es.uniovi.plandocencia.Individuo;
+import es.uniovi.plandocencia.model.GrupoAsignatura;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Sergio Florez on 27/02/2018.
+ * Created by Sergio Florez on 06/03/2018.
  */
-public class Cromosoma {
+public class CromosomaUtils {
 
-    private int[] elementos; // cada elemento representa el id de una asignatura
-
-    public Cromosoma(int[] elementos) {
-        this.elementos = elementos;
-    }
-
-    public int[] getElementos() {
-        return elementos;
-    }
-
-    public void setElementos(int[] elementos) {
-        this.elementos = elementos;
-    }
-
-    public static Cromosoma generateRandomIndividual() {
+    public static Individuo generateRandomIndividual() {
         int ultimo = GrupoAsignatura.getUltimoId();
         int[] elementos = inicializar(ultimo);
         if (ultimo == GrupoAsignatura.INICIO) throw new RuntimeException("No hay asignaturas");
@@ -36,7 +23,7 @@ public class Cromosoma {
             elementos[i] = elementos[n];
             elementos[n] = anterior;
         }
-        return new Cromosoma(elementos);
+        return new Individuo(elementos);
     }
 
     private static int[] inicializar(int ultimo) {
@@ -47,16 +34,11 @@ public class Cromosoma {
         return elementos;
     }
 
-    public static Cromosoma[] generateRandomPopulation(int size) {
-        List<Cromosoma> result = new ArrayList<>();
+    public static Individuo[] generateRandomPopulation(int size) {
+        List<Individuo> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             result.add(generateRandomIndividual());
         }
-        return result.toArray(new Cromosoma[size]);
-    }
-
-    @Override
-    public String toString() {
-        return Arrays.toString(elementos);
+        return result.toArray(new Individuo[size]);
     }
 }

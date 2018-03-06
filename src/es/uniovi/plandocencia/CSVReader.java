@@ -1,6 +1,8 @@
-import model.GrupoAsignatura;
-import model.Horario;
-import model.Profesor;
+package es.uniovi.plandocencia;
+
+import es.uniovi.plandocencia.model.GrupoAsignatura;
+import es.uniovi.plandocencia.model.Horario;
+import es.uniovi.plandocencia.model.Profesor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
