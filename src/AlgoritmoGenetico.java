@@ -34,13 +34,20 @@ public class AlgoritmoGenetico {
 
     private static void decodificar(Cromosoma cromosoma) {// O(n^2)
         System.out.println(cromosoma);
+        int n=0;
         for (int idAsignatura : cromosoma.getElementos()) {
             // las asignaturas no tienen por que estar ordenadas por ID
             GrupoAsignatura asignatura = getAsignaturaById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);
+            if(profesor==null) {
+                n++;
+                continue;
+            }
             profesor.getAsignadas().add(asignatura);
+            profesor.setCapacidad(profesor.getCapacidad()-asignatura.getHoras());
         }
         System.out.println(Util.arrayToString(profesores, "\n"));
+        System.out.println(n+" asignaturas no han sido sasignadas");
     }
 
     private static Profesor getProfesor(GrupoAsignatura a) {
@@ -49,7 +56,7 @@ public class AlgoritmoGenetico {
                 if (p.getBilingue() || !a.getBilingue())
                     return p;
         }
-        return null; //XXX ??? si no hay profesores a cubrir qué hacer?¿
+        return null; //FIXME ??? si no hay profesores a cubrir qué hacer?¿
     }
 
     private static GrupoAsignatura getAsignaturaById(int idAsignatura) {

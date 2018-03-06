@@ -32,7 +32,7 @@ public class Cromosoma {
         // permutación de elementos == elementos no repetidos
         for (int i = 0; i < ultimo; i++) {
             int n = Util.getRandomNumber(ultimo);
-            int anterior = elementos[i]; // TODO: esto está mal
+            int anterior = elementos[i];
             elementos[i] = elementos[n];
             elementos[n] = anterior;
         }
