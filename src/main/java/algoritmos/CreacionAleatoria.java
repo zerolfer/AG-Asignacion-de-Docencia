@@ -1,17 +1,19 @@
-package es.uniovi.plandocencia.util;
+package main.java.algoritmos;
 
-import es.uniovi.plandocencia.Individuo;
-import es.uniovi.plandocencia.model.GrupoAsignatura;
+import main.java.Individuo;
+import main.java.model.GrupoAsignatura;
+import main.java.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Sergio Florez on 06/03/2018.
+ * Created by Sergio Florez on 09/03/2018.
  */
-public class CromosomaUtils {
+public class CreacionAleatoria implements AlgoritmoCreacion {
 
-    public static Individuo generateRandomIndividual() {
+    @Override
+    public Individuo generateIndividual() {
         int ultimo = GrupoAsignatura.getUltimoId();
         int[] elementos = inicializar(ultimo);
         if (ultimo == GrupoAsignatura.INICIO) throw new RuntimeException("No hay asignaturas");
@@ -26,7 +28,7 @@ public class CromosomaUtils {
         return new Individuo(elementos);
     }
 
-    private static int[] inicializar(int ultimo) {
+    private int[] inicializar(int ultimo) {
         int[] elementos = new int[ultimo];
         for (int i = 0; i < ultimo; i++) {
             elementos[i] = i;
@@ -34,10 +36,11 @@ public class CromosomaUtils {
         return elementos;
     }
 
-    public static Individuo[] generateRandomPopulation(int size) {
+    @Override
+    public Individuo[] createPopulation(final int size) {
         List<Individuo> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            result.add(generateRandomIndividual());
+            result.add(generateIndividual());
         }
         return result.toArray(new Individuo[size]);
     }

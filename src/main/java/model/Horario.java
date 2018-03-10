@@ -1,4 +1,4 @@
-package es.uniovi.plandocencia.model;
+package main.java.model;
 
 import java.sql.Timestamp;
 

@@ -1,8 +1,8 @@
-package es.uniovi.plandocencia;
+package main.java;
 
-import es.uniovi.plandocencia.model.GrupoAsignatura;
-import es.uniovi.plandocencia.model.Horario;
-import es.uniovi.plandocencia.model.Profesor;
+import main.java.model.GrupoAsignatura;
+import main.java.model.Horario;
+import main.java.model.Profesor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -66,7 +66,7 @@ public class CSVReader {
             case "NO":
                 return false;
             default:
-                throw new ClassCastException("La columna no contenía valores SI/NO");
+                throw new ClassCastException("La fila no contenía valor SI/NO");
 
         }
     }
@@ -82,7 +82,6 @@ public class CSVReader {
 
             while ((line = br.readLine()) != null) {
 
-                // use comma as separator
                 String[] split = line.split(SPLITTER);
                 try {
                     asignaturas.add(
@@ -98,7 +97,7 @@ public class CSVReader {
                                     split[8].split(AREA_SPLITTER)
                             )
                     );
-                } catch (ClassCastException e) { // TODO: si existe alguna erronea se salta y sigue el algortmo
+                } catch (ClassCastException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();

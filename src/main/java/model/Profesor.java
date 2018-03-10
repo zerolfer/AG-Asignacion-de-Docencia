@@ -1,4 +1,4 @@
-package es.uniovi.plandocencia.model;
+package main.java.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ public class Profesor {
 
     private final Integer id;
     private String nombre;
+    private Float capacidadInicial;
     private Float capacidad;
     private Boolean bilingue;
     private String area; // solo puede tener un área
@@ -17,15 +18,25 @@ public class Profesor {
     // ASIGNACIONES
     private List<GrupoAsignatura> asignadas;
 
+    public Profesor(Integer id, String nombre, Float capacidad, Boolean bilingue, String area) {
+        this.id = id;
+        inicializar(nombre, capacidad, bilingue, area);
+    }
 
-    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area) {
-        this.id = contador++;
+    private void inicializar(String nombre, Float capacidad, Boolean bilingue, String area) {
         this.nombre = nombre;
         this.capacidad = capacidad;
+        this.capacidadInicial = capacidad;
         this.bilingue = bilingue;
         this.area = area;
 
         asignadas = new ArrayList<>();
+    }
+
+
+    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area) {
+        this.id = contador++;
+        inicializar(nombre, capacidad, bilingue, area);
     }
 
     public static Integer getUltimoId() {
@@ -42,6 +53,10 @@ public class Profesor {
 
     public Float getCapacidad() {
         return capacidad;
+    }
+
+    public Float getCapacidadInicial() {
+        return capacidadInicial;
     }
 
     public void setCapacidad(Float capacidad) {
@@ -82,5 +97,9 @@ public class Profesor {
             //Arrays.toString(asignadas.toArray(new GrupoAsignatura[asignadas.size()])) + " }";
         s += '}';
         return s;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

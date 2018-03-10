@@ -1,4 +1,4 @@
-package es.uniovi.plandocencia.model;
+package main.java.model;
 
 import java.util.Arrays;
 
@@ -18,9 +18,23 @@ public class GrupoAsignatura {
     private Boolean bilingue;
     private String[] areas;
 
+    public GrupoAsignatura(Integer id, String nombre, String grupo, int semestre, Horario horario,
+                           String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
+        this.id=id;
+        inicializar(nombre, grupo, semestre, horario,
+                escuela, ciudad, horas, bilingue, areas);
+    }
+
+
     public GrupoAsignatura(String nombre, String grupo, int semestre, Horario horario,
                            String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
         this.id = contador++;
+        inicializar(nombre, grupo, semestre, horario,
+                escuela, ciudad, horas, bilingue, areas);
+    }
+
+    private void inicializar(String nombre, String grupo, int semestre, Horario horario,
+                             String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
         this.grupo = grupo;
         this.nombre = nombre;
         this.semestre = semestre;
