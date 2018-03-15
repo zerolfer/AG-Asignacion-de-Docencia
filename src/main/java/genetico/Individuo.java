@@ -1,6 +1,9 @@
-package main.java;
+package main.java.genetico;
 
 
+import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
+import main.java.genetico.algoritmos.Decodificacion;
+import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
 import java.util.Arrays;
@@ -19,8 +22,11 @@ public class Individuo {
 
     // TODO: private Profesor fenotipo;
 
+
+
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
+
     }
 
     public int[] getCromosoma() {
@@ -44,7 +50,8 @@ public class Individuo {
         return Arrays.toString(cromosoma);
     }
 
-    public void asignarFitness(Profesor[] profesores) {
+    public void asignarFitness(Profesor[] profesores, GrupoAsignatura[] asignaturas) {
+
         int max = 0;
         float min = profesores[0].getCapacidadInicial();
         for (Profesor profesor : profesores) {
@@ -61,6 +68,7 @@ public class Individuo {
         }
         fitnessAsigProfesor = max;
         fitnessNumHoras = min;
+
     }
 
     public String fitnessToString() {

@@ -1,6 +1,6 @@
-package main.java.algoritmos;
+package main.java.genetico.algoritmos;
 
-import main.java.Individuo;
+import main.java.genetico.Individuo;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 import main.java.util.Util;
@@ -38,7 +38,8 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             profesor.getAsignadas().add(asignatura);
             profesor.setCapacidad(profesor.getCapacidad() - asignatura.getHoras());
         }
-        individuo.asignarFitness(this.profesores);
+        individuo.asignarFitness(this.profesores,this.asignaturas);
+//        individuo.setFenotipo(profesores);
         if (debug) {
             System.out.println(Util.arrayToString(this.profesores, "\n"));
             System.out.println(n + " asignaturas no han sido sasignadas");

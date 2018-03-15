@@ -22,6 +22,12 @@ public class Util {
         return new Random().nextInt(hasta + 1);
     }
 
+    /**
+     * Exclusivo, hasta <b>hasta</b>-1
+     *
+     * @param hasta
+     * @return
+     */
     public static int getRandomNumber(int hasta) {
         return new Random().nextInt(hasta);
     }

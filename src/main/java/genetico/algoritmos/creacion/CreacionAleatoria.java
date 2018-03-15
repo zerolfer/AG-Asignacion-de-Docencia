@@ -1,6 +1,8 @@
-package main.java.algoritmos;
+package main.java.genetico.algoritmos.creacion;
 
-import main.java.Individuo;
+import main.java.genetico.Generacion;
+import main.java.genetico.Individuo;
+import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
 import main.java.model.GrupoAsignatura;
 import main.java.util.Util;
 
@@ -37,11 +39,11 @@ public class CreacionAleatoria implements AlgoritmoCreacion {
     }
 
     @Override
-    public Individuo[] createPopulation(final int size) {
+    public Generacion createPopulation(final int size) {
         List<Individuo> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             result.add(generateIndividual());
         }
-        return result.toArray(new Individuo[size]);
+        return new Generacion(result.toArray(new Individuo[size]));
     }
 }
