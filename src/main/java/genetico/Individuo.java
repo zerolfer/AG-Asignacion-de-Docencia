@@ -23,7 +23,6 @@ public class Individuo {
     // TODO: private Profesor fenotipo;
 
 
-
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
 
@@ -50,25 +49,25 @@ public class Individuo {
         return Arrays.toString(cromosoma);
     }
 
-    public void asignarFitness(Profesor[] profesores, GrupoAsignatura[] asignaturas) {
+    public void asignarFitness(int noAsignadas, Profesor[] profesores, GrupoAsignatura[] asignaturas) {
 
-        int max = 0;
-        float min = profesores[0].getCapacidadInicial();
-        for (Profesor profesor : profesores) {
-            if(profesor.getAsignadas().isEmpty()){
-                // en caso de no asignarse asignaturas a un profesor
-                fitnessAsigProfesor = Integer.MAX_VALUE; //FIXME infinito
-                fitnessNumHoras = Float.MAX_VALUE;
-                return;
+        if (noAsignadas != 0) {
+            // en caso de no asignarse asignaturas a un profesor
+            fitnessAsigProfesor = Integer.MAX_VALUE; //FIXME infinito
+            fitnessNumHoras = Float.MAX_VALUE;
+        } else {
+            int max = 0;
+            float min = profesores[0].getCapacidadInicial();
+            for (Profesor profesor : profesores) {
+
+                if (profesor.getAsignadas().size() > max)
+                    max = profesor.getAsignadas().size();
+                if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min)
+                    min = profesor.getCapacidadInicial() - profesor.getCapacidad();
             }
-            if (profesor.getAsignadas().size() > max)
-                max = profesor.getAsignadas().size();
-            if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min)
-                min = profesor.getCapacidadInicial() - profesor.getCapacidad();
+            fitnessAsigProfesor = max;
+            fitnessNumHoras = min;
         }
-        fitnessAsigProfesor = max;
-        fitnessNumHoras = min;
-
     }
 
     public String fitnessToString() {
