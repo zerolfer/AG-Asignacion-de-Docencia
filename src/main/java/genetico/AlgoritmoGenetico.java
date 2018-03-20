@@ -22,7 +22,7 @@ import java.util.List;
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
-    private static final int POPULATION_SIZE = 1000000;
+    private static final int POPULATION_SIZE = 200000;
 
     // INFORMACIÓN DEL PROBLEMA
     private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
