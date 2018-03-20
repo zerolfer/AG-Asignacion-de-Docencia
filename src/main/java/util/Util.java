@@ -74,4 +74,11 @@ public class Util {
         return res;
     }
 
+    public static Profesor[] listToArrayProfesor(List<Profesor> profesors) {
+        return profesors.toArray(new Profesor[profesors.size()]);
+    }
+
+    public static GrupoAsignatura[] listToArrayGrupo(List<GrupoAsignatura> clases) {
+        return clases.toArray(new GrupoAsignatura[clases.size()]);
+    }
 }

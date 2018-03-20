@@ -5,7 +5,7 @@ import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 import main.java.util.Util;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,10 +16,12 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     Profesor[] profesores;
     GrupoAsignatura[] asignaturas;
 
-    boolean debug = true;
+    boolean debug = false;
 
     @Override
     public void aplicar(Individuo individuo, Profesor[] profesores, GrupoAsignatura[] asignaturas) {
+
+        Map<Integer,/* List<*/Integer/*>*/> fenotipo = new HashMap<>();
 
         this.profesores = Util.copyOf(profesores);
         this.asignaturas = Util.copyOf(asignaturas);
@@ -29,7 +31,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         if (debug) System.out.println(individuo);
         int noAsignadas = 0;
         for (int idAsignatura : individuo.getCromosoma()) {
-            // las asignaturas no tienen por que estar ordenadas por ID
+            //FIXME las asignaturas no tienen por que estar ordenadas por ID
             GrupoAsignatura asignatura = getAsignaturaById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);
             if (profesor == null) {
@@ -38,9 +40,15 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             }
             profesor.getAsignadas().add(asignatura);
             profesor.setCapacidad(profesor.getCapacidad() - asignatura.getHoras());
+//            if (fenotipo.containsKey(asignatura.getId())) {
+//                Integer pr = fenotipo.get(asignatura.getId());
+//                pr.add(profesor.getId());
+//                fenotipo.put(asignatura.getId(), pr);
+//            } else
+                fenotipo.put(asignatura.getId(), /*new ArrayList<>(*/profesor.getId()/*)*/);
         }
         individuo.asignarFitness(noAsignadas, this.profesores, this.asignaturas);
-//        individuo.setFenotipo(profesores);
+        individuo.setFenotipo(fenotipo);
         if (debug) {
             System.out.println(Util.arrayToString(this.profesores, "\n"));
             System.out.println(noAsignadas + " asignaturas no han sido sasignadas");

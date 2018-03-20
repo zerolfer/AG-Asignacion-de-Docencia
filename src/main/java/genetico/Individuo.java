@@ -7,7 +7,9 @@ import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sergio Florez on 27/02/2018.
@@ -20,7 +22,7 @@ public class Individuo {
     private int fitnessAsigProfesor;
     private float fitnessNumHoras;
 
-    // TODO: private Profesor fenotipo;
+    private Map<Integer, /*List<*/Integer/*>*/> fenotipo;
 
 
     public Individuo(int[] cromosoma) {
@@ -67,6 +69,7 @@ public class Individuo {
             }
             fitnessAsigProfesor = max;
             fitnessNumHoras = min;
+            System.out.println("MILAGRO DIVINO: "+this);
         }
     }
 
@@ -76,5 +79,13 @@ public class Individuo {
                 + getFitnessNumHoras() + " (min horas/profesor asignadas)";
         return s;
 
+    }
+
+    public void setFenotipo(Map<Integer, /*List<*/Integer/*>*/> fenotipo) {
+    this.fenotipo=fenotipo;
+    }
+
+    public Map<Integer, /*List<*/Integer/*>*/> getFenotipo() {
+        return fenotipo;
     }
 }
