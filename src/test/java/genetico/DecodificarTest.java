@@ -11,26 +11,22 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class DecodificarTest {
 
     private AlgoritmoDecodificacion decoder = new Decodificacion();
-    private Profesor[] profesores;
-    private GrupoAsignatura[] asignaturas;
+    private List<Profesor> profesores;
+    private List<GrupoAsignatura> asignaturas;
 
     @Before
     public void inicializar() {
-        List<Profesor> profesores = CSVReader.CsvLoadProfesores();
-        List<GrupoAsignatura> asignaturas = CSVReader.CsvLoadAsignaturas();
-        this.profesores = profesores.toArray(new Profesor[profesores.size()]);
-        this.asignaturas = asignaturas.toArray(new GrupoAsignatura[asignaturas.size()]);
-
+        profesores = CSVReader.CsvLoadProfesores();
+        asignaturas = CSVReader.CsvLoadAsignaturas();
     }
 
     @Test
     public void test1() {
-        inicializar();
         Individuo individuo = new Individuo(
                 new int[]{41, 45, 4, 9, 38, 21, 60, 59, 63, 27, 12, 67, 82, 58, 78, 3, 2, 11, 55, 34, 81, 64, 1,
                         37, 80, 15, 49, 30, 47, 18, 35, 24, 23, 51, 39, 0, 33, 8, 44, 70, 68, 7, 19, 6, 50, 43,

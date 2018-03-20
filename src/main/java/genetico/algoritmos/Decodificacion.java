@@ -13,21 +13,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class Decodificacion implements AlgoritmoDecodificacion {
 
-    Profesor[] profesores;
-    GrupoAsignatura[] asignaturas;
+    List<Profesor> profesores;
+    List<GrupoAsignatura> asignaturas;
 
-    boolean debug = false;
+    boolean debug = true;
 
     @Override
-    public void aplicar(Individuo individuo, Profesor[] profesores, GrupoAsignatura[] asignaturas) {
+    public void aplicar(Individuo individuo, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
 
         Map<Integer,/* List<*/Integer/*>*/> fenotipo = new HashMap<>();
 
-        this.profesores = Util.copyOf(profesores);
-        this.asignaturas = Util.copyOf(asignaturas);
+        this.profesores = Util.copyOfProfesor(profesores);
+        this.asignaturas = Util.copyOfGrupo(asignaturas);
 
         assert profesores != this.profesores;
-        assert profesores[0] != this.profesores[0];
+        assert profesores.get(0) != this.profesores.get(0);
+        assert profesores.get(0).getId() == this.profesores.get(0).getId();
         if (debug) System.out.println(individuo);
         int noAsignadas = 0;
         for (int idAsignatura : individuo.getCromosoma()) {

@@ -64,8 +64,7 @@ public class AlgoritmoGenetico {
 
         Generacion generacion = creacion.createPopulation(POPULATION_SIZE);
 
-        generacion.evaluar(profesores.toArray(new Profesor[profesores.size()]),
-                asignaturas.toArray(new GrupoAsignatura[asignaturas.size()]));
+        generacion.evaluar(profesores, asignaturas);
 
         Individuo[] padres = seleccion.aplicar(generacion);
 

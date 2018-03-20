@@ -21,7 +21,7 @@ public class CSVReader {
     private static final String PROFESORES_PATH = "files/Profesores.csv";
     private static final String ASIGNATURAS_PATH = "files/Asignaturas.csv";
 
-    private static final boolean debug=false;
+    private static final boolean debug = false;
 
     //TODO: ordenar la lista por orden de prioridades de asignación
     public static List<Profesor> CsvLoadProfesores() {
@@ -49,7 +49,7 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
-            if(debug) for (Profesor p : profesores) System.out.println(p);
+            if (debug) for (Profesor p : profesores) System.out.println(p);
 
             return profesores;
         } catch (IOException e) {
@@ -103,7 +103,7 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
-            if(debug) for (GrupoAsignatura a : asignaturas) System.out.println(a);
+            if (debug) for (GrupoAsignatura a : asignaturas) System.out.println(a);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

@@ -5,6 +5,8 @@ import main.java.genetico.algoritmos.Decodificacion;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
+import java.util.List;
+
 public class Generacion {
     Individuo[] genotipo;
     AlgoritmoDecodificacion decodificacion;
@@ -27,10 +29,12 @@ public class Generacion {
         return genotipo[posicion];
     }
 
-    public void evaluar(Profesor[] profesores, GrupoAsignatura[] asignaturas) {
+    public void evaluar(List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
 
         for (Individuo individuo : genotipo) {
             decodificacion.aplicar(individuo, profesores, asignaturas);
+            if (individuo.getFitnessAsigProfesor() < Integer.MAX_VALUE)
+                System.out.println(individuo);
         }
 
     }

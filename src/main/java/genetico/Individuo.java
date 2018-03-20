@@ -51,7 +51,7 @@ public class Individuo {
         return Arrays.toString(cromosoma);
     }
 
-    public void asignarFitness(int noAsignadas, Profesor[] profesores, GrupoAsignatura[] asignaturas) {
+    public void asignarFitness(int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
 
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
@@ -59,7 +59,7 @@ public class Individuo {
             fitnessNumHoras = Float.MAX_VALUE;
         } else {
             int max = 0;
-            float min = profesores[0].getCapacidadInicial();
+            float min = profesores.get(0).getCapacidadInicial();
             for (Profesor profesor : profesores) {
 
                 if (profesor.getAsignadas().size() > max)
@@ -69,7 +69,7 @@ public class Individuo {
             }
             fitnessAsigProfesor = max;
             fitnessNumHoras = min;
-            System.out.println("MILAGRO DIVINO: "+this);
+            System.out.println("ESTE CROMOSOMA ES VÁLIDO: "+this);
         }
     }
 

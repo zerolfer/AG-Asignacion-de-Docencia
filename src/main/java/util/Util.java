@@ -56,20 +56,21 @@ public class Util {
         return arrayToString(enume, ", ");
     }
 
-    public static Profesor[] copyOf(Profesor[] ts) {
-        Profesor[] res = new Profesor[ts.length];
-        for (int i=0;i<res.length;i++) {
-            res[i]=new Profesor(ts[i].getId(), ts[i].getNombre(),ts[i].getCapacidadInicial(),ts[i].getBilingue(),ts[i].getArea());
+    public static List<Profesor> copyOfProfesor(List<Profesor> ts) {
+        List<Profesor> res = new ArrayList<>();
+        for (int i=0;i<ts.size();i++) {
+            res.add(new Profesor(ts.get(i).getId(), ts.get(i).getNombre(),ts.get(i).getCapacidadInicial(),
+                    ts.get(i).getBilingue(),ts.get(i).getArea()));
         }
         return res;
     }
 
-    public static GrupoAsignatura[] copyOf(GrupoAsignatura[] ts) {
-        GrupoAsignatura[] res = new GrupoAsignatura[ts.length];
-        for (int i=0;i<res.length;i++) {
-            GrupoAsignatura t = ts[i];
-            res[i]=new GrupoAsignatura(t.getId(), t.getNombre(),t.getGrupo(),t.getSemestre(),t.getHorario(),
-                    t.getEscuela(),t.getCiudad(),t.getHoras(),t.getBilingue(),t.getAreas());
+    public static List<GrupoAsignatura> copyOfGrupo(List<GrupoAsignatura> ts) {
+        List<GrupoAsignatura> res = new ArrayList<>();
+        for (int i=0;i<ts.size();i++) {
+            GrupoAsignatura t = ts.get(i);
+            res.add(new GrupoAsignatura(t.getId(), t.getNombre(),t.getGrupo(),t.getSemestre(),t.getHorario(),
+                    t.getEscuela(),t.getCiudad(),t.getHoras(),t.getBilingue(),t.getAreas()));
         }
         return res;
     }
