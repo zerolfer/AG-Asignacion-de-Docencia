@@ -16,7 +16,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     Profesor[] profesores;
     GrupoAsignatura[] asignaturas;
 
-    boolean debug = true;
+    boolean debug = false;
 
     @Override
     public void aplicar(Individuo individuo, Profesor[] profesores, GrupoAsignatura[] asignaturas) {

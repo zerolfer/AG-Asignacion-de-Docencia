@@ -93,8 +93,9 @@ public class Profesor {
                 ", bilingue=" + bilingue +
                 ", area='" + area + '\'';
         if (!asignadas.isEmpty())
-            s += ", asignadas{ " + asignadas.stream().map(GrupoAsignatura::getId).collect(Collectors.toList());;
-            //Arrays.toString(asignadas.toArray(new GrupoAsignatura[asignadas.size()])) + " }";
+            s += ", asignadas{ " + asignadas.stream().map(GrupoAsignatura::getId).collect(Collectors.toList());
+        ;
+        //Arrays.toString(asignadas.toArray(new GrupoAsignatura[asignadas.size()])) + " }";
         s += '}';
         return s;
     }

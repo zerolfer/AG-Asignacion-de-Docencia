@@ -31,6 +31,8 @@ public class Generacion {
 
         for (Individuo individuo : genotipo) {
             decodificacion.aplicar(individuo, profesores, asignaturas);
+            if (individuo.getFitnessAsigProfesor() < Integer.MAX_VALUE)
+                System.out.println(individuo);
         }
 
     }
