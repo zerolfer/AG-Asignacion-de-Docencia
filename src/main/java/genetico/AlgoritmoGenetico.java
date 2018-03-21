@@ -66,7 +66,7 @@ public class AlgoritmoGenetico {
 
         generacion.evaluar(profesores, asignaturas);
 
-        Individuo[] padres = seleccion.aplicar(generacion);
+        List<Individuo[]> padres = seleccion.aplicar(generacion);
 
 //        for (Individuo c : codificacion()) {
 //            AlgoritmoGenetico.decodificar(c);

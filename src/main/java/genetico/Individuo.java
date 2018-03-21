@@ -48,7 +48,8 @@ public class Individuo {
 
     @Override
     public String toString() {
-        return Arrays.toString(cromosoma);
+        return "{ Codigo cromosoma: "+ cromosoma.hashCode()+", fitness: ("+fitnessAsigProfesor+","+fitnessNumHoras+") }";
+        //super.toString();//Arrays.toString(cromosoma);
     }
 
     public void asignarFitness(int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {

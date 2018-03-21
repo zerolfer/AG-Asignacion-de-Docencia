@@ -11,7 +11,13 @@ public class Generacion {
     Individuo[] genotipo;
     AlgoritmoDecodificacion decodificacion;
 
-    public Generacion(Individuo[] individuos) {
+//    public Generacion(Individuo[] individuos) {
+//        this.genotipo = individuos;
+//        this.decodificacion = new Decodificacion();
+//
+//    }
+
+    public Generacion(Individuo... individuos) {
         this.genotipo = individuos;
         this.decodificacion = new Decodificacion();
 

@@ -1,5 +1,6 @@
 package main.java.util;
 
+import main.java.genetico.Individuo;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
@@ -56,6 +57,10 @@ public class Util {
         return arrayToString(enume, ", ");
     }
 
+    public static String arrayToString(Object[] enume) {
+        return arrayToString(enume, ", ");
+    }
+
     public static List<Profesor> copyOfProfesor(List<Profesor> ts) {
         List<Profesor> res = new ArrayList<>();
         for (int i=0;i<ts.size();i++) {
@@ -81,5 +86,9 @@ public class Util {
 
     public static GrupoAsignatura[] listToArrayGrupo(List<GrupoAsignatura> clases) {
         return clases.toArray(new GrupoAsignatura[clases.size()]);
+    }
+
+    public static Individuo createIndividual(int... valores){
+        return new Individuo(valores);
     }
 }
