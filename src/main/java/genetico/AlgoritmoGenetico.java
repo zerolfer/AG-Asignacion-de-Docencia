@@ -17,12 +17,16 @@ import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
-    private static final int POPULATION_SIZE = 200000;
+    private static final int POPULATION_SIZE = 20;
+    private static final float PROBABILIDAD_CRUCE = 0.7f;
+    private static final float PROBABILIDAD_MUTACION = 0.5f;
+    private static final int NUMERO_GENERACIONES = 2;
 
     // INFORMACIÓN DEL PROBLEMA
     private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
@@ -49,28 +53,79 @@ public class AlgoritmoGenetico {
     }
 
     public AlgoritmoGenetico() {
-        this(new CreacionAleatoria(), new SeleccionAleatoria(), new CruceOrderBased(),
-                new MutacionIntercambio(), new ReemplazoTorneoPH());
+        this(new CreacionAleatoria(), new SeleccionAleatoria(), new CruceOrderBased(PROBABILIDAD_CRUCE),
+                new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoTorneoPH());
     }
 
     public void iniciar(List<GrupoAsignatura> asignaturas, List<Profesor> profesores) {
         this.asignaturas = asignaturas;
         this.profesores = profesores;
+//        ordenarAsignaturas();
+        ordenarProfesores();
         genetico();
+    }
+
+    private void ordenarProfesores() {
+        profesores.sort(new Comparator<Profesor>() {
+            @Override
+            public int compare(Profesor o1, Profesor o2) {
+                if (o1.getBilingue() == true && o2.getBilingue() == false)
+                    return 1;
+                if (o1.getBilingue() == false && o2.getBilingue() == true)
+                    return -1;
+                else return 0;
+            }
+        });
+    }
+
+    private void ordenarAsignaturas() {
+        asignaturas.sort(new Comparator<GrupoAsignatura>() {
+            @Override
+            public int compare(GrupoAsignatura o1, GrupoAsignatura o2) {
+                if (o1.getBilingue() == true && o2.getBilingue() == false)
+                    return 1;
+                if (o1.getBilingue() == false && o2.getBilingue() == true)
+                    return -1;
+                else return 0;
+            }
+        });
     }
 
 
     private void genetico() {
 
         Generacion generacion = creacion.createPopulation(POPULATION_SIZE);
+        int numGeneraciones = 1;
 
-        generacion.evaluar(profesores, asignaturas);
+        do {
 
-        List<Individuo[]> padres = seleccion.aplicar(generacion);
+            generacion.evaluar(profesores, asignaturas);
 
-//        for (Individuo c : codificacion()) {
-//            AlgoritmoGenetico.decodificar(c);
-//        }
+            List<Individuo[]> padres = seleccion.aplicar(generacion);
+            List<Individuo[]> hijos = cruce.aplicar(padres);
+
+            mutacion.mutar(hijos);
+            generacion = agrupar(hijos);
+            generacion.evaluar(profesores, asignaturas);
+
+            int sizeAnterior = generacion.size();
+            generacion = reemplazo.aplicar(generacion);
+            numGeneraciones++;
+
+            assert sizeAnterior == generacion.size();
+
+        } while (numGeneraciones <= NUMERO_GENERACIONES);
+
+    }
+
+    private Generacion agrupar(List<Individuo[]> individuos) {
+        List<Individuo> result = new ArrayList<>();
+        for (Individuo[] par : individuos) {
+            for (Individuo indi : par) {
+                result.add(indi);
+            }
+        }
+        return new Generacion(result.toArray(new Individuo[result.size()]));
     }
 
 

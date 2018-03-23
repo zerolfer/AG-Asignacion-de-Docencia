@@ -33,6 +33,10 @@ public class Util {
         return new Random().nextInt(hasta);
     }
 
+    public static int getRandomNumber(int desde, int hasta) {
+        return new Random().nextInt(hasta-desde)+desde;
+    }
+
     public static String arrayToString(List<?> enume, String separador) {
         StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < enume.size(); i++) {

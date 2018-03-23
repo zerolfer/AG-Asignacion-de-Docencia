@@ -36,12 +36,13 @@ public class Generacion {
     }
 
     public void evaluar(List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
-
+        if (Decodificacion.debug) System.out.println("DECODIFICACION Y EVALUACIÓN:");
         for (Individuo individuo : genotipo) {
             decodificacion.aplicar(individuo, profesores, asignaturas);
-            if (individuo.getFitnessAsigProfesor() < Integer.MAX_VALUE)
-                System.out.println(individuo);
+            if (Decodificacion.debug) System.out.println(individuo);
         }
+
+        if (Decodificacion.debug) System.out.println();
 
     }
 }

@@ -15,7 +15,7 @@ public class SeleccionAleatoria implements AlgoritmoSeleccion {
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> resultado = new ArrayList<>();
 
-        for (int i = 0; i <= generacion.size()/2; i++) {
+        for (int i = 0; i < generacion.size()/2; i++) {
 
             Individuo gen1 = generacion.getIndividuo(Util.getRandomNumber(generacion.size()));
             Individuo gen2;

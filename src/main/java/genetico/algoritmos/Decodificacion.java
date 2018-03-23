@@ -16,7 +16,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     List<Profesor> profesores;
     List<GrupoAsignatura> asignaturas;
 
-    boolean debug = true;
+    public static boolean debug = true;
 
     @Override
     public void aplicar(Individuo individuo, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
@@ -29,9 +29,9 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         assert profesores != this.profesores;
         assert profesores.get(0) != this.profesores.get(0);
         assert profesores.get(0).getId() == this.profesores.get(0).getId();
-        if (debug) System.out.println(individuo);
+
         int noAsignadas = 0;
-        for (int idAsignatura : individuo.getCromosoma()) {
+        for (int idAsignatura : individuo.getCromosoma()) { // O(n^3)
             //FIXME las asignaturas no tienen por que estar ordenadas por ID
             GrupoAsignatura asignatura = getAsignaturaById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);
@@ -51,9 +51,10 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         individuo.asignarFitness(noAsignadas, this.profesores, this.asignaturas);
         individuo.setFenotipo(fenotipo);
         if (debug) {
-            System.out.println(Util.arrayToString(this.profesores, "\n"));
+            if (individuo.getFitnessAsigProfesor()>=Integer.MAX_VALUE)
+                System.out.println(Util.arrayToString(this.profesores, "\n"));
             System.out.println(noAsignadas + " asignaturas no han sido sasignadas");
-            System.out.println(individuo.fitnessToString());
+            //System.out.println(individuo.fitnessToString());
         }
     }
 
