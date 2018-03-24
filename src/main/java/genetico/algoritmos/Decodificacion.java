@@ -16,7 +16,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     List<Profesor> profesores;
     List<GrupoAsignatura> asignaturas;
 
-    public static boolean debug = true;
+    public static boolean debug = false;
 
     @Override
     public void aplicar(Individuo individuo, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
@@ -64,7 +64,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 if (checkSolapamiento(p, a))
                     return p;
         }
-        return null; //FIXME ??? si no hay profesores a cubrir qué hacer?¿
+        return null; // en caso de no haber profesoresa cubrir se le asignará un fitness infinito
     }
 
     private boolean checkArea(Profesor p, GrupoAsignatura a) {

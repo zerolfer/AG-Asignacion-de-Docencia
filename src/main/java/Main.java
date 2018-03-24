@@ -9,12 +9,12 @@ import java.util.List;
 public class Main {
     public static void main(String args[]){
 
-        List<Profesor> p = CSVReader.CsvLoadProfesores();
-        List<GrupoAsignatura> a = CSVReader.CsvLoadAsignaturas();
+//        List<Profesor> p = CSVReader.CsvLoadProfesores();
+//        List<GrupoAsignatura> a = CSVReader.CsvLoadAsignaturas();
 
         AlgoritmoGenetico genetico=new AlgoritmoGenetico();
 
-        genetico.iniciar(a,p);
+        genetico.iniciar(/*a,p*/);
 
     }
 }

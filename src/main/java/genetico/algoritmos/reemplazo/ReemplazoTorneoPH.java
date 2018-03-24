@@ -12,6 +12,6 @@ import java.util.List;
 public class ReemplazoTorneoPH implements AlgoritmoReemplazo {
     @Override
     public Generacion aplicar(Generacion generacion) {
-        return generacion;
+        return generacion; // TODO
     }
 }

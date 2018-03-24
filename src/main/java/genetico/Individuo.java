@@ -1,6 +1,7 @@
 package main.java.genetico;
 
 
+import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
@@ -19,7 +20,7 @@ public class Individuo {
     private int fitnessAsigProfesor;
     private float fitnessNumHoras;
 
-    private Map<Integer, /*List<*/Integer/*>*/> fenotipo;
+    private Map<Integer, /*List<*/Integer/*>*/> fenotipo; // <AsignaturaId, ProfesorId>
 
 
     public Individuo(int[] cromosoma) {
@@ -132,7 +133,24 @@ public class Individuo {
     }
 
     @Override
-    public Individuo clone(){
+    public Individuo clone() {
         return new Individuo(this.cromosoma.clone());
     }
+
+    public String toStringFull() {
+        StringBuilder sb = new StringBuilder("Individuo:{ \n\tfitness: (" + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
+                + "Codigo cromosoma: " + cromosomaToString() + "\n");
+        for (int key : fenotipo.keySet()) { // asignaturas
+            sb.append(BD.getGrupoById(key));
+            sb.append(" " + BD.getProfesorById(fenotipo.get(key)) + "\n");
+            sb.append('\n');
+        }
+//        for (int value : fenotipo.values()) {
+//            sb.append(BD.getProfesorById(value) + " asignaturas: ");
+//        }
+
+        return sb.toString();
+    }
+
+
 }

@@ -10,15 +10,18 @@ import main.java.genetico.algoritmos.cruce.CruceOrderBased;
 import main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion;
 import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH;
+import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
+import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
-import main.java.model.Profesor;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import static main.java.model.BD.asignaturas;
+import static main.java.model.BD.profesores;
 
 public class AlgoritmoGenetico {
 
@@ -29,8 +32,8 @@ public class AlgoritmoGenetico {
     private static final int NUMERO_GENERACIONES = 2;
 
     // INFORMACIÓN DEL PROBLEMA
-    private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
-    private static List<Profesor> profesores = new ArrayList<>();
+    /*private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
+    private static List<Profesor> profesores = new ArrayList<>();*/
 
     // ALGORITMOS
     AlgoritmoCreacion creacion;
@@ -54,41 +57,23 @@ public class AlgoritmoGenetico {
 
     public AlgoritmoGenetico() {
         this(new CreacionAleatoria(), new SeleccionAleatoria(), new CruceOrderBased(PROBABILIDAD_CRUCE),
-                new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoTorneoPH());
+                new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoGeneracional());
     }
 
-    public void iniciar(List<GrupoAsignatura> asignaturas, List<Profesor> profesores) {
-        this.asignaturas = asignaturas;
-        this.profesores = profesores;
+    public void iniciar(/*List<GrupoAsignatura> asignaturas, List<Profesor> profesores*/) {
+        /*this.asignaturas = asignaturas;
+        this.profesores = profesores;*/
 //        ordenarAsignaturas();
         ordenarProfesores();
         genetico();
     }
 
     private void ordenarProfesores() {
-        profesores.sort(new Comparator<Profesor>() {
-            @Override
-            public int compare(Profesor o1, Profesor o2) {
-                if (o1.getBilingue() == true && o2.getBilingue() == false)
-                    return 1;
-                if (o1.getBilingue() == false && o2.getBilingue() == true)
-                    return -1;
-                else return 0;
-            }
-        });
+        profesores.sort(BD.comparatorProfesores);
     }
 
     private void ordenarAsignaturas() {
-        asignaturas.sort(new Comparator<GrupoAsignatura>() {
-            @Override
-            public int compare(GrupoAsignatura o1, GrupoAsignatura o2) {
-                if (o1.getBilingue() == true && o2.getBilingue() == false)
-                    return 1;
-                if (o1.getBilingue() == false && o2.getBilingue() == true)
-                    return -1;
-                else return 0;
-            }
-        });
+        asignaturas.sort(BD.comparatorAsignaturas);
     }
 
 
@@ -114,8 +99,23 @@ public class AlgoritmoGenetico {
 
             assert sizeAnterior == generacion.size();
 
+//          System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toStringFull());
+            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
+    }
+
+    private Individuo obtenerMejor(Generacion generacion) {
+        Individuo[] genotipo = generacion.getGenotipo();
+        Individuo mejor = genotipo[0];
+        for (Individuo indi : genotipo) {
+            if (mejor.getFitnessAsigProfesor() == indi.getFitnessAsigProfesor()) {
+                if (indi.getFitnessNumHoras() < mejor.getFitnessNumHoras())
+                    mejor = indi;
+            } else if (indi.getFitnessAsigProfesor() < mejor.getFitnessAsigProfesor())
+                mejor = indi;
+        }
+        return mejor;
     }
 
     private Generacion mutarAgrupar(List<Individuo[]> individuos) {

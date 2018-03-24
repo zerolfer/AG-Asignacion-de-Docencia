@@ -92,17 +92,17 @@ public class GrupoAsignatura {
 
     @Override
     public String toString() {
-        return "GrupoAsignatura{\n" +
-                "\tid=" + id +'\n'+
-                "\tgrupo='" + grupo + '\'' +'\n'+
-                "\tnombre='" + nombre + '\'' +'\n'+
-                "\tsemestre=" + semestre +'\n'+
-                "\thorario=" + horario +'\n'+
-                "\tescuela='" + escuela + '\'' +'\n'+
-                "\tciudad='" + ciudad + '\'' +'\n'+
-                "\thoras=" + horas +'\n'+
-                "\tbilingue=" + bilingue +'\n'+
-                "\tareas=" + Arrays.toString(areas) +'\n'+
+        return "GrupoAsignatura{ " +
+                "id=" + id +','+
+                " grupo='" + grupo + '\'' +','+
+                " nombre='" + nombre + '\'' +','+
+                " semestre=" + semestre +','+
+                " horario=" + horario +'\n'+
+                "\tescuela='" + escuela + '\'' +','+
+                " ciudad='" + ciudad + '\'' +','+
+                " horas=" + horas +','+
+                " bilingue=" + bilingue +','+
+                " areas=" + Arrays.toString(areas) +'\n'+
                 '}';
     }
 }
