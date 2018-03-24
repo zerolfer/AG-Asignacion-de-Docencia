@@ -104,8 +104,8 @@ public class AlgoritmoGenetico {
             List<Individuo[]> padres = seleccion.aplicar(generacion);
             List<Individuo[]> hijos = cruce.aplicar(padres);
 
-            mutacion.mutar(hijos);
-            generacion = agrupar(hijos);
+            generacion = mutarAgrupar(hijos);
+
             generacion.evaluar(profesores, asignaturas);
 
             int sizeAnterior = generacion.size();
@@ -118,10 +118,11 @@ public class AlgoritmoGenetico {
 
     }
 
-    private Generacion agrupar(List<Individuo[]> individuos) {
+    private Generacion mutarAgrupar(List<Individuo[]> individuos) {
         List<Individuo> result = new ArrayList<>();
         for (Individuo[] par : individuos) {
             for (Individuo indi : par) {
+                mutacion.mutar(indi);
                 result.add(indi);
             }
         }

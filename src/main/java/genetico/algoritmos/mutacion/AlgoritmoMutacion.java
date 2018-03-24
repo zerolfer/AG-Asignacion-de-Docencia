@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface AlgoritmoMutacion {
     void mutar(List<Individuo[]> individuo);
+    void mutar(Individuo individuo);
 }

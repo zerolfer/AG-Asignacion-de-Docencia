@@ -21,23 +21,28 @@ public class MutacionIntercambio implements AlgoritmoMutacion {
     public void mutar(List<Individuo[]> individuos) {
         for (Individuo[] par : individuos) {
             for (Individuo individuo : par) {
-                if (Math.random() <= probabilidad) {
-                    if(debug) System.out.println("MUTACION:\n\tAntes: \t "+individuo);
-                    int pos1 = Util.getRandomNumber(individuo.size());
-                    int pos2;
-                    do {
-                        pos2 = Util.getRandomNumber(individuo.size());
-                    } while ((pos1 == pos2));
-
-                    // swap
-                    int valor = individuo.getCromosoma()[pos1];
-                    individuo.getCromosoma()[pos1] = individuo.getCromosoma()[pos2];
-                    individuo.getCromosoma()[pos2] = valor;
-
-                    if(debug) System.out.println("\tDespues: "+individuo);
-                }
+                mutar(individuo);
             }
 
+        }
+    }
+
+    @Override
+    public void mutar(Individuo individuo) {
+        if (Math.random() <= probabilidad) {
+            if(debug) System.out.println("MUTACION:\n\tAntes: \t "+individuo);
+            int pos1 = Util.getRandomNumber(individuo.size());
+            int pos2;
+            do {
+                pos2 = Util.getRandomNumber(individuo.size());
+            } while ((pos1 == pos2));
+
+            // swap
+            int valor = individuo.getCromosoma()[pos1];
+            individuo.getCromosoma()[pos1] = individuo.getCromosoma()[pos2];
+            individuo.getCromosoma()[pos2] = valor;
+
+            if(debug) System.out.println("\tDespues: "+individuo);
         }
     }
 }

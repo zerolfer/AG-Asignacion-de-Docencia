@@ -130,4 +130,9 @@ public class Individuo {
     public int hashCode() {
         return Arrays.hashCode(cromosoma);
     }
+
+    @Override
+    public Individuo clone(){
+        return new Individuo(this.cromosoma.clone());
+    }
 }

@@ -56,7 +56,7 @@ public class CruceOrderBased implements AlgoritmoCruce {
                 }
 
                 if (!hijo2.contains(desde, hasta, idxHijo2, padre1.getCromosoma()[idxPadres]) && idxHijo2 < length) {
-                    hijo2.getCromosoma()[idxHijo2++] = padre1.getCromosoma()[idxPadres]; //FIXME error aqui ArrayIndexOutOfBoundsException
+                    hijo2.getCromosoma()[idxHijo2++] = padre1.getCromosoma()[idxPadres];
                 }
             }
         }
