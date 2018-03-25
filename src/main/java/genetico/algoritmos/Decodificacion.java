@@ -21,7 +21,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     @Override
     public void aplicar(Individuo individuo, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
 
-        Map<Integer,/* List<*/Integer/*>*/> fenotipo = new HashMap<>();
+        Map<Integer, Set<Integer>> fenotipo = new HashMap<>();
 
         this.profesores = Util.copyOfProfesor(profesores);
         this.asignaturas = Util.copyOfGrupo(asignaturas);
@@ -41,17 +41,19 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             }
             profesor.getAsignadas().add(asignatura);
             profesor.setCapacidad(profesor.getCapacidad() - asignatura.getHoras());
-//            if (fenotipo.containsKey(asignatura.getId())) {
-//                Integer pr = fenotipo.get(asignatura.getId());
-//                pr.add(profesor.getId());
-//                fenotipo.put(asignatura.getId(), pr);
-//            } else
-                fenotipo.put(asignatura.getId(), /*new ArrayList<>(*/profesor.getId()/*)*/);
+            if (fenotipo.containsKey(profesor.getId())) {
+                Set<Integer> asignadas = fenotipo.get(profesor.getId());
+                asignadas.add(asignatura.getId());
+            } else {
+                Set<Integer> nuevoSet = new HashSet<>();
+                nuevoSet.add(asignatura.getId());
+                fenotipo.put(profesor.getId(), nuevoSet);
+            }
         }
         individuo.asignarFitness(noAsignadas, this.profesores, this.asignaturas);
         individuo.setFenotipo(fenotipo);
         if (debug) {
-            if (individuo.getFitnessAsigProfesor()>=Integer.MAX_VALUE)
+            if (individuo.getFitnessAsigProfesor() >= Integer.MAX_VALUE)
                 System.out.println(Util.arrayToString(this.profesores, "\n"));
             System.out.println(noAsignadas + " asignaturas no han sido sasignadas");
             //System.out.println(individuo.fitnessToString());

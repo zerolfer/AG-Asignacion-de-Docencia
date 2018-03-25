@@ -8,6 +8,7 @@ import main.java.model.Profesor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Sergio Florez on 27/02/2018.
@@ -20,7 +21,7 @@ public class Individuo {
     private int fitnessAsigProfesor;
     private float fitnessNumHoras;
 
-    private Map<Integer, /*List<*/Integer/*>*/> fenotipo; // <AsignaturaId, ProfesorId>
+    private Map<Integer, Set<Integer>> fenotipo; // <AsignaturaId, ProfesorId>
 
 
     public Individuo(int[] cromosoma) {
@@ -93,11 +94,11 @@ public class Individuo {
         return this.cromosoma.length;
     }
 
-    public void setFenotipo(Map<Integer, /*List<*/Integer/*>*/> fenotipo) {
+    public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
         this.fenotipo = fenotipo;
     }
 
-    public Map<Integer, /*List<*/Integer/*>*/> getFenotipo() {
+    public Map<Integer, Set<Integer>> getFenotipo() {
         return fenotipo;
     }
 
@@ -140,10 +141,19 @@ public class Individuo {
     public String toStringFull() {
         StringBuilder sb = new StringBuilder("Individuo:{ \n\tfitness: (" + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
                 + "Codigo cromosoma: " + cromosomaToString() + "\n");
-        for (int key : fenotipo.keySet()) { // asignaturas
-            sb.append(BD.getGrupoById(key));
-            sb.append(" " + BD.getProfesorById(fenotipo.get(key)) + "\n");
-            sb.append('\n');
+        for (Integer key : fenotipo.keySet()) { // profesores
+            sb.append(BD.getProfesorById(key) + " asignadas: [ ");
+
+            Set<Integer> asignadas = fenotipo.get(key);
+            int i = 0;
+            for (Integer grupo : asignadas) {
+                i++;
+                sb.append(BD.getGrupoById(grupo).getId());
+                if (i < asignadas.size())
+                    sb.append(", ");
+
+            }
+            sb.append(" ]\n");
         }
 //        for (int value : fenotipo.values()) {
 //            sb.append(BD.getProfesorById(value) + " asignaturas: ");
