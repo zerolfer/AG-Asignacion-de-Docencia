@@ -14,10 +14,8 @@ import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.model.BD;
-import main.java.model.GrupoAsignatura;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static main.java.model.BD.asignaturas;
@@ -27,9 +25,9 @@ public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
     private static final int POPULATION_SIZE = 20;
-    private static final float PROBABILIDAD_CRUCE = 0.7f;
-    private static final float PROBABILIDAD_MUTACION = 0.5f;
-    private static final int NUMERO_GENERACIONES = 1;
+    public static final float PROBABILIDAD_CRUCE = 0.7f;
+    public static final float PROBABILIDAD_MUTACION = 0.5f;
+    private static final int NUMERO_GENERACIONES = 7000 ;
 
     // INFORMACIÓN DEL PROBLEMA
     /*private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
@@ -99,10 +97,10 @@ public class AlgoritmoGenetico {
 
             assert sizeAnterior == generacion.size();
 
-          System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toStringFull());
-//            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
+        System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toStringFull());
+//            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());
     }
 
     private Individuo obtenerMejor(Generacion generacion) {
