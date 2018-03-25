@@ -1,17 +1,11 @@
 package test.java.genetico;
 
-import main.java.CSVReader;
 import main.java.genetico.Individuo;
 import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
 import main.java.genetico.algoritmos.cruce.CruceOrderBased;
-import main.java.model.GrupoAsignatura;
-import main.java.model.Profesor;
 import main.java.util.Util;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,7 +14,7 @@ import static org.junit.Assert.assertFalse;
  * Created by Sergio Florez on 23/03/2018.
  */
 public class CruceTest {
-    private AlgoritmoCruce crossover = new CruceOrderBased(1);
+    private CruceOrderBased crossover = new CruceOrderBased(1);
 
     @Test
     public void orderBasedCrossover1() {
@@ -108,18 +102,45 @@ public class CruceTest {
         }
     }
 
+
     @Test
     public void orderBasedCrossover4() {
 
+        crossover = new CruceOrderBased(1);
+        Individuo padre1 = Util.createIndividual(3, 11, 1, 4, 0, 10, 8, 7, 9, 6, 5, 2, 12);
+        Individuo padre2 = Util.createIndividual(10, 3, 8, 1, 11, 2, 0, 6, 5, 12, 7, 9, 4);
+        Individuo[] hijosEsperados = new Individuo[]{
+                Util.createIndividual(10, 3, 1, 11, 2, 0, 8, 7, 9, 6, 5, 12, 4),
+                Util.createIndividual(3, 11, 1, 4, 10, 8, 0, 6, 5, 12, 7, 9, 2)};
+
+        Individuo[] hijos = crossover.aplicar(padre1, padre2, 6, 9);
+        assertArrayEquals(hijosEsperados, hijos);
+
+        System.out.println("ORDER-BASED CROSSOVER - ALGORITMO DE CRUCE - TEST 2 - RESULTADOS:");
+
+        System.out.println("Padre 1: " + padre1);
+        System.out.println("Padre 2: " + padre2);
+
+        for (Individuo hijo : hijos) {
+            System.out.println("Hijo: \t " + hijo);
+            assertFalse(hijo.checkHayRepetidos());
+        }
+    }
+
+    @Test
+    public void orderBasedCrossover5() {
 
         crossover = new CruceOrderBased(1);
-        Individuo padre1 = Util.createIndividual(58, 33, 16, 12, 61, 21, 75, 6, 17, 20, 25, 65, 42, 40, 78, 74, 26, 64, 15, 35, 66, 27, 22, 4, 7, 80, 30, 10, 3, 48, 50, 62, 18, 67, 9, 11, 46, 81, 63, 5, 38, 72, 24, 31, 52, 79, 53, 68, 0, 82, 56, 8, 41, 32, 77, 59, 39, 23, 45, 50, 2, 11, 0, 9, 47, 49, 19, 52, 1, 24, 55, 76, 43, 57, 73, 54, 44, 13, 29, 60, 37, 28, 70);
 
-        Individuo padre2 = Util.createIndividual(58, 33, 16, 12, 14, 25, 78, 21, 15, 20, 1, 51, 6, 61, 3, 18, 67, 11, 46, 38, 72, 24, 52, 53, 82, 56, 8, 77, 35, 66, 31, 50, 27, 22, 4, 5, 7, 80, 30, 81, 63, 10, 32, 55, 76, 45, 43, 9, 48, 23, 68, 39, 57, 19, 73, 54, 44, 13, 41, 29, 60, 37, 0, 47, 28, 70, 34, 62, 79, 36, 59, 2, 49, 46, 0, 47, 29, 60, 24, 61, 65, 6, 37);
+        Individuo padre1 = Util.createIndividual(30,78,4,35,58,71,60,11,9,1,36,23,76,63,66,61,48,3,8,52,18,32,26,28,6,79,64,74,21,51,43,45,47,40,37,46,5,72,27,24,10,44,56,7,33,50,54,59,38,81,20,55,41,16,14,67,12,17,19,53,62,13,0,68,73,75,34,57,49,42,22,82,25,2,65,29,77,39,70,15,31,69,80);
+        Individuo padre2 = Util.createIndividual(31,30,20,26,61,60,68,48,22,38,54,14,64,44,5,70,51,36,71,24,2,79,6,45,40,35,59,49,39,34,80,53,72,15,55,62,3,33,81,9,17,29,74,78,1,50,82,57,63,19,42,27,56,8,66,67,25,65,43,23,7,77,13,16,37,75,73,58,11,10,52,12,41,46,47,4,76,0,21,28,18,69,32);
+
+        assertFalse(padre1.checkHayRepetidos());
+        assertFalse(padre2.checkHayRepetidos());
 
         Individuo[] hijosEsperados = new Individuo[]{
-                Util.createIndividual(58, 33, 16, 12, 14, 25, 78, 21, 15, 20, 51, 6, 61, 35, 66, 27, 22, 4, 7, 80, 30, 10, 55, 76, 43, 57, 73, 54, 3, 48, 50, 62, 18, 67, 9, 11, 46, 81, 63, 5, 38, 72, 24, 31, 52, 79, 53, 68, 0, 82, 56, 8, 41, 32, 77, 59, 39, 23, 45, 50, 2, 11, 0, 9, 47, 49, 19, 52, 1, 24, 44, 13, 29, 60, 37, 28, 70, 34, 36, 65, 37, 28, 70),
-                Util.createIndividual(58, 33, 16, 12, 14, 25, 78, 21, 15, 20, 65, 42, 40, 74, 26, 64, 3, 18, 67, 11, 46, 38, 72, 24, 52, 53, 82, 56, 35, 66, 31, 50, 27, 22, 4, 5, 7, 80, 30, 81, 63, 10, 32, 55, 76, 45, 43, 9, 48, 23, 68, 39, 57, 19, 73, 54, 44, 13, 41, 29, 60, 37, 0, 47, 28, 70, 34, 62, 79, 36, 8, 77, 59, 2, 49, 1, 29, 60, 24, 61, 65, 6, 37)
+                Util.createIndividual(31,30,26,61,60,48,22,64,70,36,71,2,79,6,35,39,80,15,3,9,29,74,78,1,82,63,8,66,21,51,43,45,47,40,37,46,5,72,27,24,10,44,56,7,33,50,54,59,38,81,20,55,41,16,14,67,12,17,19,53,62,13,0,68,73,75,34,57,49,42,25,65,23,77,58,11,52,4,76,28,18,69,32),
+                Util.createIndividual(30,4,35,71,60,36,76,61,48,52,18,32,26,28,6,79,64,21,51,45,47,40,46,5,24,44,54,59,39,34,80,53,72,15,55,62,3,33,81,9,17,29,74,78,1,50,82,57,63,19,42,27,56,8,66,67,25,65,43,23,7,77,13,16,37,75,73,58,11,10,38,20,41,14,12,0,68,49,22,2,70,31,69)
         };
 
         Individuo[] hijos = crossover.aplicar(padre1, padre2, 28, 69);

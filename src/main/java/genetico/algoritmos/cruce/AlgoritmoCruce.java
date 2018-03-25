@@ -10,7 +10,7 @@ import java.util.List;
 public interface AlgoritmoCruce {
     Individuo[] aplicar(Individuo padre1, Individuo padre2);
     Individuo[] aplicar(Individuo[] padres);
-    Individuo[] aplicar(Individuo padre1, Individuo padre2,int desde, int hasta);
+//    Individuo[] aplicar(Individuo padre1, Individuo padre2,int desde, int hasta);
 
     List<Individuo[]> aplicar(List<Individuo[]> pares);
 }

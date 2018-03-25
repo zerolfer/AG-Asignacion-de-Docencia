@@ -16,6 +16,15 @@ public class CruceOrderBased extends AbstractCruce {
     }
 
     @Override
+    public Individuo[] aplicar(Individuo padre1, Individuo padre2) {
+        int length = padre1.size();
+        int desde = Util.getRandomNumber(length);
+        int hasta = Util.getRandomNumber(desde, length);
+
+        return aplicar(padre1, padre2, desde, hasta);
+    }
+
+
     public Individuo[] aplicar(Individuo padre1, Individuo padre2, int desde, int hasta) {
         assert padre1.size() == padre2.size();
         int length = padre1.size();
@@ -34,11 +43,11 @@ public class CruceOrderBased extends AbstractCruce {
                 while (idxHijo2 >= desde && idxHijo2 <= hasta)
                     idxHijo2++;
 
-                if (!hijo1.contains(desde, hasta, idxHijo1, padre2.getCromosoma()[idxPadres]) && idxHijo1 < length) {
+                if (!hijo1.contains(desde, hasta, padre2.getCromosoma()[idxPadres]) && idxHijo1 < length) {
                     hijo1.getCromosoma()[idxHijo1++] = padre2.getCromosoma()[idxPadres];
                 }
 
-                if (!hijo2.contains(desde, hasta, idxHijo2, padre1.getCromosoma()[idxPadres]) && idxHijo2 < length) {
+                if (!hijo2.contains(desde, hasta, padre1.getCromosoma()[idxPadres]) && idxHijo2 < length) {
                     hijo2.getCromosoma()[idxHijo2++] = padre1.getCromosoma()[idxPadres];
                 }
             }
@@ -58,5 +67,4 @@ public class CruceOrderBased extends AbstractCruce {
         return new Individuo[]{hijo1, hijo2};
 
     }
-
 }

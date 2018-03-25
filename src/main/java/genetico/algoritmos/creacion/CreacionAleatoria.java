@@ -27,6 +27,7 @@ public class CreacionAleatoria implements AlgoritmoCreacion {
             elementos[i] = elementos[n];
             elementos[n] = anterior;
         }
+//        assert ! new Individuo(elementos).checkHayRepetidos();
         return new Individuo(elementos);
     }
 

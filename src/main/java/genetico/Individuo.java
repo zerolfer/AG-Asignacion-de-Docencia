@@ -102,9 +102,9 @@ public class Individuo {
         return fenotipo;
     }
 
-    public boolean contains(int desde, int hasta, int idxHijo, int integer) {
+    public boolean contains(int desde, int hasta, int integer) {
         for (int i = 0; i <= size(); i++)
-            if ((i >= desde && i <= hasta) || (i < idxHijo))
+            if (i >= desde && i <= hasta)
                 if (cromosoma[i] == integer)
                     return true;
         return false;
