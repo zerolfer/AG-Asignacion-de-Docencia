@@ -14,8 +14,12 @@ public class CrucePositionBased extends AbstractCruce {
         super(probabilidad);
     }
 
-    @Override
     public Individuo[] aplicar(Individuo padre1, Individuo padre2, int desde, int hasta) {
+        return new Individuo[0];
+    }
+
+    @Override
+    public Individuo[] aplicar(Individuo padre1, Individuo padre2) {
         return new Individuo[0];
     }
 }
