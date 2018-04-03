@@ -24,10 +24,10 @@ import static main.java.model.BD.profesores;
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
-    private static final int POPULATION_SIZE = 20;
+    private static final int POPULATION_SIZE = 100;
     public static final float PROBABILIDAD_CRUCE = 0.7f;
     public static final float PROBABILIDAD_MUTACION = 0.5f;
-    private static final int NUMERO_GENERACIONES = 7000 ;
+    private static final int NUMERO_GENERACIONES = 1000 ;
 
     // INFORMACIÓN DEL PROBLEMA
     /*private static List<GrupoAsignatura> asignaturas = new ArrayList<>();

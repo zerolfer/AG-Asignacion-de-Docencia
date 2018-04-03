@@ -7,6 +7,7 @@ import main.java.genetico.algoritmos.cruce.CrucePositionBased;
 import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
+import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
@@ -23,7 +24,7 @@ public class Main {
 
         AlgoritmoGenetico genetico=new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionAleatoria(),
+                new SeleccionRuleta(),
                 new CruceOrderBased(PROBABILIDAD_CRUCE),
                 new MutacionIntercambio(PROBABILIDAD_MUTACION),
                 new ReemplazoGeneracional());

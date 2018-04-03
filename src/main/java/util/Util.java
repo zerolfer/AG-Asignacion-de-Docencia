@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Util {
@@ -94,5 +95,10 @@ public class Util {
 
     public static Individuo createIndividual(int... valores){
         return new Individuo(valores);
+    }
+
+    public static float getFoatRandomNumber(int desde, float hasta) {
+        return (float) ThreadLocalRandom.current().nextDouble(desde, hasta);
+
     }
 }
