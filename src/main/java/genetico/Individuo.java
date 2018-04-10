@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by Sergio Florez on 27/02/2018.
  */
-public class Individuo {
+public class Individuo implements Comparable<Individuo>{
 
     private int[] cromosoma; // cada elemento representa el id de una asignatura
 
@@ -168,4 +168,18 @@ public class Individuo {
     }
 
 
+    @Override
+    public int compareTo(Individuo ind) {
+        if(this.getFitnessAsigProfesor()>ind.getFitnessAsigProfesor())
+            return -1; // es mejor ind
+        if(this.getFitnessAsigProfesor()<ind.getFitnessAsigProfesor())
+            return 1; // es mejor this
+        // en este punto sabemos que son iguales, empleamos el otro fitness
+        if(this.getFitnessNumHoras()>ind.getFitnessNumHoras())
+            return 1; // es mejor this
+        if(this.getFitnessNumHoras()<ind.getFitnessNumHoras())
+            return -1; // es mejor ind
+        // ambos individuos son iguales
+        else return 0;
+    }
 }

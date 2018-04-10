@@ -4,6 +4,7 @@ import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
 import main.java.genetico.algoritmos.Decodificacion;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
+import main.java.util.Util;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class Generacion {
 //
 //    }
 
+    // equivalente:
+    // public Generacion(Individuo[] individuos) {
     public Generacion(Individuo... individuos) {
         this.genotipo = individuos;
         this.decodificacion = new Decodificacion();
@@ -44,5 +47,9 @@ public class Generacion {
 
         if (Decodificacion.debug) System.out.println();
 
+    }
+
+    public Individuo getRandomIndividual() {
+        return this.genotipo[Util.getRandomNumber(size())];
     }
 }
