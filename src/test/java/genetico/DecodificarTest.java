@@ -1,12 +1,10 @@
 package test.java.genetico;
 
-import main.java.CSVReader;
 import main.java.genetico.Individuo;
 import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
 import main.java.genetico.algoritmos.Decodificacion;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -19,11 +17,13 @@ public class DecodificarTest {
     private List<Profesor> profesores;
     private List<GrupoAsignatura> asignaturas;
 
+/*
     @Before
     public void inicializar() {
         profesores = CSVReader.CsvLoadProfesores();
         asignaturas = CSVReader.CsvLoadAsignaturas();
     }
+*/
 
     @Test
     public void test1() {
@@ -32,7 +32,7 @@ public class DecodificarTest {
                         37, 80, 15, 49, 30, 47, 18, 35, 24, 23, 51, 39, 0, 33, 8, 44, 70, 68, 7, 19, 6, 50, 43,
                         42, 71, 14, 66, 79, 29, 75, 72, 73, 76, 74, 56, 62, 5, 65, 54, 52, 53, 69, 28, 46, 20, 10,
                         32, 48, 36, 17, 16, 57, 26, 25, 13, 61, 77, 31, 22, 40});
-        decoder.aplicar(individuo, profesores, asignaturas);
+        decoder.aplicar(individuo);
 
         assertEquals("el fitnes no era el esperado", 15, individuo.getFitnessAsigProfesor());
     }

@@ -1,6 +1,7 @@
 package main.java.genetico.algoritmos;
 
 import main.java.genetico.Individuo;
+import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 import main.java.util.Util;
@@ -19,16 +20,16 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     public static boolean debug = false;
 
     @Override
-    public void aplicar(Individuo individuo, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
+    public void aplicar(Individuo individuo) {
 
         Map<Integer, Set<Integer>> fenotipo = new HashMap<>();
 
-        this.profesores = Util.copyOfProfesor(profesores);
-        this.asignaturas = Util.copyOfGrupo(asignaturas);
+        this.profesores = Util.copyOfProfesor(BD.getProfesores());
+        this.asignaturas = Util.copyOfGrupo(BD.getAsignaturas());
 
-        assert profesores != this.profesores;
-        assert profesores.get(0) != this.profesores.get(0);
-        assert profesores.get(0).getId() == this.profesores.get(0).getId();
+        assert BD.getProfesores() != this.profesores;
+        assert BD.getProfesores().get(0) != this.profesores.get(0);
+        assert BD.getProfesores().get(0).getId() == this.profesores.get(0).getId();
 
         int noAsignadas = 0;
         for (int idAsignatura : individuo.getCromosoma()) { // O(n^3)
@@ -50,7 +51,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 fenotipo.put(profesor.getId(), nuevoSet);
             }
         }
-        individuo.asignarFitness(noAsignadas, this.profesores, this.asignaturas);
+        asignarFitness(individuo, noAsignadas, this.profesores, this.asignaturas);
         individuo.setFenotipo(fenotipo);
         if (debug) {
             if (individuo.getFitnessAsigProfesor() >= Integer.MAX_VALUE)
@@ -59,6 +60,26 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             //System.out.println(individuo.fitnessToString());
         }
     }
+
+    private void asignarFitness(Individuo i, int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
+        if (noAsignadas != 0) {
+            // en caso de no asignarse asignaturas a un profesor
+            i.setFitnessAsigProfesor(Integer.MAX_VALUE); //FIXME infinito
+            i.setFitnessNumHoras(Float.MAX_VALUE);
+        } else {
+            int max = 0;
+            float min = profesores.get(0).getCapacidadInicial();
+            for (Profesor profesor : profesores) {
+                if (profesor.getAsignadas().size() > max)
+                    max = profesor.getAsignadas().size();
+                if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min)
+                    min = profesor.getCapacidadInicial() - profesor.getCapacidad();
+            }
+            i.setFitnessAsigProfesor(max);
+            i.setFitnessNumHoras(min);
+        }
+    }
+
 
     private Profesor getProfesor(GrupoAsignatura a) {
         for (Profesor p : this.profesores) {

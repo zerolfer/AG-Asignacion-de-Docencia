@@ -1,4 +1,4 @@
-package main.java;
+package main.java.util;
 
 import main.java.model.GrupoAsignatura;
 import main.java.model.Horario;

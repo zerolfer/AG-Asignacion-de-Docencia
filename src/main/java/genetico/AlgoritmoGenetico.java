@@ -15,11 +15,7 @@ import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.model.BD;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static main.java.model.BD.asignaturas;
-import static main.java.model.BD.profesores;
 
 public class AlgoritmoGenetico {
 
@@ -27,7 +23,7 @@ public class AlgoritmoGenetico {
     private static final int POPULATION_SIZE = 100;
     public static final float PROBABILIDAD_CRUCE = 0.7f;
     public static final float PROBABILIDAD_MUTACION = 0.5f;
-    private static final int NUMERO_GENERACIONES = 1000 ;
+    private static final int NUMERO_GENERACIONES = 1000;
 
     // INFORMACIÓN DEL PROBLEMA
     /*private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
@@ -67,11 +63,11 @@ public class AlgoritmoGenetico {
     }
 
     private void ordenarProfesores() {
-        profesores.sort(BD.comparatorProfesores);
+        BD.getProfesores().sort(BD.comparatorProfesores);
     }
 
     private void ordenarAsignaturas() {
-        asignaturas.sort(BD.comparatorAsignaturas);
+        BD.getAsignaturas().sort(BD.comparatorAsignaturas);
     }
 
 
@@ -82,17 +78,17 @@ public class AlgoritmoGenetico {
 
         do {
 
-            generacion.evaluar(profesores, asignaturas);
+            generacion.evaluar();
 
             List<Individuo[]> padres = seleccion.aplicar(generacion);
             List<Individuo[]> hijos = cruce.aplicar(padres);
 
-            generacion = mutarAgrupar(hijos);
+            mutar(hijos);
 
-            generacion.evaluar(profesores, asignaturas);
+            evaluar(hijos);
 
             int sizeAnterior = generacion.size();
-            generacion = reemplazo.aplicar(generacion);
+            generacion = reemplazo.aplicar(padres, hijos);
             numGeneraciones++;
 
             assert sizeAnterior == generacion.size();
@@ -116,15 +112,16 @@ public class AlgoritmoGenetico {
         return mejor;
     }
 
-    private Generacion mutarAgrupar(List<Individuo[]> individuos) {
-        List<Individuo> result = new ArrayList<>();
-        for (Individuo[] par : individuos) {
-            for (Individuo indi : par) {
+    private void mutar(List<Individuo[]> individuos) {
+        for (Individuo[] par : individuos)
+            for (Individuo indi : par)
                 mutacion.mutar(indi);
-                result.add(indi);
-            }
-        }
-        return new Generacion(result.toArray(new Individuo[result.size()]));
+    }
+
+    private void evaluar(List<Individuo[]> individuos) {
+        for (Individuo[] par : individuos)
+            for (Individuo indi : par)
+                indi.evaluar();
     }
 
 

@@ -9,5 +9,5 @@ import java.util.List;
  * Created by Sergio Florez on 15/03/2018.
  */
 public interface AlgoritmoReemplazo {
-    Generacion aplicar(Generacion individuos);
+    Generacion aplicar(List<Individuo[]> padres, List<Individuo[]> hijos);
 }

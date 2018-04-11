@@ -2,7 +2,6 @@ package main.java.genetico.algoritmos.creacion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
 import main.java.model.GrupoAsignatura;
 import main.java.util.Util;
 

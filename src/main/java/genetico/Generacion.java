@@ -1,16 +1,10 @@
 package main.java.genetico;
 
-import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
 import main.java.genetico.algoritmos.Decodificacion;
-import main.java.model.GrupoAsignatura;
-import main.java.model.Profesor;
 import main.java.util.Util;
-
-import java.util.List;
 
 public class Generacion {
     Individuo[] genotipo;
-    AlgoritmoDecodificacion decodificacion;
 
 //    public Generacion(Individuo[] individuos) {
 //        this.genotipo = individuos;
@@ -22,8 +16,6 @@ public class Generacion {
     // public Generacion(Individuo[] individuos) {
     public Generacion(Individuo... individuos) {
         this.genotipo = individuos;
-        this.decodificacion = new Decodificacion();
-
     }
 
     public Individuo[] getGenotipo() {
@@ -38,10 +30,10 @@ public class Generacion {
         return genotipo[posicion];
     }
 
-    public void evaluar(List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
+    public void evaluar() {
         if (Decodificacion.debug) System.out.println("DECODIFICACION Y EVALUACIÓN:");
         for (Individuo individuo : genotipo) {
-            decodificacion.aplicar(individuo, profesores, asignaturas);
+            individuo.evaluar();
             if (Decodificacion.debug) System.out.println(individuo);
         }
 

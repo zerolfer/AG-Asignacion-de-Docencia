@@ -1,6 +1,6 @@
 package main.java.model;
 
-import main.java.CSVReader;
+import main.java.util.CSVReader;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,10 +10,28 @@ import java.util.List;
  */
 public class BD {
 
-    public static final List<Profesor> profesores = CSVReader.CsvLoadProfesores();
-    public static final List<GrupoAsignatura> asignaturas = CSVReader.CsvLoadAsignaturas();
+    private static List<Profesor> profesores;
+    private static List<GrupoAsignatura> asignaturas;
+
+    private static void inicializar(){
+        profesores = CSVReader.CsvLoadProfesores();
+        asignaturas = CSVReader.CsvLoadAsignaturas();
+    }
+
+    public static List<Profesor> getProfesores(){
+        if(profesores==null)
+            profesores = CSVReader.CsvLoadProfesores();
+        return profesores;
+    }
+
+    public static List<GrupoAsignatura> getAsignaturas(){
+        if(asignaturas==null)
+            asignaturas = CSVReader.CsvLoadAsignaturas();
+        return asignaturas;
+    }
 
     public static Profesor getProfesorById(int id) {
+        if(profesores==null&&asignaturas==null) inicializar();
         for (Profesor profe : profesores) {
             if (profe.getId() == id)
                 return profe;
@@ -22,6 +40,7 @@ public class BD {
     }
 
     public static GrupoAsignatura getGrupoById(int id) {
+        if(profesores==null&&asignaturas==null) inicializar();
         for (GrupoAsignatura grupo : asignaturas) {
             if (grupo.getId() == id)
                 return grupo;

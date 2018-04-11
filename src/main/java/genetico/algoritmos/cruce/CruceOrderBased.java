@@ -3,9 +3,6 @@ package main.java.genetico.algoritmos.cruce;
 import main.java.genetico.Individuo;
 import main.java.util.Util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Sergio Florez on 15/03/2018.
  */

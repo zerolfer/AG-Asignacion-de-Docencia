@@ -2,7 +2,6 @@ package main.java.genetico.algoritmos.seleccion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class SeleccionTorneo implements AlgoritmoSeleccion {
     @Override
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> result = new ArrayList<>();
-        for (int i = 0; i < generacion.size() / 2; i++) {
+        for (int i = 0; i < generacion.size() / 2 + 1; i++) {
             Individuo individuo1 = torneo(generacion);
             Individuo individuo2 = torneo(generacion);
             result.add(new Individuo[]{individuo1, individuo2});
@@ -33,8 +32,8 @@ public class SeleccionTorneo implements AlgoritmoSeleccion {
         Individuo elMejor = generacion.getRandomIndividual();
         for (int i = 1; i < torneoSize; i++) {
             Individuo candidato = generacion.getRandomIndividual();
-            if(candidato.compareTo(elMejor)>0) // si es mejor el candidato
-                elMejor=candidato;
+            if (candidato.compareTo(elMejor) > 0) // si es mejor el candidato
+                elMejor = candidato;
         }
         return elMejor;
     }

@@ -15,10 +15,10 @@ public class SeleccionRuleta implements AlgoritmoSeleccion {
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> result = new ArrayList<>();
         float total = sumaTotal(generacion);
-        for (int i = 0; i < generacion.size()/2; i++) {
-            Individuo individuo1 = seleccionar(generacion,total);
-            Individuo individuo2 = seleccionar(generacion,total);
-            result.add(new Individuo[]{individuo1,individuo2});
+        for (int i = 0; i < generacion.size() / 2 + 1; i++) {
+            Individuo individuo1 = seleccionar(generacion, total);
+            Individuo individuo2 = seleccionar(generacion, total);
+            result.add(new Individuo[]{individuo1, individuo2});
         }
         return result;
     }

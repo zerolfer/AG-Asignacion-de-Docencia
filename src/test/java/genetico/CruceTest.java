@@ -81,8 +81,8 @@ public class CruceTest {
             System.out.println("contador c: " + c);
             System.out.println("contador d: " + d);
 
-            Assert.assertEquals(7500, c, 130);
-            Assert.assertEquals(7500, d, 130);
+            Assert.assertEquals(7500, c, 200);
+            Assert.assertEquals(7500, d, 200);
         }
 
     }
