@@ -130,17 +130,17 @@ public class AlgoritmoGenetico {
 
     public String[] getAlgoritmos() {
         return new String[]{
-                unir( creacion   .getClass().getSimpleName().split("(?=\\p{Upper})")),
-                unir( seleccion  .getClass().getSimpleName().split("(?=\\p{Upper})")),
-                unir( cruce      .getClass().getSimpleName().split("(?=\\p{Upper})")),
-                unir( mutacion   .getClass().getSimpleName().split("(?=\\p{Upper})")),
-                unir( reemplazo  .getClass().getSimpleName().split("(?=\\p{Upper})"))
+                /*unir(*/ creacion   .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ seleccion  .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ cruce      .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ mutacion   .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ reemplazo  .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/
         };
     }
 
     private String unir(String[] split) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < split.length; i++) {
+        for (int i = 0; i < split.length; i++) {
             sb.append(split[i]);
             //if(i<split.length-1)
              //   sb.append(" ");
