@@ -65,7 +65,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
             i.setFitnessAsigProfesor(Integer.MAX_VALUE); //FIXME infinito
-            i.setFitnessNumHoras(Float.MAX_VALUE);
+            i.setFitnessNumHoras(Float.MIN_VALUE);
         } else {
             int max = 0;
             float min = profesores.get(0).getCapacidadInicial();

@@ -20,10 +20,10 @@ import java.util.List;
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
-    private static final int POPULATION_SIZE = 100;
-    public static final float PROBABILIDAD_CRUCE = 0.7f;
-    public static final float PROBABILIDAD_MUTACION = 0.5f;
-    private static final int NUMERO_GENERACIONES = 1000;
+    public static final Integer   POPULATION_SIZE       = 100;
+    public static final Float     PROBABILIDAD_CRUCE    = 0.7f;
+    public static final Float     PROBABILIDAD_MUTACION = 0.075f;
+    public static final Integer   NUMERO_GENERACIONES   = 1000;
 
     // INFORMACIÓN DEL PROBLEMA
     /*private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
@@ -36,7 +36,10 @@ public class AlgoritmoGenetico {
     AlgoritmoMutacion mutacion;
     AlgoritmoReemplazo reemplazo;
 
-    AlgoritmoDecodificacion decodificacion;
+   // AlgoritmoDecodificacion decodificacion;
+
+    private Individuo mejorIndividuo;
+    private boolean debug=false;
 
 
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
@@ -46,7 +49,7 @@ public class AlgoritmoGenetico {
         this.cruce = cruce;
         this.mutacion = mutacion;
         this.reemplazo = reemplazo;
-        this.decodificacion = new Decodificacion();
+        //this.decodificacion = new Decodificacion();
     }
 
     public AlgoritmoGenetico() {
@@ -95,7 +98,8 @@ public class AlgoritmoGenetico {
 
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
-        System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toStringFull());
+        mejorIndividuo=obtenerMejor(generacion);
+        if(debug)System.out.println("Mejor resultado: \n" + mejorIndividuo.toStringFull());
 //            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());
     }
 
@@ -124,5 +128,28 @@ public class AlgoritmoGenetico {
                 indi.evaluar();
     }
 
+    public String[] getAlgoritmos() {
+        return new String[]{
+                unir( creacion   .getClass().getSimpleName().split("(?=\\p{Upper})")),
+                unir( seleccion  .getClass().getSimpleName().split("(?=\\p{Upper})")),
+                unir( cruce      .getClass().getSimpleName().split("(?=\\p{Upper})")),
+                unir( mutacion   .getClass().getSimpleName().split("(?=\\p{Upper})")),
+                unir( reemplazo  .getClass().getSimpleName().split("(?=\\p{Upper})"))
+        };
+    }
 
+    private String unir(String[] split) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < split.length; i++) {
+            sb.append(split[i]);
+            //if(i<split.length-1)
+             //   sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+
+    public Individuo getMejorIndividuo() {
+        return mejorIndividuo;
+    }
 }

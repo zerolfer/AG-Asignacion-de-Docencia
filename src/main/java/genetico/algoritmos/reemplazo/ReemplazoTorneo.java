@@ -1,5 +1,6 @@
 package main.java.genetico.algoritmos.reemplazo;
 
+import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
 import main.java.util.Util;
@@ -25,15 +26,15 @@ public class ReemplazoTorneo implements AlgoritmoReemplazo {
     @Override
     public Generacion aplicar(List<Individuo[]> padres, List<Individuo[]> hijos) {
         Individuo[] union = agrupar(padres, hijos);
-        Individuo[] resultados = new Individuo[padres.size()];
-        for (int i = 0; i < padres.size(); i++) {
+        Individuo[] resultados = new Individuo[AlgoritmoGenetico.POPULATION_SIZE];
+        for (int i = 0; i < AlgoritmoGenetico.POPULATION_SIZE; i++) {
             resultados[i] = torneo(union);
         }
         return new Generacion(resultados);
     }
 
     private Individuo[] agrupar(List<Individuo[]> padres, List<Individuo[]> hijos) {
-        Individuo[] result = new Individuo[padres.size() + hijos.size()];
+        Individuo[] result = new Individuo[padres.size()*2 + hijos.size()*2];
         int i = 0;
         for (Individuo[] par : padres)
             for (Individuo padre : par)

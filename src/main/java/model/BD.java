@@ -10,28 +10,18 @@ import java.util.List;
  */
 public class BD {
 
-    private static List<Profesor> profesores;
-    private static List<GrupoAsignatura> asignaturas;
-
-    private static void inicializar(){
-        profesores = CSVReader.CsvLoadProfesores();
-        asignaturas = CSVReader.CsvLoadAsignaturas();
-    }
+    private static List<Profesor> profesores=CSVReader.CsvLoadProfesores();;
+    private static List<GrupoAsignatura> asignaturas=CSVReader.CsvLoadAsignaturas();
 
     public static List<Profesor> getProfesores(){
-        if(profesores==null)
-            profesores = CSVReader.CsvLoadProfesores();
         return profesores;
     }
 
     public static List<GrupoAsignatura> getAsignaturas(){
-        if(asignaturas==null)
-            asignaturas = CSVReader.CsvLoadAsignaturas();
         return asignaturas;
     }
 
     public static Profesor getProfesorById(int id) {
-        if(profesores==null&&asignaturas==null) inicializar();
         for (Profesor profe : profesores) {
             if (profe.getId() == id)
                 return profe;
@@ -40,7 +30,6 @@ public class BD {
     }
 
     public static GrupoAsignatura getGrupoById(int id) {
-        if(profesores==null&&asignaturas==null) inicializar();
         for (GrupoAsignatura grupo : asignaturas) {
             if (grupo.getId() == id)
                 return grupo;

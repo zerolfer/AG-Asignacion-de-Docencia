@@ -23,7 +23,6 @@ public class CSVReader {
 
     private static final boolean debug = false;
 
-    //TODO: ordenar la lista por orden de prioridades de asignación
     public static List<Profesor> CsvLoadProfesores() {
         BufferedReader br = null;
         String line = "";

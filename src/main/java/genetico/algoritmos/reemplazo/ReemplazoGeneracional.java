@@ -1,5 +1,6 @@
 package main.java.genetico.algoritmos.reemplazo;
 
+import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
 
@@ -15,7 +16,8 @@ public class ReemplazoGeneracional implements AlgoritmoReemplazo {
         List<Individuo> generacion = new ArrayList<>();
         for (Individuo[] par : hijos)
             for (Individuo hijo : par)
-                generacion.add(hijo);
+                if (generacion.size() < AlgoritmoGenetico.POPULATION_SIZE)
+                    generacion.add(hijo);
         return new Generacion(generacion.toArray(new Individuo[generacion.size()]));
     }
 }
