@@ -14,6 +14,7 @@ import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.model.BD;
+import main.java.util.RandomManager;
 
 import java.util.List;
 
@@ -39,8 +40,7 @@ public class AlgoritmoGenetico {
    // AlgoritmoDecodificacion decodificacion;
 
     private Individuo mejorIndividuo;
-    private boolean debug=false;
-
+    private boolean debug=true;
 
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
                              AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
@@ -57,12 +57,12 @@ public class AlgoritmoGenetico {
                 new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoGeneracional());
     }
 
-    public void iniciar(/*List<GrupoAsignatura> asignaturas, List<Profesor> profesores*/) {
-        /*this.asignaturas = asignaturas;
-        this.profesores = profesores;*/
+    public void iniciar(int seed) {
 //        ordenarAsignaturas();
+        RandomManager.seed=seed;
         ordenarProfesores();
         genetico();
+        RandomManager.destroyInstance();
     }
 
     private void ordenarProfesores() {

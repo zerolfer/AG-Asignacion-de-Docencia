@@ -1,7 +1,7 @@
 package main.java.genetico;
 
 import main.java.genetico.algoritmos.Decodificacion;
-import main.java.util.Util;
+import main.java.util.RandomManager;
 
 public class Generacion {
     Individuo[] genotipo;
@@ -42,6 +42,6 @@ public class Generacion {
     }
 
     public Individuo getRandomIndividual() {
-        return this.genotipo[Util.getRandomNumber(size())];
+        return this.genotipo[RandomManager.getInstance().getRandomNumber(size())];
     }
 }

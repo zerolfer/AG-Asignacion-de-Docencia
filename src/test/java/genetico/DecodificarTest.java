@@ -34,6 +34,8 @@ public class DecodificarTest {
                         32, 48, 36, 17, 16, 57, 26, 25, 13, 61, 77, 31, 22, 40});
         decoder.aplicar(individuo);
 
-        assertEquals("el fitnes no era el esperado", 15, individuo.getFitnessAsigProfesor());
+        assertEquals("el fitnes no era el esperado", 9, individuo.getFitnessAsigProfesor());
     }
+
+
 }

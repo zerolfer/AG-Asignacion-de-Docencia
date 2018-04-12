@@ -64,20 +64,35 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     private void asignarFitness(Individuo i, int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
-            i.setFitnessAsigProfesor(Integer.MAX_VALUE); //FIXME infinito
+            i.setFitnessAsigProfesor(Integer.MAX_VALUE);
             i.setFitnessNumHoras(Float.MIN_VALUE);
         } else {
             int max = 0;
             float min = profesores.get(0).getCapacidadInicial();
             for (Profesor profesor : profesores) {
-                if (profesor.getAsignadas().size() > max)
-                    max = profesor.getAsignadas().size();
+                int numAsignaturas = getNumAsignaturas(profesor);
+                if (numAsignaturas > max)
+                    max = numAsignaturas;
                 if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min)
                     min = profesor.getCapacidadInicial() - profesor.getCapacidad();
             }
             i.setFitnessAsigProfesor(max);
             i.setFitnessNumHoras(min);
         }
+    }
+
+    private int getNumAsignaturas(Profesor profesor) {
+        List<GrupoAsignatura> asignadas = profesor.getAsignadas();
+        Set<String> asignaturas = new HashSet<>();
+        int contador = 0;
+        for (GrupoAsignatura grupo : asignadas) {
+            String nombreAsignatura = grupo.getNombre();
+            if (!asignaturas.contains(nombreAsignatura)) {
+                asignaturas.add(nombreAsignatura);
+                contador++;
+            }
+        }
+        return contador;
     }
 
 

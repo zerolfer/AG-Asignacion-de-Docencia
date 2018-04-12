@@ -3,7 +3,7 @@ package main.java.genetico.algoritmos.creacion;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
 import main.java.model.GrupoAsignatura;
-import main.java.util.Util;
+import main.java.util.RandomManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class CreacionAleatoria implements AlgoritmoCreacion {
 
         // permutación de elementos == elementos no repetidos
         for (int i = 0; i < ultimo; i++) {
-            int n = Util.getRandomNumber(ultimo);
+            int n = RandomManager.getInstance().getRandomNumber(ultimo);
             int anterior = elementos[i];
             elementos[i] = elementos[n];
             elementos[n] = anterior;

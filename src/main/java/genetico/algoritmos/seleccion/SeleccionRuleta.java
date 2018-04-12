@@ -2,7 +2,7 @@ package main.java.genetico.algoritmos.seleccion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.util.Util;
+import main.java.util.RandomManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class SeleccionRuleta implements AlgoritmoSeleccion {
     }
 
     private Individuo seleccionar(Generacion generacion, float total) {
-        float random = Util.getFoatRandomNumber(0, total);
+        float random = RandomManager.getInstance().getFloatRandomNumber(0, total);
         float acumulado = 0;
         for (Individuo individuo : generacion.getGenotipo()) {
             acumulado += individuo.getFitnessAsigProfesor();

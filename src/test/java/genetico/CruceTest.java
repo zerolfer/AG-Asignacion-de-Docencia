@@ -3,6 +3,7 @@ package test.java.genetico;
 import main.java.genetico.Individuo;
 import main.java.genetico.algoritmos.cruce.CruceOrderBased;
 import main.java.genetico.algoritmos.cruce.CrucePositionBased;
+import main.java.util.RandomManager;
 import main.java.util.Util;
 import org.junit.Assert;
 import org.junit.Test;
@@ -66,8 +67,8 @@ public class CruceTest {
         for (int j = 0; j < 30; j++) {
             int c = 0, d = 0;
             for (int i = 0; i < 10000; i++) {
-                float ran = (float) Math.random();
-                float rand = Util.getRandomNumberInclusive(100);
+                float ran = RandomManager.getInstance().getTrialProbability();
+                float rand = RandomManager.getInstance().getRandomNumberInclusive(100);
                 rand = rand / 100;
                 if (ran <= 0.75)
                     d++;
@@ -185,5 +186,30 @@ public class CruceTest {
         for (Individuo hijo : hijos) {
             System.out.println(hijo);
         }
+    }
+
+    @Test
+    public void semillaTest(){
+        Individuo padre1 = Util.createIndividual(3, 1, 4, 0, 8, 7, 9, 6, 5, 2);
+        Individuo padre2 = Util.createIndividual(3, 8, 1, 2, 0, 6, 5, 7, 9, 4);
+
+        RandomManager.seed=1;
+        Individuo[] hijos1_1 = orderCrossover.aplicar(padre1,padre2);
+        RandomManager.destroyInstance();
+
+        RandomManager.seed=1;
+        Individuo[] hijos1_2 = orderCrossover.aplicar(padre1,padre2);
+        RandomManager.destroyInstance();
+
+        RandomManager.seed=5;
+        Individuo[] hijos2_1 = positionCrossover.aplicar(padre1,padre2);
+        RandomManager.destroyInstance();
+
+        RandomManager.seed=5;
+        Individuo[] hijos2_2 = positionCrossover.aplicar(padre1,padre2);
+
+
+        Assert.assertArrayEquals(hijos1_1,hijos1_2);
+        Assert.assertArrayEquals(hijos2_1,hijos2_2);
     }
 }

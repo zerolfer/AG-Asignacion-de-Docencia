@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class BD {
 
-    private static List<Profesor> profesores=CSVReader.CsvLoadProfesores();;
-    private static List<GrupoAsignatura> asignaturas=CSVReader.CsvLoadAsignaturas();
+    private static final List<Profesor> profesores=CSVReader.CsvLoadProfesores();;
+    private static final List<GrupoAsignatura> asignaturas=CSVReader.CsvLoadAsignaturas();
 
     public static List<Profesor> getProfesores(){
         return profesores;

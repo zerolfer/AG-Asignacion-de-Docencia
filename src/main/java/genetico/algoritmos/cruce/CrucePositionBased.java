@@ -1,6 +1,7 @@
 package main.java.genetico.algoritmos.cruce;
 
 import main.java.genetico.Individuo;
+import main.java.util.RandomManager;
 
 /**
  * Created by Sergio Florez on 25/03/2018.
@@ -16,7 +17,7 @@ public class CrucePositionBased extends AbstractCruce {
         int length = padre1.size();
         boolean[] mascara = new boolean[length];
         for (int i = 0; i < length; i++) {
-            if (Math.random() <= probabilidad)
+            if (RandomManager.getInstance().getTrialProbability() <= probabilidad)
                 mascara[i] = true;
         }
 
@@ -30,7 +31,7 @@ public class CrucePositionBased extends AbstractCruce {
         Individuo hijo1 = new Individuo(padre1.getCromosoma().clone());
         Individuo hijo2 = new Individuo(padre2.getCromosoma().clone());
 
-        if (Math.random() <= probabilidad) {
+        if (RandomManager.getInstance().getTrialProbability() <= probabilidad) {
 
             int idxHijo1 = 0;
             int idxHijo2 = 0;

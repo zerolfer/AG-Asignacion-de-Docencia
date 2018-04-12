@@ -3,7 +3,7 @@ package main.java.genetico.algoritmos.reemplazo;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.util.Util;
+import main.java.util.RandomManager;
 
 import java.util.List;
 
@@ -46,9 +46,9 @@ public class ReemplazoTorneo implements AlgoritmoReemplazo {
     }
 
     private Individuo torneo(Individuo[] union) {
-        Individuo elMejor = union[Util.getRandomNumber(union.length)];
+        Individuo elMejor = union[RandomManager.getInstance().getRandomNumber(union.length)];
         for (int i = 1; i < torneoSize; i++) {
-            Individuo candidato = union[Util.getRandomNumber(union.length)];
+            Individuo candidato = union[RandomManager.getInstance().getRandomNumber(union.length)];
             if (candidato.compareTo(elMejor) > 0) // si es mejor el candidato
                 elMejor = candidato;
         }

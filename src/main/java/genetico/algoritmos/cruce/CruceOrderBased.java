@@ -1,7 +1,7 @@
 package main.java.genetico.algoritmos.cruce;
 
 import main.java.genetico.Individuo;
-import main.java.util.Util;
+import main.java.util.RandomManager;
 
 /**
  * Created by Sergio Florez on 15/03/2018.
@@ -15,8 +15,8 @@ public class CruceOrderBased extends AbstractCruce {
     @Override
     public Individuo[] aplicar(Individuo padre1, Individuo padre2) {
         int length = padre1.size();
-        int desde = Util.getRandomNumber(length);
-        int hasta = Util.getRandomNumber(desde, length);
+        int desde = RandomManager.getInstance().getRandomNumber(length);
+        int hasta = RandomManager.getInstance().getRandomNumber(desde, length);
 
         return aplicar(padre1, padre2, desde, hasta);
     }
@@ -29,7 +29,7 @@ public class CruceOrderBased extends AbstractCruce {
         Individuo hijo1 = new Individuo(padre1.getCromosoma().clone());
         Individuo hijo2 = new Individuo(padre2.getCromosoma().clone());
 
-        if (Math.random() <= probabilidad) {
+        if (RandomManager.getInstance().getTrialProbability() <= probabilidad) {
 
             int idxHijo1 = 0;
             int idxHijo2 = 0;

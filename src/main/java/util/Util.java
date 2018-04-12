@@ -12,31 +12,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
 
-    /**
-     * Desde 0 hasta "hasta" INCLUSIVE
-     *
-     * @param hasta
-     *
-     * @return
-     */
-    public static int getRandomNumberInclusive(int hasta) {
-        return new Random().nextInt(hasta + 1);
-    }
-
-    /**
-     * Exclusivo, hasta <b>hasta</b>-1
-     *
-     * @param hasta
-     * @return
-     */
-    public static int getRandomNumber(int hasta) {
-        return new Random().nextInt(hasta);
-    }
-
-    public static int getRandomNumber(int desde, int hasta) {
-        return new Random().nextInt(hasta-desde)+desde;
-    }
-
     public static String arrayToString(List<?> enume, String separador) {
         StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < enume.size(); i++) {
@@ -96,8 +71,11 @@ public class Util {
         return new Individuo(valores);
     }
 
-    public static float getFoatRandomNumber(int desde, float hasta) {
-        return (float) ThreadLocalRandom.current().nextDouble(desde, hasta);
+    public static void swap(int[] cromosoma, int pos1, int pos2) {
+        int valor = cromosoma[pos1];
+        cromosoma[pos1] = cromosoma[pos2];
+        cromosoma[pos2] = valor;
+
 
     }
 }
