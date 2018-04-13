@@ -1,15 +1,17 @@
-package main.java.util;
+package main.java.util.writer;
+
+import com.sun.istack.internal.NotNull;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class CSVWriter {
+public abstract class AbstractCSVWriter implements CSVWriter {
     public final char SPLITTER = ';';
     BufferedWriter br;
 
-    public CSVWriter(String path) {
+    public AbstractCSVWriter(String path) {
         try {
             br = new BufferedWriter(new FileWriter(path, true));
         } catch (IOException e) {
@@ -18,37 +20,37 @@ public class CSVWriter {
         }
     }
 
-    public void CsvWriteDataCollection(List<String>... dataColection) {
+    public void csvWriteDataCollection(List<String>... dataColection) {
         for (List<String> data : dataColection) {
             for (String d : data) {
-                CsvWriteData(d);
+                csvWriteData(d);
             }
         }
-        CsvWriteNewLine();
-        CsvWriteFlush();
+        csvWriteNewLine();
+        csvWriteFlush();
 
     }
 
-    public void CsvWriteDataCollection(List<String> data) {
+    public void csvWriteDataCollection(List<String> data) {
         for (String d : data) {
-            CsvWriteData(d);
+            csvWriteData(d);
         }
-        CsvWriteNewLine();
-        CsvWriteFlush();
+        csvWriteNewLine();
+        csvWriteFlush();
 
     }
 
-    private void CsvWriteData(String data) {
+    public void csvWriteData(String data) {
         try {
             br.append(data.toString());
             br.append(SPLITTER);
-            br.flush(); //TODO delete me
+            //  br.flush(); //TODO for debug
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void CsvWriteNewLine() {
+    public void csvWriteNewLine() {
         try {
             br.newLine();
         } catch (IOException e) {
@@ -56,7 +58,7 @@ public class CSVWriter {
         }
     }
 
-    private void CsvWriteFlush() {
+    public void csvWriteFlush() {
         try {
             br.flush();
         } catch (IOException e) {
@@ -64,7 +66,7 @@ public class CSVWriter {
         }
     }
 
-    private void close() {
+    public void close() {
         try {
             br.newLine();
             br.close();

@@ -34,7 +34,7 @@ public class ReemplazoTorneo implements AlgoritmoReemplazo {
     }
 
     private Individuo[] agrupar(List<Individuo[]> padres, List<Individuo[]> hijos) {
-        Individuo[] result = new Individuo[padres.size()*2 + hijos.size()*2];
+        Individuo[] result = new Individuo[padres.size() * 2 + hijos.size() * 2];
         int i = 0;
         for (Individuo[] par : padres)
             for (Individuo padre : par)

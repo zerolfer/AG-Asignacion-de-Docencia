@@ -8,5 +8,6 @@ import main.java.genetico.Individuo;
  */
 public interface AlgoritmoCreacion {
     Generacion createPopulation(final int populationSize);
+
     Individuo generateIndividual();
 }

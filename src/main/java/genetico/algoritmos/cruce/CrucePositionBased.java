@@ -36,7 +36,7 @@ public class CrucePositionBased extends AbstractCruce {
             int idxHijo1 = 0;
             int idxHijo2 = 0;
 
-            for (int idxPadres = 0; idxPadres < length ; idxPadres++) {
+            for (int idxPadres = 0; idxPadres < length; idxPadres++) {
 
                 while (idxHijo1 < length && posiciones[idxHijo1])
                     idxHijo1++;

@@ -175,11 +175,11 @@ public class CruceTest {
         Individuo padre1 = Util.createIndividual(2, 4, 1, 5, 7, 6, 0, 3);
         Individuo padre2 = Util.createIndividual(4, 1, 6, 2, 3, 5, 7, 0);
         Individuo[] hijosEsperados = new Individuo[]{
-                Util.createIndividual(2,4,1,6,7,5,0,3),
-                Util.createIndividual(4,1,2,5,3,7,6,0)
+                Util.createIndividual(2, 4, 1, 6, 7, 5, 0, 3),
+                Util.createIndividual(4, 1, 2, 5, 3, 7, 6, 0)
         };
 
-        Individuo[] hijos = positionCrossover.aplicar(padre1, padre2, new boolean[]{true,true,false,false,true,false,false,true});
+        Individuo[] hijos = positionCrossover.aplicar(padre1, padre2, new boolean[]{true, true, false, false, true, false, false, true});
         assertArrayEquals(hijosEsperados, hijos);
 
         System.out.println("ORDER-BASED CROSSOVER - ALGORITMO DE CRUCE - TEST 1 - RESULTADOS:");
@@ -189,27 +189,27 @@ public class CruceTest {
     }
 
     @Test
-    public void semillaTest(){
+    public void semillaTest() {
         Individuo padre1 = Util.createIndividual(3, 1, 4, 0, 8, 7, 9, 6, 5, 2);
         Individuo padre2 = Util.createIndividual(3, 8, 1, 2, 0, 6, 5, 7, 9, 4);
 
-        RandomManager.seed=1;
-        Individuo[] hijos1_1 = orderCrossover.aplicar(padre1,padre2);
+        RandomManager.seed = 1;
+        Individuo[] hijos1_1 = orderCrossover.aplicar(padre1, padre2);
         RandomManager.destroyInstance();
 
-        RandomManager.seed=1;
-        Individuo[] hijos1_2 = orderCrossover.aplicar(padre1,padre2);
+        RandomManager.seed = 1;
+        Individuo[] hijos1_2 = orderCrossover.aplicar(padre1, padre2);
         RandomManager.destroyInstance();
 
-        RandomManager.seed=5;
-        Individuo[] hijos2_1 = positionCrossover.aplicar(padre1,padre2);
+        RandomManager.seed = 5;
+        Individuo[] hijos2_1 = positionCrossover.aplicar(padre1, padre2);
         RandomManager.destroyInstance();
 
-        RandomManager.seed=5;
-        Individuo[] hijos2_2 = positionCrossover.aplicar(padre1,padre2);
+        RandomManager.seed = 5;
+        Individuo[] hijos2_2 = positionCrossover.aplicar(padre1, padre2);
 
 
-        Assert.assertArrayEquals(hijos1_1,hijos1_2);
-        Assert.assertArrayEquals(hijos2_1,hijos2_2);
+        Assert.assertArrayEquals(hijos1_1, hijos1_2);
+        Assert.assertArrayEquals(hijos2_1, hijos2_2);
     }
 }

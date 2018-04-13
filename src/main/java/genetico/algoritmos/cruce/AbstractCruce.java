@@ -10,8 +10,8 @@ import java.util.List;
  */
 public abstract class AbstractCruce implements AlgoritmoCruce {
 
-    protected float probabilidad = 1f;
     protected static final boolean debug = false;
+    protected float probabilidad = 1f;
 
     public AbstractCruce(float probabilidad) {
         this.probabilidad = probabilidad;

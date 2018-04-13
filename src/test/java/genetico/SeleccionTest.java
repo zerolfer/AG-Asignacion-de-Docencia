@@ -1,12 +1,10 @@
 package test.java.genetico;
 
-import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
-import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
+import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
+import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
-import main.java.model.GrupoAsignatura;
-import main.java.model.Profesor;
 import main.java.util.Util;
 import org.junit.Test;
 
@@ -44,7 +42,7 @@ public class SeleccionTest {
     }
 
     public void parejasAleatorias(int test, int resultado, Generacion generacion) {
-        selector=new SeleccionAleatoria();
+        selector = new SeleccionAleatoria();
         List<Individuo[]> res = selector.aplicar(generacion);
 
         System.out.println("PAREJAS ALEATORIAS - ALGORITMO DE SELECCION - TEST " + test + " - RESULTADOS:");
@@ -57,7 +55,7 @@ public class SeleccionTest {
     }
 
     public void torneo(int test, int resultado, Generacion generacion) {
-        selector=new SeleccionTorneo(generacion.size());
+        selector = new SeleccionTorneo(generacion.size());
         List<Individuo[]> res = selector.aplicar(generacion);
 
         System.out.println("TORNEO - ALGORITMO DE SELECCION - TEST " + test + " - RESULTADOS:");

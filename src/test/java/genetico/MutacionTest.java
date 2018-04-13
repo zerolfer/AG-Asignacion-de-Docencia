@@ -28,18 +28,30 @@ public class MutacionTest {
         System.out.println("Inicial: " + individuo);
 
         Map<Individuo, Integer> posibilidades = new HashMap<>();
-        posibilidades.put(Util.createIndividual(1, 4, 3, 2), 0);    posibilidades.put(Util.createIndividual(3, 4, 1, 2), 0);
-        posibilidades.put(Util.createIndividual(3, 1, 4, 2), 0);    posibilidades.put(Util.createIndividual(2, 1, 4, 3), 0);
-        posibilidades.put(Util.createIndividual(2, 3, 4, 1), 0);    posibilidades.put(Util.createIndividual(3, 2, 4, 1), 0);
-        posibilidades.put(Util.createIndividual(2, 4, 1, 3), 0);    posibilidades.put(Util.createIndividual(2, 4, 3, 1), 0);
-        posibilidades.put(Util.createIndividual(1, 2, 3, 4), 0);    posibilidades.put(Util.createIndividual(4, 1, 3, 2), 0);
-        posibilidades.put(Util.createIndividual(1, 3, 4, 2), 0);    posibilidades.put(Util.createIndividual(2, 1, 3, 4), 0);
-        posibilidades.put(Util.createIndividual(3, 4, 2, 1), 0);    posibilidades.put(Util.createIndividual(3, 2, 1, 4), 0);
-        posibilidades.put(Util.createIndividual(3, 1, 2, 4), 0);    posibilidades.put(Util.createIndividual(4, 1, 2, 3), 0);
-        posibilidades.put(Util.createIndividual(4, 2, 3, 1), 0);    posibilidades.put(Util.createIndividual(1, 3, 2, 4), 0);
-        posibilidades.put(Util.createIndividual(1, 2, 4, 3), 0);    posibilidades.put(Util.createIndividual(4, 3, 1, 2), 0);
-        posibilidades.put(Util.createIndividual(4, 3, 2, 1), 0);    posibilidades.put(Util.createIndividual(4, 2, 1, 3), 0);
-        posibilidades.put(Util.createIndividual(2, 3, 1, 4), 0);    posibilidades.put(Util.createIndividual(1, 4, 2, 3), 0);
+        posibilidades.put(Util.createIndividual(1, 4, 3, 2), 0);
+        posibilidades.put(Util.createIndividual(3, 4, 1, 2), 0);
+        posibilidades.put(Util.createIndividual(3, 1, 4, 2), 0);
+        posibilidades.put(Util.createIndividual(2, 1, 4, 3), 0);
+        posibilidades.put(Util.createIndividual(2, 3, 4, 1), 0);
+        posibilidades.put(Util.createIndividual(3, 2, 4, 1), 0);
+        posibilidades.put(Util.createIndividual(2, 4, 1, 3), 0);
+        posibilidades.put(Util.createIndividual(2, 4, 3, 1), 0);
+        posibilidades.put(Util.createIndividual(1, 2, 3, 4), 0);
+        posibilidades.put(Util.createIndividual(4, 1, 3, 2), 0);
+        posibilidades.put(Util.createIndividual(1, 3, 4, 2), 0);
+        posibilidades.put(Util.createIndividual(2, 1, 3, 4), 0);
+        posibilidades.put(Util.createIndividual(3, 4, 2, 1), 0);
+        posibilidades.put(Util.createIndividual(3, 2, 1, 4), 0);
+        posibilidades.put(Util.createIndividual(3, 1, 2, 4), 0);
+        posibilidades.put(Util.createIndividual(4, 1, 2, 3), 0);
+        posibilidades.put(Util.createIndividual(4, 2, 3, 1), 0);
+        posibilidades.put(Util.createIndividual(1, 3, 2, 4), 0);
+        posibilidades.put(Util.createIndividual(1, 2, 4, 3), 0);
+        posibilidades.put(Util.createIndividual(4, 3, 1, 2), 0);
+        posibilidades.put(Util.createIndividual(4, 3, 2, 1), 0);
+        posibilidades.put(Util.createIndividual(4, 2, 1, 3), 0);
+        posibilidades.put(Util.createIndividual(2, 3, 1, 4), 0);
+        posibilidades.put(Util.createIndividual(1, 4, 2, 3), 0);
 
         assertFalse(individuo.checkHayRepetidos());
 

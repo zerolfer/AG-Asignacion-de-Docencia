@@ -15,9 +15,8 @@ import java.util.Set;
  */
 public class Individuo implements Comparable<Individuo> {
 
-    private int[] cromosoma; // cada elemento representa el id de una asignatura
     AlgoritmoDecodificacion decodificacion;
-
+    private int[] cromosoma; // cada elemento representa el id de una asignatura
     // los valores de fitness
     private int fitnessAsigProfesor;
     private float fitnessNumHoras;
@@ -42,12 +41,12 @@ public class Individuo implements Comparable<Individuo> {
         return fitnessAsigProfesor;
     }
 
-    public float getFitnessNumHoras() {
-        return fitnessNumHoras;
-    }
-
     public void setFitnessAsigProfesor(int fitnessAsigProfesor) {
         this.fitnessAsigProfesor = fitnessAsigProfesor;
+    }
+
+    public float getFitnessNumHoras() {
+        return fitnessNumHoras;
     }
 
     public void setFitnessNumHoras(float fitnessNumHoras) {
@@ -82,12 +81,12 @@ public class Individuo implements Comparable<Individuo> {
         return this.cromosoma.length;
     }
 
-    public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
-        this.fenotipo = fenotipo;
-    }
-
     public Map<Integer, Set<Integer>> getFenotipo() {
         return fenotipo;
+    }
+
+    public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
+        this.fenotipo = fenotipo;
     }
 
     public boolean contains(int integer) {

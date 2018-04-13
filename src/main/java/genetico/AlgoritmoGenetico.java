@@ -1,8 +1,6 @@
 package main.java.genetico;
 
 
-import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
-import main.java.genetico.algoritmos.Decodificacion;
 import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
 import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
 import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
@@ -15,20 +13,17 @@ import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.model.BD;
 import main.java.util.RandomManager;
+import main.java.util.Stopwatch;
 
 import java.util.List;
 
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
-    public static final Integer   POPULATION_SIZE       = 100;
-    public static final Float     PROBABILIDAD_CRUCE    = 0.7f;
-    public static final Float     PROBABILIDAD_MUTACION = 0.075f;
-    public static final Integer   NUMERO_GENERACIONES   = 1000;
-
-    // INFORMACIÓN DEL PROBLEMA
-    /*private static List<GrupoAsignatura> asignaturas = new ArrayList<>();
-    private static List<Profesor> profesores = new ArrayList<>();*/
+    public static final Integer POPULATION_SIZE = 100;
+    public static final Float PROBABILIDAD_CRUCE = 0.7f;
+    public static final Float PROBABILIDAD_MUTACION = 0.075f;
+    public static final Integer NUMERO_GENERACIONES = 1000;
 
     // ALGORITMOS
     AlgoritmoCreacion creacion;
@@ -37,10 +32,11 @@ public class AlgoritmoGenetico {
     AlgoritmoMutacion mutacion;
     AlgoritmoReemplazo reemplazo;
 
-   // AlgoritmoDecodificacion decodificacion;
-
+    // ESTRUCTURAS AUXILIARES
     private Individuo mejorIndividuo;
-    private boolean debug=true;
+    private boolean debug = true;
+    private Stopwatch timer = new Stopwatch();
+
 
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
                              AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
@@ -59,7 +55,7 @@ public class AlgoritmoGenetico {
 
     public void iniciar(int seed) {
 //        ordenarAsignaturas();
-        RandomManager.seed=seed;
+        RandomManager.seed = seed;
         ordenarProfesores();
         genetico();
         RandomManager.destroyInstance();
@@ -78,6 +74,7 @@ public class AlgoritmoGenetico {
 
         Generacion generacion = creacion.createPopulation(POPULATION_SIZE);
         int numGeneraciones = 1;
+        timer.start();
 
         do {
 
@@ -92,14 +89,16 @@ public class AlgoritmoGenetico {
 
             int sizeAnterior = generacion.size();
             generacion = reemplazo.aplicar(padres, hijos);
+
+            timer.newLap(numGeneraciones);
             numGeneraciones++;
 
             assert sizeAnterior == generacion.size();
 
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
-        mejorIndividuo=obtenerMejor(generacion);
-        if(debug)System.out.println("Mejor resultado: \n" + mejorIndividuo.toStringFull());
+        mejorIndividuo = obtenerMejor(generacion);
+        if (debug) System.out.println("Mejor resultado: \n" + mejorIndividuo.toStringFull());
 //            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());
     }
 
@@ -130,11 +129,11 @@ public class AlgoritmoGenetico {
 
     public String[] getAlgoritmos() {
         return new String[]{
-                /*unir(*/ creacion   .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
-                /*unir(*/ seleccion  .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
-                /*unir(*/ cruce      .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
-                /*unir(*/ mutacion   .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
-                /*unir(*/ reemplazo  .getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/
+                /*unir(*/ creacion.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ seleccion.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ cruce.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ mutacion.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
+                /*unir(*/ reemplazo.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/
         };
     }
 
@@ -143,7 +142,7 @@ public class AlgoritmoGenetico {
         for (int i = 0; i < split.length; i++) {
             sb.append(split[i]);
             //if(i<split.length-1)
-             //   sb.append(" ");
+            //   sb.append(" ");
         }
         return sb.toString();
     }
@@ -151,5 +150,9 @@ public class AlgoritmoGenetico {
 
     public Individuo getMejorIndividuo() {
         return mejorIndividuo;
+    }
+
+    public Stopwatch getTimer() {
+        return timer;
     }
 }

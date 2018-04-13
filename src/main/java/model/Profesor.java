@@ -23,6 +23,15 @@ public class Profesor {
         inicializar(nombre, capacidad, bilingue, area);
     }
 
+    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area) {
+        this.id = contador++;
+        inicializar(nombre, capacidad, bilingue, area);
+    }
+
+    public static Integer getUltimoId() {
+        return contador;
+    }
+
     private void inicializar(String nombre, Float capacidad, Boolean bilingue, String area) {
         this.nombre = nombre;
         this.capacidad = capacidad;
@@ -31,16 +40,6 @@ public class Profesor {
         this.area = area;
 
         asignadas = new ArrayList<>();
-    }
-
-
-    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area) {
-        this.id = contador++;
-        inicializar(nombre, capacidad, bilingue, area);
-    }
-
-    public static Integer getUltimoId() {
-        return contador;
     }
 
     public String getNombre() {
@@ -55,12 +54,12 @@ public class Profesor {
         return capacidad;
     }
 
-    public Float getCapacidadInicial() {
-        return capacidadInicial;
-    }
-
     public void setCapacidad(Float capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public Float getCapacidadInicial() {
+        return capacidadInicial;
     }
 
     public Boolean getBilingue() {

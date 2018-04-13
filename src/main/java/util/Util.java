@@ -6,8 +6,6 @@ import main.java.model.Profesor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Util {
@@ -42,19 +40,19 @@ public class Util {
 
     public static List<Profesor> copyOfProfesor(List<Profesor> ts) {
         List<Profesor> res = new ArrayList<>();
-        for (int i=0;i<ts.size();i++) {
-            res.add(new Profesor(ts.get(i).getId(), ts.get(i).getNombre(),ts.get(i).getCapacidadInicial(),
-                    ts.get(i).getBilingue(),ts.get(i).getArea()));
+        for (int i = 0; i < ts.size(); i++) {
+            res.add(new Profesor(ts.get(i).getId(), ts.get(i).getNombre(), ts.get(i).getCapacidadInicial(),
+                    ts.get(i).getBilingue(), ts.get(i).getArea()));
         }
         return res;
     }
 
     public static List<GrupoAsignatura> copyOfGrupo(List<GrupoAsignatura> ts) {
         List<GrupoAsignatura> res = new ArrayList<>();
-        for (int i=0;i<ts.size();i++) {
+        for (int i = 0; i < ts.size(); i++) {
             GrupoAsignatura t = ts.get(i);
-            res.add(new GrupoAsignatura(t.getId(), t.getNombre(),t.getGrupo(),t.getSemestre(),t.getHorario(),
-                    t.getEscuela(),t.getCiudad(),t.getHoras(),t.getBilingue(),t.getAreas()));
+            res.add(new GrupoAsignatura(t.getId(), t.getNombre(), t.getGrupo(), t.getSemestre(), t.getHorario(),
+                    t.getEscuela(), t.getCiudad(), t.getHoras(), t.getBilingue(), t.getAreas()));
         }
         return res;
     }
@@ -67,7 +65,7 @@ public class Util {
         return clases.toArray(new GrupoAsignatura[clases.size()]);
     }
 
-    public static Individuo createIndividual(int... valores){
+    public static Individuo createIndividual(int... valores) {
         return new Individuo(valores);
     }
 

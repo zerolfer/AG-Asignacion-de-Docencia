@@ -20,7 +20,7 @@ public class GrupoAsignatura {
 
     public GrupoAsignatura(Integer id, String nombre, String grupo, int semestre, Horario horario,
                            String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
-        this.id=id;
+        this.id = id;
         inicializar(nombre, grupo, semestre, horario,
                 escuela, ciudad, horas, bilingue, areas);
     }
@@ -31,6 +31,10 @@ public class GrupoAsignatura {
         this.id = contador++;
         inicializar(nombre, grupo, semestre, horario,
                 escuela, ciudad, horas, bilingue, areas);
+    }
+
+    public static Integer getUltimoId() {
+        return contador;
     }
 
     private void inicializar(String nombre, String grupo, int semestre, Horario horario,
@@ -44,10 +48,6 @@ public class GrupoAsignatura {
         this.horas = horas;
         this.bilingue = bilingue;
         this.areas = areas;
-    }
-
-    public static Integer getUltimoId() {
-        return contador;
     }
 
     public Integer getId() {
@@ -93,16 +93,16 @@ public class GrupoAsignatura {
     @Override
     public String toString() {
         return "GrupoAsignatura{ " +
-                "id=" + id +','+
-                " grupo='" + grupo + '\'' +','+
-                " nombre='" + nombre + '\'' +','+
-                " semestre=" + semestre +','+
-                " horario=" + horario +'\n'+
-                "\tescuela='" + escuela + '\'' +','+
-                " ciudad='" + ciudad + '\'' +','+
-                " horas=" + horas +','+
-                " bilingue=" + bilingue +','+
-                " areas=" + Arrays.toString(areas) +'\n'+
+                "id=" + id + ',' +
+                " grupo='" + grupo + '\'' + ',' +
+                " nombre='" + nombre + '\'' + ',' +
+                " semestre=" + semestre + ',' +
+                " horario=" + horario + '\n' +
+                "\tescuela='" + escuela + '\'' + ',' +
+                " ciudad='" + ciudad + '\'' + ',' +
+                " horas=" + horas + ',' +
+                " bilingue=" + bilingue + ',' +
+                " areas=" + Arrays.toString(areas) + '\n' +
                 '}';
     }
 }

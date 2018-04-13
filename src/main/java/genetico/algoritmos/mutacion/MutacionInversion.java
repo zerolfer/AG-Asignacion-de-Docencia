@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class MutacionInversion implements AlgoritmoMutacion {
 
-    private final float probabilidad;
     private static final boolean debug = false;
+    private final float probabilidad;
 
     public MutacionInversion(final float probabilidad) {
         this.probabilidad = probabilidad;

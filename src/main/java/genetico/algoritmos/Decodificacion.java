@@ -14,10 +14,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class Decodificacion implements AlgoritmoDecodificacion {
 
+    public static boolean debug = false;
     List<Profesor> profesores;
     List<GrupoAsignatura> asignaturas;
-
-    public static boolean debug = false;
 
     @Override
     public void aplicar(Individuo individuo) {

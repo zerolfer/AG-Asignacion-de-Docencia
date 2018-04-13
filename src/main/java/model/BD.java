@@ -10,14 +10,35 @@ import java.util.List;
  */
 public class BD {
 
-    private static final List<Profesor> profesores=CSVReader.CsvLoadProfesores();;
-    private static final List<GrupoAsignatura> asignaturas=CSVReader.CsvLoadAsignaturas();
+    public static final Comparator<Profesor> comparatorProfesores = new Comparator<Profesor>() {
+        @Override
+        public int compare(Profesor o1, Profesor o2) {
+            if (o1.getBilingue() == true && o2.getBilingue() == false)
+                return 1;
+            if (o1.getBilingue() == false && o2.getBilingue() == true)
+                return -1;
+            else return 0;
+        }
+    };
+    ;
+    public static final Comparator<GrupoAsignatura> comparatorAsignaturas = new Comparator<GrupoAsignatura>() {
+        @Override
+        public int compare(GrupoAsignatura o1, GrupoAsignatura o2) {
+            if (o1.getBilingue() == true && o2.getBilingue() == false)
+                return -1;
+            if (o1.getBilingue() == false && o2.getBilingue() == true)
+                return 1;
+            else return 0;
+        }
+    };
+    private static final List<Profesor> profesores = CSVReader.CsvLoadProfesores();
+    private static final List<GrupoAsignatura> asignaturas = CSVReader.CsvLoadAsignaturas();
 
-    public static List<Profesor> getProfesores(){
+    public static List<Profesor> getProfesores() {
         return profesores;
     }
 
-    public static List<GrupoAsignatura> getAsignaturas(){
+    public static List<GrupoAsignatura> getAsignaturas() {
         return asignaturas;
     }
 
@@ -36,28 +57,6 @@ public class BD {
         }
         return null;
     }
-
-    public static final Comparator<Profesor> comparatorProfesores = new Comparator<Profesor>() {
-        @Override
-        public int compare(Profesor o1, Profesor o2) {
-            if (o1.getBilingue() == true && o2.getBilingue() == false)
-                return 1;
-            if (o1.getBilingue() == false && o2.getBilingue() == true)
-                return -1;
-            else return 0;
-        }
-    };
-
-    public static final Comparator<GrupoAsignatura> comparatorAsignaturas = new Comparator<GrupoAsignatura>() {
-        @Override
-        public int compare(GrupoAsignatura o1, GrupoAsignatura o2) {
-            if (o1.getBilingue() == true && o2.getBilingue() == false)
-                return -1;
-            if (o1.getBilingue() == false && o2.getBilingue() == true)
-                return 1;
-            else return 0;
-        }
-    };
 
 
 }
