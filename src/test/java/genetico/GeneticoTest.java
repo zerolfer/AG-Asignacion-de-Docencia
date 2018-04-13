@@ -139,13 +139,13 @@ public class GeneticoTest {
     @Test
     public void semillaTest2() {
         AlgoritmoGenetico g = new AlgoritmoGenetico();
-        g.iniciar(1);
+        g.iniciar("semillaTest2 - 1", 1);
         String r1 = g.getMejorIndividuo().toStringFull();
-        g.iniciar(1);
+        g.iniciar("semillaTest2 - 2", 1);
         String r2 = g.getMejorIndividuo().toStringFull();
 
         AlgoritmoGenetico g2 = new AlgoritmoGenetico();
-        g2.iniciar(1);
+        g2.iniciar("semillaTest2 - 3", 1);
         String r3 = g.getMejorIndividuo().toStringFull();
 
 

@@ -14,6 +14,8 @@ import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.model.BD;
 import main.java.util.RandomManager;
 import main.java.util.Stopwatch;
+import main.java.util.writer.CSVWriter;
+import main.java.util.writer.DatosDetalladosEjecuciones;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class AlgoritmoGenetico {
     private Individuo mejorIndividuo;
     private boolean debug = true;
     private Stopwatch timer = new Stopwatch();
-
+    private boolean printed = false;
 
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
                              AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
@@ -53,11 +55,11 @@ public class AlgoritmoGenetico {
                 new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoGeneracional());
     }
 
-    public void iniciar(int seed) {
+    public void iniciar(String ejecucion, int seed) {
 //        ordenarAsignaturas();
         RandomManager.seed = seed;
         ordenarProfesores();
-        genetico();
+        genetico(ejecucion);
         RandomManager.destroyInstance();
     }
 
@@ -70,7 +72,13 @@ public class AlgoritmoGenetico {
     }
 
 
-    private void genetico() {
+    private void genetico(String ejecucion) {
+
+        CSVWriter printer2 = null;
+        if (!printed)
+            printer2 = new DatosDetalladosEjecuciones(
+                    "files/ejecuciones/DatosDetalladosEjecucion" + ejecucion + ".csv");
+
 
         Generacion generacion = creacion.createPopulation(POPULATION_SIZE);
         int numGeneraciones = 1;
@@ -90,13 +98,24 @@ public class AlgoritmoGenetico {
             int sizeAnterior = generacion.size();
             generacion = reemplazo.aplicar(padres, hijos);
 
-            timer.newLap(numGeneraciones);
-            numGeneraciones++;
-
             assert sizeAnterior == generacion.size();
 
+            timer.newLap(numGeneraciones);
+            if (!printed) {
+                Individuo mejor = obtenerMejor(generacion);
+                float[] fitnessMedio = generacion.obtenerFitnessMedio();
+                printer2.csvWriteData(this, //TODO: refartor this to the printer class
+                        Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
+                        Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
+                        Integer.toString((int) fitnessMedio[0]), Float.toString(fitnessMedio[1]));
+            }
+            numGeneraciones++;
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
+        if (!printed) {
+            printer2.close();
+            printed = true;
+        }
         mejorIndividuo = obtenerMejor(generacion);
         if (debug) System.out.println("Mejor resultado: \n" + mejorIndividuo.toStringFull());
 //            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());

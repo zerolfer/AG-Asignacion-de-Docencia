@@ -1,23 +1,29 @@
 package main.java.util.writer;
 
-import com.sun.istack.internal.NotNull;
+import main.java.genetico.AlgoritmoGenetico;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractCSVWriter implements CSVWriter {
     public final char SPLITTER = ';';
     BufferedWriter br;
 
-    public AbstractCSVWriter(String path) {
+    public AbstractCSVWriter(String path, boolean append) {
         try {
-            br = new BufferedWriter(new FileWriter(path, true));
+            br = new BufferedWriter(new FileWriter(path, append));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
+
+    }
+
+    public AbstractCSVWriter(String path) {
+        this(path, true);
     }
 
     public void csvWriteDataCollection(List<String>... dataColection) {
@@ -37,8 +43,12 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         }
         csvWriteNewLine();
         csvWriteFlush();
-
     }
+
+    public void csvWriteData(AlgoritmoGenetico genetico, String... otros) {
+        csvWriteData(genetico, Arrays.asList(otros));
+    }
+
 
     public void csvWriteData(String data) {
         try {

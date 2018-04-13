@@ -12,6 +12,7 @@ import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
 import main.java.util.writer.CSVWriter;
+import main.java.util.writer.DatosDetalladosEjecuciones;
 import main.java.util.writer.DatosGlobalesEjecuciones;
 
 import java.util.ArrayList;
@@ -27,9 +28,7 @@ public class Main {
     private static CSVWriter printer1 =
             new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
 
-    /*   private static CSVWriter printer2 =
-               new DatosDetalladosEjecuciones("files/DatosDetalladosEjecuciones.csv");
-       private static CSVWriter printer3 =
+     /*    private static CSVWriter printer3 =
                new FenotipoEjecuciones("files/FenotipoEjecuciones.csv");
    */
     public static void main(String args[]) {
@@ -83,6 +82,7 @@ public class Main {
                 new CruceOrderBased(PROBABILIDAD_CRUCE),
                 new MutacionInversion(PROBABILIDAD_MUTACION),
                 new ReemplazoGeneracional());
+
         AlgoritmoGenetico genetico4_2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionTorneo(4),
@@ -90,7 +90,6 @@ public class Main {
                 new MutacionInversion(PROBABILIDAD_MUTACION),
                 new ReemplazoGeneracional());
 
-        lanzarAlgoritmo("2_1", genetico2_1);
         lanzarAlgoritmo("2_1", genetico2_1);
         lanzarAlgoritmo("1_1", genetico1_1);
         lanzarAlgoritmo("3_1", genetico3_1);
@@ -101,8 +100,7 @@ public class Main {
         lanzarAlgoritmo("4_2", genetico4_2);
 
         printer1.close();
-        /*printer2.close();
-        printer3.close();*/
+        /*printer3.close();*/
 
     }
 
@@ -121,23 +119,9 @@ public class Main {
             System.out.println("ALGORITMO GENÉTICO - EJECUCIÓN " + id + ":");
             System.out.print("\tIteracion " + i + "...");
 
-            long t1 = System.currentTimeMillis();
-            genetico.iniciar(i);
-            long t2 = System.currentTimeMillis();
+            genetico.iniciar(id, i);
 
             printer1.csvWriteData(genetico, configuracion);
-            // printer2.csvWriteData(genetico);
-            // printer3.csvWriteData(genetico);
-/*
-            Individuo resultado = genetico.getMejorIndividuo();
-            List<String> especifico = new ArrayList<>();
-            especifico.add(Integer.toString(resultado.getFitnessAsigProfesor()));
-            especifico.add(Float.toString(resultado.getFitnessNumHoras()));
-            especifico.add(genetico.getTimer().getFinalTime().toString());
-            especifico.add(Long.toString(RandomManager.seed));
-
-            out.csvWriteDataCollection(configuracion, especifico);
-*/
 
             System.out.println("Hecho!");
         }

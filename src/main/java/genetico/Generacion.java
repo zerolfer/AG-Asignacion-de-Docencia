@@ -44,4 +44,16 @@ public class Generacion {
     public Individuo getRandomIndividual() {
         return this.genotipo[RandomManager.getInstance().getRandomNumber(size())];
     }
+
+    public float[] obtenerFitnessMedio() {
+        float[] result = new float[2];
+        for (Individuo ind : this.genotipo) {
+            result[0] += ind.getFitnessAsigProfesor();
+            result[1] += ind.getFitnessNumHoras();
+        }
+        result[0]/=size();
+        result[1]/=size();
+
+        return result;
+    }
 }
