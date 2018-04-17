@@ -85,9 +85,9 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         Set<String> asignaturas = new HashSet<>();
         int contador = 0;
         for (GrupoAsignatura grupo : asignadas) {
-            String nombreAsignatura = grupo.getNombre();
-            if (!asignaturas.contains(nombreAsignatura)) {
-                asignaturas.add(nombreAsignatura);
+            String codigoAsignatura = grupo.getCodigo();
+            if (!asignaturas.contains(codigoAsignatura)) {
+                asignaturas.add(codigoAsignatura);
                 contador++;
             }
         }

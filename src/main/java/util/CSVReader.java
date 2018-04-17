@@ -87,13 +87,14 @@ public class CSVReader {
                             new GrupoAsignatura(
                                     split[0],
                                     split[1],
-                                    Integer.parseInt(split[2]),
-                                    horarioProvider(split[3]), // tipo horario
-                                    split[4],
+                                    split[2],
+                                    Integer.parseInt(split[3]),
+                                    horarioProvider(split[4]), // tipo horario
                                     split[5],
-                                    Float.parseFloat(split[6]),
-                                    parseBoolean(split[7]),
-                                    split[8].split(AREA_SPLITTER)
+                                    split[6],
+                                    Float.parseFloat(split[7]),
+                                    parseBoolean(split[8]),
+                                    split[9].split(AREA_SPLITTER)
                             )
                     );
                 } catch (ClassCastException e) {

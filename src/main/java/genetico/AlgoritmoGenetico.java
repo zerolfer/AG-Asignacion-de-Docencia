@@ -47,7 +47,10 @@ public class AlgoritmoGenetico {
         this.cruce = cruce;
         this.mutacion = mutacion;
         this.reemplazo = reemplazo;
-        //this.decodificacion = new Decodificacion();
+        // this.decodificacion = new Decodificacion();
+        // ordenarAsignaturas();
+        ordenarProfesores();
+
     }
 
     public AlgoritmoGenetico() {
@@ -56,9 +59,7 @@ public class AlgoritmoGenetico {
     }
 
     public void iniciar(String ejecucion, int seed) {
-//        ordenarAsignaturas();
         RandomManager.seed = seed;
-        ordenarProfesores();
         genetico(ejecucion);
         RandomManager.destroyInstance();
     }

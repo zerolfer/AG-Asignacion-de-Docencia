@@ -8,6 +8,7 @@ public class GrupoAsignatura {
     private static int contador = 0;
 
     private final Integer id;
+    private String codigo;
     private String grupo;
     private String nombre;
     private Integer semestre;
@@ -18,18 +19,19 @@ public class GrupoAsignatura {
     private Boolean bilingue;
     private String[] areas;
 
-    public GrupoAsignatura(Integer id, String nombre, String grupo, int semestre, Horario horario,
-                           String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
+    public GrupoAsignatura(Integer id, String codigo, String nombre, String grupo, int semestre,
+                           Horario horario, String escuela, String ciudad, Float horas,
+                           Boolean bilingue, String[] areas) {
         this.id = id;
-        inicializar(nombre, grupo, semestre, horario,
+        inicializar(codigo, nombre, grupo, semestre, horario,
                 escuela, ciudad, horas, bilingue, areas);
     }
 
 
-    public GrupoAsignatura(String nombre, String grupo, int semestre, Horario horario,
+    public GrupoAsignatura(String codigo, String nombre, String grupo, int semestre, Horario horario,
                            String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
         this.id = contador++;
-        inicializar(nombre, grupo, semestre, horario,
+        inicializar(codigo, nombre, grupo, semestre, horario,
                 escuela, ciudad, horas, bilingue, areas);
     }
 
@@ -37,8 +39,9 @@ public class GrupoAsignatura {
         return contador;
     }
 
-    private void inicializar(String nombre, String grupo, int semestre, Horario horario,
+    private void inicializar(String codigo, String nombre, String grupo, int semestre, Horario horario,
                              String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
+        this.codigo=codigo;
         this.grupo = grupo;
         this.nombre = nombre;
         this.semestre = semestre;
@@ -52,6 +55,10 @@ public class GrupoAsignatura {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getCodigo() {
+        return codigo;
     }
 
     public String getGrupo() {
