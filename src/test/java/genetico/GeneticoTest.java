@@ -111,6 +111,8 @@ public class GeneticoTest {
     @Test
     public void semillaTest1() {
         for (int i = 0; i < 30; i++) {
+            RandomManager.destroyInstance();
+
             RandomManager.seed = i;
             int n1_1 = RandomManager.getInstance().getRandomNumber(1000);
             int n1_2 = RandomManager.getInstance().getRandomNumber(1000);
@@ -130,8 +132,8 @@ public class GeneticoTest {
             assertTrue(n1 >= 1 && n1 < 100);
             assertTrue(n2 >= 0 && n2 < 1);
 
-            RandomManager.destroyInstance();
         }
+        RandomManager.destroyInstance();
 
 
     }

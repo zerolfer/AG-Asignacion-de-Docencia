@@ -192,6 +192,8 @@ public class CruceTest {
     public void semillaTest() {
         Individuo padre1 = Util.createIndividual(3, 1, 4, 0, 8, 7, 9, 6, 5, 2);
         Individuo padre2 = Util.createIndividual(3, 8, 1, 2, 0, 6, 5, 7, 9, 4);
+        RandomManager.destroyInstance();
+
 
         RandomManager.seed = 1;
         Individuo[] hijos1_1 = orderCrossover.aplicar(padre1, padre2);
@@ -207,6 +209,7 @@ public class CruceTest {
 
         RandomManager.seed = 5;
         Individuo[] hijos2_2 = positionCrossover.aplicar(padre1, padre2);
+        RandomManager.destroyInstance();
 
 
         Assert.assertArrayEquals(hijos1_1, hijos1_2);
