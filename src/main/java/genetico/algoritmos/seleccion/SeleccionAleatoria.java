@@ -14,14 +14,18 @@ public class SeleccionAleatoria implements AlgoritmoSeleccion {
     @Override
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> resultado = new ArrayList<>();
-
-        for (int i = 0; i < generacion.size() / 2 + 1; i++) {
-
-            Individuo gen1 = generacion.getIndividuo(RandomManager.getInstance().getRandomNumber(generacion.size()));
+        List<Integer> yaAsignados = new ArrayList<>();
+        for (int i = 0; i < generacion.size() / 2; i++) {
+            int random1 = RandomManager.getInstance().getRandomNumber(generacion.size());
+            int random2;
+            Individuo gen1 = generacion.getIndividuo(random1);
             Individuo gen2;
+            yaAsignados.add(random1);
             do {
-                gen2 = generacion.getIndividuo(RandomManager.getInstance().getRandomNumber(generacion.size()));
-            } while (gen2.equals(gen1));
+                random2 = RandomManager.getInstance().getRandomNumber(generacion.size());
+                gen2 = generacion.getIndividuo(random2);
+            } while (!yaAsignados.contains(random2));
+            yaAsignados.add(random2);
             resultado.add(new Individuo[]{gen1, gen2});
         }
         return resultado;

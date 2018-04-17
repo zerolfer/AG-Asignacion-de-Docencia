@@ -24,7 +24,8 @@ import static main.java.genetico.AlgoritmoGenetico.PROBABILIDAD_CRUCE;
 import static main.java.genetico.AlgoritmoGenetico.PROBABILIDAD_MUTACION;
 
 public class Main {
-    private static final int NUM_EJECUCIONES = 10;
+    private static final int NUM_EJECUCIONES = 1;
+    /*private static final int NUM_EJECUCIONES = 10*/;
     private static CSVWriter printer1 =
             new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
 
