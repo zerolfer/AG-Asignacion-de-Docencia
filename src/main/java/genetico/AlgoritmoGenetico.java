@@ -91,7 +91,6 @@ public class AlgoritmoGenetico {
         timer.start();
 
         do {
-
             generacion.evaluar();
 
             List<Individuo[]> padres = seleccion.aplicar(generacion);
@@ -119,7 +118,8 @@ public class AlgoritmoGenetico {
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
         mejorIndividuo = obtenerMejor(generacion);
-        printer3.csvWriteData(this);
+        if (!printed)
+            printer3.csvWriteData(this);
 
         if (!printed) {
             printer2.close();
@@ -135,7 +135,7 @@ public class AlgoritmoGenetico {
         Individuo mejor = genotipo[0];
         for (Individuo indi : genotipo) {
             if (mejor.getFitnessAsigProfesor() == indi.getFitnessAsigProfesor()) {
-                if (indi.getFitnessNumHoras() < mejor.getFitnessNumHoras())
+                if (indi.getFitnessNumHoras() > mejor.getFitnessNumHoras())
                     mejor = indi;
             } else if (indi.getFitnessAsigProfesor() < mejor.getFitnessAsigProfesor())
                 mejor = indi;

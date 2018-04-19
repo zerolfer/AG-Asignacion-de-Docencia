@@ -8,9 +8,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
+    boolean printCabeceras = false;
 
     public DatosGlobalesEjecuciones(String path) {
         super(path);
+        if (printCabeceras)
+            super.csvWriteData("ejecucion"
+                    + SPLITTER + "poblacion"
+                    + SPLITTER + "pr. cruce"
+                    + SPLITTER + "pr. mutacion"
+                    + SPLITTER + "num generaciones"
+                    + SPLITTER + "creacion"
+                    + SPLITTER + "seleccion"
+                    + SPLITTER + "cruce"
+                    + SPLITTER + "mutacion"
+                    + SPLITTER + "reemplazo"
+                    + SPLITTER + "fitness1"
+                    + SPLITTER + "fitness2"
+                    + SPLITTER + "tiempo (ms)"
+                    + SPLITTER + "semilla"
+            );
+
     }
 
     @Override
