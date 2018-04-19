@@ -116,7 +116,7 @@ public class CSVReader {
         char dia = diaIntervalo[0].charAt(0);
         String[] horas = diaIntervalo[1].split("-");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date parsedDate1 = dateFormat.parse(horas[0]);
         Date parsedDate2 = dateFormat.parse(horas[1]);
         Timestamp timestamp1 = new java.sql.Timestamp(parsedDate1.getTime());

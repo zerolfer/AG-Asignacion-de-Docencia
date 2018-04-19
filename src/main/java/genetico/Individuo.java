@@ -156,7 +156,6 @@ public class Individuo implements Comparable<Individuo> {
         return sb.toString();
     }
 
-
     @Override
     public int compareTo(Individuo ind) {
         if (this.getFitnessAsigProfesor() > ind.getFitnessAsigProfesor())

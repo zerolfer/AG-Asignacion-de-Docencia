@@ -1,6 +1,7 @@
 package main.java.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Sergio Florez on 27/02/2018.
@@ -45,8 +46,16 @@ public class Horario {
     public String toString() {
         return "Horario{" +
                 "dia=" + dia +
-                ", horaInicio=" + horaInicio +
-                ", horaFin=" + horaFin +
+                ", horaInicio=" + horaInicio.toString().substring(11, 16) +
+                ", horaFin=" + horaFin.toString().substring(11, 16) +
                 '}';
+    }
+
+    public String toFormatedString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(dia+" "+getHoraInicio().toString().substring(11, 16));
+        sb.append("-"+getHoraFin().toString().substring(11, 16));
+
+        return sb.toString();
     }
 }

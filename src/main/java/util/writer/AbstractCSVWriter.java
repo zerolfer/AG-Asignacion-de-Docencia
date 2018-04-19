@@ -10,6 +10,12 @@ import java.util.List;
 
 public abstract class AbstractCSVWriter implements CSVWriter {
     public final char SPLITTER = ';';
+    public final String LINE_SEP = System.getProperty("line.separator");
+
+    BufferedWriter getBr() {
+        return br;
+    }
+
     BufferedWriter br;
 
     public AbstractCSVWriter(String path, boolean append) {
@@ -78,11 +84,17 @@ public abstract class AbstractCSVWriter implements CSVWriter {
 
     public void close() {
         try {
-            br.newLine();
-            br.close();
+            if (br != null) {
+                br.newLine();
+                br.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void csvWriteData(AlgoritmoGenetico genetico){
+        throw new RuntimeException("Not implemented method \"csvWriteData(AlgoritmoGenetico genetico)\" at "+
+        getClass().getSimpleName());
+    }
 }

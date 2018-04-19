@@ -16,6 +16,7 @@ import main.java.util.RandomManager;
 import main.java.util.Stopwatch;
 import main.java.util.writer.CSVWriter;
 import main.java.util.writer.DatosDetalladosEjecuciones;
+import main.java.util.writer.DatosFenotipoEjecuciones;
 
 import java.util.List;
 
@@ -76,10 +77,14 @@ public class AlgoritmoGenetico {
     private void genetico(String ejecucion) {
 
         CSVWriter printer2 = null;
-        if (!printed)
+        CSVWriter printer3 = null;
+        if (!printed) {
             printer2 = new DatosDetalladosEjecuciones(
-                    "files/ejecuciones/DatosDetalladosEjecucion" + ejecucion + ".csv");
-
+                    "files/ejecuciones/DatosDetalladosEjecucion" + ejecucion + ".csv",
+                    getAlgoritmos());
+            printer3 = new DatosFenotipoEjecuciones(
+                    "files/DatosFenotipoEjecuciones.csv", ejecucion);
+        }
 
         Generacion generacion = creacion.createPopulation(POPULATION_SIZE);
         int numGeneraciones = 1;
@@ -113,11 +118,14 @@ public class AlgoritmoGenetico {
             numGeneraciones++;
         } while (numGeneraciones <= NUMERO_GENERACIONES);
 
+        mejorIndividuo = obtenerMejor(generacion);
+        printer3.csvWriteData(this);
+
         if (!printed) {
             printer2.close();
+            printer3.close();
             printed = true;
         }
-        mejorIndividuo = obtenerMejor(generacion);
         if (debug) System.out.println("Mejor resultado: \n" + mejorIndividuo.toStringFull());
 //            System.out.println("Mejor resultado: \n" + obtenerMejor(generacion).toString());
     }
