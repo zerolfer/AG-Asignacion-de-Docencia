@@ -33,7 +33,6 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
         int noAsignadas = 0;
         for (int idAsignatura : individuo.getCromosoma()) { // O(n^3)
-            //FIXME las asignaturas no tienen por que estar ordenadas por ID
             GrupoAsignatura asignatura = getAsignaturaById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);
             if (profesor == null) {
@@ -51,8 +50,11 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 fenotipo.put(profesor.getId(), nuevoSet);
             }
         }
+
         asignarFitness(individuo, noAsignadas, this.profesores, this.asignaturas);
+
         individuo.setFenotipo(fenotipo);
+
         if (debug) {
             if (individuo.getFitnessAsigProfesor() >= Integer.MAX_VALUE)
                 System.out.println(Util.arrayToString(this.profesores, "\n"));
@@ -69,15 +71,18 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         } else {
             int max = 0;
             float min = profesores.get(0).getCapacidadInicial();
+            Profesor p=profesores.get(0);
             for (Profesor profesor : profesores) {
                 int numAsignaturas = getNumAsignaturas(profesor);
                 if (numAsignaturas > max)
                     max = numAsignaturas;
-                if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min)
+                if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min) {
                     min = profesor.getCapacidadInicial() - profesor.getCapacidad();
+                    p=profesor;
+                }
             }
             i.setFitnessAsigProfesor(max);
-            i.setFitnessNumHoras(min);
+            i.setFitnessNumHoras(min/p.getCapacidadInicial()); //TODO chequear
         }
     }
 

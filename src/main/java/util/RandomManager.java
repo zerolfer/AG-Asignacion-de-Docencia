@@ -60,7 +60,7 @@ public class RandomManager {
         return random.nextInt(hasta - desde) + desde;
     }
 
-    public float getTrialProbability() {
+    public float getRandomProbability() {
         return random.nextFloat();
     }
 

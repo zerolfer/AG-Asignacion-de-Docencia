@@ -128,7 +128,7 @@ public class GeneticoTest {
             Assert.assertEquals("iteracion " + i, n1_3, n2_3);
 
             float n1 = RandomManager.getInstance().getFloatRandomNumber(1, 100);
-            float n2 = RandomManager.getInstance().getTrialProbability();
+            float n2 = RandomManager.getInstance().getRandomProbability();
             assertTrue(n1 >= 1 && n1 < 100);
             assertTrue(n2 >= 0 && n2 < 1);
 

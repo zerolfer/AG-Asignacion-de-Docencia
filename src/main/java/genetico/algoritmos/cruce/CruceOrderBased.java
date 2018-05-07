@@ -29,7 +29,7 @@ public class CruceOrderBased extends AbstractCruce {
         Individuo hijo1 = new Individuo(padre1.getCromosoma().clone());
         Individuo hijo2 = new Individuo(padre2.getCromosoma().clone());
 
-        if (RandomManager.getInstance().getTrialProbability() <= probabilidad) {
+        if (RandomManager.getInstance().getRandomProbability() <= probabilidad) {
 
             int idxHijo1 = 0;
             int idxHijo2 = 0;

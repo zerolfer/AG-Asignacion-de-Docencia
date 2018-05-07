@@ -30,7 +30,7 @@ public class MutacionInversion implements AlgoritmoMutacion {
 
     @Override
     public void mutar(Individuo individuo) {
-        if (RandomManager.getInstance().getTrialProbability() <= probabilidad) {
+        if (RandomManager.getInstance().getRandomProbability() <= probabilidad) {
             if (debug) System.out.println("MUTACION:\n\tAntes: \t " + individuo);
             int pos1 = RandomManager.getInstance().getRandomNumber(individuo.size());
             int pos2;

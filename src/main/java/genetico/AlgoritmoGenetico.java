@@ -92,7 +92,7 @@ public class AlgoritmoGenetico {
         timer.start();
 
         do {
-            generacion.evaluar();
+            generacion.evaluar(); //FIXME: es necesario esto siempre? o solo en la primera ejecucion??
 
             List<Individuo[]> padres = seleccion.aplicar(generacion);
             List<Individuo[]> hijos = cruce.aplicar(padres);

@@ -30,6 +30,7 @@ public class Individuo implements Comparable<Individuo> {
         this.decodificacion = new DecodificacionFiltroGrupo();
     }
 
+
     public int[] getCromosoma() {
         return cromosoma;
     }

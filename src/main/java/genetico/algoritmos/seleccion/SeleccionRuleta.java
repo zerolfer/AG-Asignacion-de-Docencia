@@ -5,6 +5,7 @@ import main.java.genetico.Individuo;
 import main.java.util.RandomManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ public class SeleccionRuleta implements AlgoritmoSeleccion {
     @Override
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> result = new ArrayList<>();
-        float[] probabilidades = calcularProbabilidades(generacion.getGenotipo().clone());
+        Arrays.sort(generacion.getGenotipo());  // ordenamos Individios por su fitness
+        float[] probabilidades = calcularProbabilidades(generacion);
         for (int i = 0; i < generacion.size() / 2; i++) {
             Individuo individuo1 = ruleta(generacion, probabilidades);
             Individuo individuo2 = ruleta(generacion, probabilidades);
@@ -23,24 +25,24 @@ public class SeleccionRuleta implements AlgoritmoSeleccion {
         return result;
     }
 
-    private Individuo ruleta(Generacion generacion, float[] total) {
+    private Individuo ruleta(Generacion generacion, float[] probabilidades) {
         float acumulado = 0;
+        float random = RandomManager.getInstance().getRandomProbability();
         for (int i = 0; i < generacion.size(); i++) {
-            float random = RandomManager.getInstance().getFloatRandomNumber(0, total[i]);
-            acumulado += generacion.getIndividuo(i).getFitnessAsigProfesor();
+            acumulado += probabilidades[i];
             if (acumulado >= random)
                 return generacion.getIndividuo(i);
         }
         throw new RuntimeException("No se ha seleccionado un individuo por ruleta");
     }
 
-    private float[] calcularProbabilidades(Individuo[] generacion) {
-        float[] result = new float[generacion.length];
+    private float[] calcularProbabilidades(Generacion generacion) {
+        float[] result = new float[generacion.size()];
         int n = 1;
-        for (int i = generacion.length - 1; i >= 0; i--, n++)
+        for (int i = 0; i < generacion.size(); i++, n++)
             result[i] = n;
-        float N = (n * (n + 1)) / 2;
-        for (int i = 0; i < generacion.length; i++)
+        float N = (n * (n - 1)) / 2; // n vale 101, que sería "n+1" en N=n*(n+1)/2
+        for (int i = 0; i < generacion.size(); i++)
             result[i] /= N;
         return result;
     }

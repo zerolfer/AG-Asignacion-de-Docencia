@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
-    boolean printCabeceras = false;
+    boolean printCabeceras = true; // NOTE: true para imprimer cabeceras de tabla
 
     public DatosGlobalesEjecuciones(String path) {
-        super(path);
+        super(path,false); //NOTE: poner true para no reescribir fichero
         if (printCabeceras)
             super.csvWriteData("ejecucion"
                     + SPLITTER + "poblacion"
@@ -28,6 +28,7 @@ public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
                     + SPLITTER + "tiempo (ms)"
                     + SPLITTER + "semilla"
             );
+        super.csvWriteNewLine();
 
     }
 

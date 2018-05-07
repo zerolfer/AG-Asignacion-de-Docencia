@@ -67,7 +67,7 @@ public class CruceTest {
         for (int j = 0; j < 30; j++) {
             int c = 0, d = 0;
             for (int i = 0; i < 10000; i++) {
-                float ran = RandomManager.getInstance().getTrialProbability();
+                float ran = RandomManager.getInstance().getRandomProbability();
                 float rand = RandomManager.getInstance().getRandomNumberInclusive(100);
                 rand = rand / 100;
                 if (ran <= 0.75)

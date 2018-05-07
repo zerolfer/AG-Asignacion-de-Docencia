@@ -37,7 +37,7 @@ public class Main {
          */
         // lanzarAlgoritmo("1_1", genetico1_1());
         // lanzarAlgoritmo("2_1", genetico2_1());
-        //     lanzarAlgoritmo("3_1", genetico3_1());
+        lanzarAlgoritmo("3_1", genetico3_1());
         // lanzarAlgoritmo("4_1", genetico4_1());
         // lanzarAlgoritmo("1_2", genetico1_2());
         // lanzarAlgoritmo("2_2", genetico2_2());

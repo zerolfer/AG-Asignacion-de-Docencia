@@ -17,7 +17,7 @@ public class CrucePositionBased extends AbstractCruce {
         int length = padre1.size();
         boolean[] mascara = new boolean[length];
         for (int i = 0; i < length; i++) {
-            if (RandomManager.getInstance().getTrialProbability() <= probabilidad)
+            if (RandomManager.getInstance().getRandomProbability() <= probabilidad)
                 mascara[i] = true;
         }
 
@@ -31,7 +31,7 @@ public class CrucePositionBased extends AbstractCruce {
         Individuo hijo1 = new Individuo(padre1.getCromosoma().clone());
         Individuo hijo2 = new Individuo(padre2.getCromosoma().clone());
 
-        if (RandomManager.getInstance().getTrialProbability() <= probabilidad) {
+        if (RandomManager.getInstance().getRandomProbability() <= probabilidad) {
 
             int idxHijo1 = 0;
             int idxHijo2 = 0;

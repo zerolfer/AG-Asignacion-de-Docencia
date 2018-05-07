@@ -3,6 +3,8 @@ package main.java.genetico;
 import main.java.genetico.algoritmos.decodificacion.Decodificacion;
 import main.java.util.RandomManager;
 
+import java.util.Arrays;
+
 public class Generacion {
     Individuo[] genotipo;
 
@@ -55,5 +57,29 @@ public class Generacion {
         result[1]/=size();
 
         return result;
+    }
+
+    @Override
+    public Generacion clone() {
+        Individuo[] res = new Individuo[size()];
+        for (int i = 0; i < size(); i++) {
+            Individuo t = getIndividuo(i);
+            res[i]=new Individuo(t.getCromosoma());
+        }
+        return new Generacion(res);
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Generacion that = (Generacion) o;
+        return Arrays.equals(genotipo, that.genotipo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(genotipo);
     }
 }
