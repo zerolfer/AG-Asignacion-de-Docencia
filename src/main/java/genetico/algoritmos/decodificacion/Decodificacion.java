@@ -70,19 +70,23 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             i.setFitnessNumHoras(Float.MIN_VALUE);
         } else {
             int max = 0;
-            float min = profesores.get(0).getCapacidadInicial();
-            Profesor p=profesores.get(0);
+            float min = 1;
+
             for (Profesor profesor : profesores) {
+                // FITNESS 1
                 int numAsignaturas = getNumAsignaturas(profesor);
                 if (numAsignaturas > max)
                     max = numAsignaturas;
-                if (profesor.getCapacidadInicial() - profesor.getCapacidad() < min) {
-                    min = profesor.getCapacidadInicial() - profesor.getCapacidad();
-                    p=profesor;
+
+                // FITNESS 2
+                float horasAsignadas=profesor.getCapacidadInicial() - profesor.getCapacidad();
+                float proporcion = horasAsignadas/profesor.getCapacidadInicial();
+                if (proporcion < min) {
+                    min = proporcion;
                 }
             }
             i.setFitnessAsigProfesor(max);
-            i.setFitnessNumHoras(min/p.getCapacidadInicial()); //TODO chequear
+            i.setFitnessNumHoras(min);
         }
     }
 

@@ -5,11 +5,8 @@ import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
     private String ejecucion;
@@ -22,8 +19,11 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
     @Override
     public void csvWriteData(AlgoritmoGenetico genetico) {
         Map<Integer, Set<Integer>> fenotipo = genetico.getMejorIndividuo().getFenotipo();
-
-        super.csvWriteData("ejecucion" + SPLITTER + ejecucion
+        Date d = new Date();
+        super.csvWriteData("ejecucion" + SPLITTER + ejecucion + SPLITTER
+                + "hora" + SPLITTER +
+                new SimpleDateFormat("HH:mm:ss").format(d) + SPLITTER
+                + new SimpleDateFormat("dd/MM/yyyy").format(d)
                 + LINE_SEP + "genotipo" + SPLITTER + Arrays.toString(genetico.getMejorIndividuo().getCromosoma())
                 + LINE_SEP + fenotipoToString(fenotipo) + LINE_SEP);
 
@@ -41,10 +41,16 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
 
             Profesor profe = BD.getProfesorById(key);
             sb.append(profe.getId());
-            sb.append(SPLITTER); sb.append(profe.getNombre());
-            sb.append(SPLITTER); sb.append(profe.getCapacidad());
-            sb.append(SPLITTER); sb.append(profe.getBilingue() ? "SI" : "NO");
-            sb.append(SPLITTER); sb.append(profe.getArea() + LINE_SEP);
+            sb.append(SPLITTER);
+            sb.append(profe.getNombre());
+            sb.append(SPLITTER);
+            sb.append(profe.getCapacidad());
+            sb.append(SPLITTER);
+            sb.append(profe.getCapacidad());
+            sb.append(SPLITTER);
+            sb.append(profe.getBilingue() ? "SI" : "NO");
+            sb.append(SPLITTER);
+            sb.append(profe.getArea() + LINE_SEP);
 
             sb.append(/*SPLITTER + */"asignadas");
             sb.append(SPLITTER + "codigo");

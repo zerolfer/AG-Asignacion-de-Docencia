@@ -22,7 +22,7 @@ public class Individuo implements Comparable<Individuo> {
     private int fitnessAsigProfesor;
     private float fitnessNumHoras;
 
-    private Map<Integer, Set<Integer>> fenotipo; // <AsignaturaId, ProfesorId>
+    private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
 
 
     public Individuo(int[] cromosoma) {

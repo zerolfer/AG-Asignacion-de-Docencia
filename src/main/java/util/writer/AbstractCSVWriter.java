@@ -60,7 +60,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         try {
             br.append(data.toString());
             br.append(SPLITTER);
-             br.flush(); //NOTE for debug
+            // br.flush(); //NOTE for debug
         } catch (IOException e) {
             e.printStackTrace();
         }
