@@ -28,7 +28,7 @@ public class DecodificacionFiltroGrupo extends Decodificacion {
 
     private boolean checkImparteAsignatura(Profesor p, GrupoAsignatura a) {
         for (GrupoAsignatura imparte : p.getAsignadas())
-            if (imparte.getCodigo().equals(a.getCodigo()))
+            if (imparte.getCodigoAsignatura().equals(a.getCodigoAsignatura()))
                 return true;
         return false;
     }

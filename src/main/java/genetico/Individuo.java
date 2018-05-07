@@ -5,6 +5,8 @@ import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
 import main.java.genetico.algoritmos.decodificacion.Decodificacion;
 import main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.BD;
+import main.java.model.GrupoAsignatura;
+import main.java.model.Profesor;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -23,6 +25,7 @@ public class Individuo implements Comparable<Individuo> {
     private float fitnessNumHoras;
 
     private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
+    public Map<Profesor, Set<GrupoAsignatura>> fenotipo2;
 
 
     public Individuo(int[] cromosoma) {

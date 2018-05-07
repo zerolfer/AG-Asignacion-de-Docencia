@@ -51,7 +51,7 @@ public class Util {
         List<GrupoAsignatura> res = new ArrayList<>();
         for (int i = 0; i < ts.size(); i++) {
             GrupoAsignatura t = ts.get(i);
-            res.add(new GrupoAsignatura(t.getId(),t.getCodigo(), t.getNombre(), t.getGrupo(), t.getSemestre(), t.getHorario(),
+            res.add(new GrupoAsignatura(t.getId(),t.getCodigoAsignatura(), t.getNombre(), t.getGrupo(), t.getSemestre(), t.getHorario(),
                     t.getEscuela(), t.getCiudad(), t.getHoras(), t.getBilingue(), t.getAreas()));
         }
         return res;

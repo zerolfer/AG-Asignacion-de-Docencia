@@ -1,7 +1,9 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Profesor {
@@ -105,4 +107,18 @@ public class Profesor {
     public Integer getId() {
         return id;
     }
+
+    public int getNumAsignaturas() {
+        Set<String> asignaturas = new HashSet<>();
+        int contador = 0;
+        for (GrupoAsignatura grupo : asignadas) {
+            String codigoAsignatura = grupo.getCodigoAsignatura();
+            if (!asignaturas.contains(codigoAsignatura)) {
+                asignaturas.add(codigoAsignatura);
+                contador++;
+            }
+        }
+        return contador;
+    }
+
 }

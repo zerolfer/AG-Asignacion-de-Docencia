@@ -23,6 +23,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     public void aplicar(Individuo individuo) {
 
         Map<Integer, Set<Integer>> fenotipo = new HashMap<>();
+        Map<Profesor, Set<GrupoAsignatura>> fenotipo2 = new HashMap<>();
 
         this.profesores = Util.copyOfProfesor(BD.getProfesores());
         this.asignaturas = Util.copyOfGrupo(BD.getAsignaturas());
@@ -49,11 +50,23 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 nuevoSet.add(asignatura.getId());
                 fenotipo.put(profesor.getId(), nuevoSet);
             }
+
+
+
+            if (fenotipo2.containsKey(profesor)) {
+                Set<GrupoAsignatura> asignadas = fenotipo2.get(profesor);
+                asignadas.add(asignatura);
+            } else {
+                Set<GrupoAsignatura> nuevoSet = new HashSet<>();
+                nuevoSet.add(asignatura);
+                fenotipo2.put(profesor, nuevoSet);
+            }
         }
 
         asignarFitness(individuo, noAsignadas, this.profesores, this.asignaturas);
 
         individuo.setFenotipo(fenotipo);
+        individuo.fenotipo2=fenotipo2;
 
         if (debug) {
             if (individuo.getFitnessAsigProfesor() >= Integer.MAX_VALUE)
@@ -74,7 +87,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
             for (Profesor profesor : profesores) {
                 // FITNESS 1
-                int numAsignaturas = getNumAsignaturas(profesor);
+                int numAsignaturas = profesor.getNumAsignaturas();
                 if (numAsignaturas > max)
                     max = numAsignaturas;
 
@@ -89,21 +102,6 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             i.setFitnessNumHoras(min);
         }
     }
-
-    int getNumAsignaturas(Profesor profesor) {
-        List<GrupoAsignatura> asignadas = profesor.getAsignadas();
-        Set<String> asignaturas = new HashSet<>();
-        int contador = 0;
-        for (GrupoAsignatura grupo : asignadas) {
-            String codigoAsignatura = grupo.getCodigo();
-            if (!asignaturas.contains(codigoAsignatura)) {
-                asignaturas.add(codigoAsignatura);
-                contador++;
-            }
-        }
-        return contador;
-    }
-
 
     Profesor getProfesor(GrupoAsignatura a) {
         for (Profesor p : this.profesores) {

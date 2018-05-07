@@ -57,7 +57,7 @@ public class GrupoAsignatura {
         return id;
     }
 
-    public String getCodigo() {
+    public String getCodigoAsignatura() {
         return codigo;
     }
 
