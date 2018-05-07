@@ -1,6 +1,6 @@
 package main.java.genetico;
 
-import main.java.genetico.algoritmos.Decodificacion;
+import main.java.genetico.algoritmos.decodificacion.Decodificacion;
 import main.java.util.RandomManager;
 
 public class Generacion {

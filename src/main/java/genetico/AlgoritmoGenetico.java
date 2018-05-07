@@ -18,6 +18,7 @@ import main.java.util.writer.CSVWriter;
 import main.java.util.writer.DatosDetalladosEjecuciones;
 import main.java.util.writer.DatosFenotipoEjecuciones;
 
+import java.io.File;
 import java.util.List;
 
 public class AlgoritmoGenetico {
@@ -112,7 +113,7 @@ public class AlgoritmoGenetico {
                 printer2.csvWriteData(this, //TODO: refartor this to the printer class
                         Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
                         Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
-                        Integer.toString((int) fitnessMedio[0]), Float.toString(fitnessMedio[1]));
+                        Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
             numGeneraciones++;
         } while (numGeneraciones <= NUMERO_GENERACIONES);

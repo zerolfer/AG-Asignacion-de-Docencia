@@ -112,4 +112,7 @@ public class GrupoAsignatura {
                 " areas=" + Arrays.toString(areas) + '\n' +
                 '}';
     }
+
+
+
 }

@@ -1,8 +1,8 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
-import main.java.genetico.algoritmos.Decodificacion;
+import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
+import main.java.genetico.algoritmos.decodificacion.Decodificacion;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 import org.junit.Test;

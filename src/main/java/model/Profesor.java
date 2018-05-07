@@ -42,6 +42,9 @@ public class Profesor {
         asignadas = new ArrayList<>();
     }
 
+    public float getHorasClaseAsignadas(){
+        return getCapacidadInicial()-this.getCapacidad();
+    }
     public String getNombre() {
         return nombre;
     }

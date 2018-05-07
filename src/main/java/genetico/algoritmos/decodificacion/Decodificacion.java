@@ -1,6 +1,7 @@
-package main.java.genetico.algoritmos;
+package main.java.genetico.algoritmos.decodificacion;
 
 import main.java.genetico.Individuo;
+import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
 import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
@@ -60,7 +61,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         }
     }
 
-    private void asignarFitness(Individuo i, int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
+    void asignarFitness(Individuo i, int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
             i.setFitnessAsigProfesor(Integer.MAX_VALUE);
@@ -80,7 +81,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         }
     }
 
-    private int getNumAsignaturas(Profesor profesor) {
+    int getNumAsignaturas(Profesor profesor) {
         List<GrupoAsignatura> asignadas = profesor.getAsignadas();
         Set<String> asignaturas = new HashSet<>();
         int contador = 0;
@@ -95,7 +96,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     }
 
 
-    private Profesor getProfesor(GrupoAsignatura a) {
+    Profesor getProfesor(GrupoAsignatura a) {
         for (Profesor p : this.profesores) {
             if (checkCapacidad(a, p) && checkBilingue(a, p) && checkArea(p, a))
                 if (checkSolapamiento(p, a))
@@ -104,11 +105,11 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         return null; // en caso de no haber profesoresa cubrir se le asignará un fitness infinito
     }
 
-    private boolean checkArea(Profesor p, GrupoAsignatura a) {
+    boolean checkArea(Profesor p, GrupoAsignatura a) {
         return Arrays.binarySearch(a.getAreas(), p.getArea()) != -1;
     }
 
-    private boolean checkSolapamiento(Profesor p, GrupoAsignatura a) {
+    boolean checkSolapamiento(Profesor p, GrupoAsignatura a) {
         for (GrupoAsignatura asignatura : p.getAsignadas()) {
             if (asignatura.getHorario().getDia() == a.getHorario().getDia()
                     && asignatura.getSemestre() == a.getSemestre()) {
@@ -117,13 +118,13 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 if (finActualInicioNueva <= 0) {
                     if (!asignatura.getEscuela().equals(a.getEscuela()))
                         if (Math.abs(
-                                asignatura.getHorario().getHoraInicio().getTime() - a.getHorario().getHoraFin().getTime()
+                                a.getHorario().getHoraInicio().getTime() - asignatura.getHorario().getHoraFin().getTime()
                         ) < TimeUnit.HOURS.toMillis(1))
                             return false;
                 } else if (inicioActualFinNueva >= 0) {
                     if (!asignatura.getEscuela().equals(a.getEscuela()))
                         if (Math.abs(
-                                asignatura.getHorario().getHoraFin().getTime() - asignatura.getHorario().getHoraInicio().getTime()
+                                asignatura.getHorario().getHoraFin().getTime() - a.getHorario().getHoraInicio().getTime()
                         ) < TimeUnit.HOURS.toMillis(1))
                             return false;
                 } else
@@ -134,15 +135,15 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         return true;
     }
 
-    private boolean checkBilingue(GrupoAsignatura a, Profesor p) {
+    boolean checkBilingue(GrupoAsignatura a, Profesor p) {
         return p.getBilingue() || !a.getBilingue();
     }
 
-    private boolean checkCapacidad(GrupoAsignatura a, Profesor p) {
+    boolean checkCapacidad(GrupoAsignatura a, Profesor p) {
         return p.getCapacidad() >= a.getHoras();
     }
 
-    private GrupoAsignatura getAsignaturaById(int idAsignatura) {
+    GrupoAsignatura getAsignaturaById(int idAsignatura) {
         for (GrupoAsignatura a : this.asignaturas) {
             if (a.getId() == idAsignatura)
                 return a;

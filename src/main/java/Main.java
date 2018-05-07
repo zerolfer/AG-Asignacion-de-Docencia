@@ -12,9 +12,9 @@ import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
 import main.java.util.writer.CSVWriter;
-import main.java.util.writer.DatosFenotipoEjecuciones;
 import main.java.util.writer.DatosGlobalesEjecuciones;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,26 +23,26 @@ import static main.java.genetico.AlgoritmoGenetico.PROBABILIDAD_CRUCE;
 import static main.java.genetico.AlgoritmoGenetico.PROBABILIDAD_MUTACION;
 
 public class Main {
-    //private static final int NUM_EJECUCIONES = 1;
-    private static final int NUM_EJECUCIONES = 1; //TODO reestablecer valor a 10
+
+    private static final int NUM_EJECUCIONES = 1; // TODO reestablecer valor a 10
+
     private static CSVWriter printer1 =
             new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
 
-    /*    private static CSVWriter printer3 =
-              new FenotipoEjecuciones("files/FenotipoEjecuciones.csv");
-  */
     public static void main(String args[]) {
+        new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existir
 
-        //AbstractCSVWriter out = new AbstractCSVWriter("files/output.csv");
-
-        //lanzarAlgoritmo("1_1", genetico1_1());
-        lanzarAlgoritmo("2_1", genetico2_1());
-        /*lanzarAlgoritmo("3_1", genetico3_1());
-        lanzarAlgoritmo("4_1", genetico4_1());
-        lanzarAlgoritmo("1_2", genetico1_2());
-        lanzarAlgoritmo("2_2", genetico2_2());
+        /*
+         * Combinaciones de algoritmos, ver cada javadoc
+         */
+        // lanzarAlgoritmo("1_1", genetico1_1());
+        // lanzarAlgoritmo("2_1", genetico2_1());
+        //     lanzarAlgoritmo("3_1", genetico3_1());
+        // lanzarAlgoritmo("4_1", genetico4_1());
+        // lanzarAlgoritmo("1_2", genetico1_2());
+        // lanzarAlgoritmo("2_2", genetico2_2());
         lanzarAlgoritmo("3_2", genetico3_2());
-        lanzarAlgoritmo("4_2", genetico4_2());*/
+        // lanzarAlgoritmo("4_2", genetico4_2());
 
         printer1.close();
         /*printer3.close();*/

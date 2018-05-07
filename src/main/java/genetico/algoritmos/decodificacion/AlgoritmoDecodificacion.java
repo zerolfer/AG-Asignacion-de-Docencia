@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos;
+package main.java.genetico.algoritmos.decodificacion;
 
 import main.java.genetico.Individuo;
 

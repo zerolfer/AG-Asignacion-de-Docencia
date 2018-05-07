@@ -1,8 +1,9 @@
 package main.java.genetico;
 
 
-import main.java.genetico.algoritmos.AlgoritmoDecodificacion;
-import main.java.genetico.algoritmos.Decodificacion;
+import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
+import main.java.genetico.algoritmos.decodificacion.Decodificacion;
+import main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.BD;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public class Individuo implements Comparable<Individuo> {
 
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
-        this.decodificacion = new Decodificacion();
+        this.decodificacion = new DecodificacionFiltroGrupo();
     }
 
     public int[] getCromosoma() {
