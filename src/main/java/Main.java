@@ -35,14 +35,14 @@ public class Main {
         /*
          * Combinaciones de algoritmos, ver cada javadoc
          */
-        // lanzarAlgoritmo("1_1", genetico1_1());
-        // lanzarAlgoritmo("2_1", genetico2_1());
+        lanzarAlgoritmo("1_1", genetico1_1());
+        lanzarAlgoritmo("2_1", genetico2_1());
         lanzarAlgoritmo("3_1", genetico3_1());
-        // lanzarAlgoritmo("4_1", genetico4_1());
-        // lanzarAlgoritmo("1_2", genetico1_2());
-        // lanzarAlgoritmo("2_2", genetico2_2());
+        lanzarAlgoritmo("4_1", genetico4_1());
+        lanzarAlgoritmo("1_2", genetico1_2());
+        lanzarAlgoritmo("2_2", genetico2_2());
         lanzarAlgoritmo("3_2", genetico3_2());
-        // lanzarAlgoritmo("4_2", genetico4_2());
+        lanzarAlgoritmo("4_2", genetico4_2());
 
         printer1.close();
         /*printer3.close();*/
