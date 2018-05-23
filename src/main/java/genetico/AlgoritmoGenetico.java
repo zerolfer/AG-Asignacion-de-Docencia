@@ -1,6 +1,8 @@
 package main.java.genetico;
 
 
+import main.java.busqueda.BusquedaIntercambioGrupo;
+import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
 import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
 import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
@@ -18,7 +20,6 @@ import main.java.util.writer.CSVWriter;
 import main.java.util.writer.DatosDetalladosEjecuciones;
 import main.java.util.writer.DatosFenotipoEjecuciones;
 
-import java.io.File;
 import java.util.List;
 
 public class AlgoritmoGenetico {
@@ -28,6 +29,7 @@ public class AlgoritmoGenetico {
     public static final Float PROBABILIDAD_CRUCE = 0.7f;
     public static final Float PROBABILIDAD_MUTACION = 0.075f;
     public static final Integer NUMERO_GENERACIONES = 1000;
+    public static final Float PROBABILIDAD_BUSQUEDA = 0f;//0.7f;
 
     // ALGORITMOS
     AlgoritmoCreacion creacion;
@@ -35,6 +37,7 @@ public class AlgoritmoGenetico {
     AlgoritmoCruce cruce;
     AlgoritmoMutacion mutacion;
     AlgoritmoReemplazo reemplazo;
+    BusquedaLocal busqueda;
 
     // ESTRUCTURAS AUXILIARES
     private Individuo mejorIndividuo;
@@ -49,6 +52,7 @@ public class AlgoritmoGenetico {
         this.cruce = cruce;
         this.mutacion = mutacion;
         this.reemplazo = reemplazo;
+        this.busqueda = new BusquedaIntercambioGrupo(PROBABILIDAD_BUSQUEDA);
         // this.decodificacion = new Decodificacion();
         // ordenarAsignaturas();
         ordenarProfesores();
@@ -71,7 +75,7 @@ public class AlgoritmoGenetico {
     }
 
     private void ordenarAsignaturas() {
-        BD.getAsignaturas().sort(BD.comparatorAsignaturas);
+        BD.getAsignaturas().sort(BD.comparatorGrupos);
     }
 
 
@@ -92,7 +96,7 @@ public class AlgoritmoGenetico {
         timer.start();
 
         do {
-            generacion.evaluar(); //FIXME: es necesario esto siempre? o solo en la primera ejecucion??
+            generacion.evaluar(); // FIXME: es necesario esto siempre? o solo en la primera ejecucion??
 
             List<Individuo[]> padres = seleccion.aplicar(generacion);
             List<Individuo[]> hijos = cruce.aplicar(padres);
@@ -100,6 +104,7 @@ public class AlgoritmoGenetico {
             mutar(hijos);
 
             evaluar(hijos);
+            busquedaLocal(hijos);
 
             int sizeAnterior = generacion.size();
             generacion = reemplazo.aplicar(padres, hijos);
@@ -110,7 +115,7 @@ public class AlgoritmoGenetico {
             if (!printed) {
                 Individuo mejor = obtenerMejor(generacion);
                 float[] fitnessMedio = generacion.obtenerFitnessMedio();
-                printer2.csvWriteData(this, //TODO: refartor this to the printer class
+                printer2.csvWriteData(this, // TODO: refartor this to the printer class
                         Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
                         Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
@@ -154,6 +159,14 @@ public class AlgoritmoGenetico {
         for (Individuo[] par : individuos)
             for (Individuo indi : par)
                 indi.evaluar();
+    }
+
+    private void busquedaLocal(List<Individuo[]> individuos) {
+        for (Individuo[] par : individuos)
+            for (int i = 0; i < par.length; i++) {
+                par[i] = busqueda.aplicar(par[i]);
+            }
+
     }
 
     public String[] getAlgoritmos() {

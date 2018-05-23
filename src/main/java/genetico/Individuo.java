@@ -2,13 +2,13 @@ package main.java.genetico;
 
 
 import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
-import main.java.genetico.algoritmos.decodificacion.Decodificacion;
 import main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -90,6 +90,10 @@ public class Individuo implements Comparable<Individuo> {
         return fenotipo;
     }
 
+    public Map<Profesor, Set<GrupoAsignatura>> getFenotipo2() {
+        return fenotipo2;
+    }
+
     public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
         this.fenotipo = fenotipo;
     }
@@ -132,7 +136,12 @@ public class Individuo implements Comparable<Individuo> {
 
     @Override
     public Individuo clone() {
-        return new Individuo(this.cromosoma.clone());
+        Individuo result = new Individuo(this.cromosoma.clone());
+        result.setFitnessAsigProfesor(getFitnessAsigProfesor());
+        result.setFitnessNumHoras(getFitnessNumHoras());
+        if (getFenotipo() != null)  result.setFenotipo(new HashMap<>(getFenotipo()));
+        if (getFenotipo2() != null) result.fenotipo2 = new HashMap<>(getFenotipo2());
+        return result;
     }
 
     public String toStringFull() {
@@ -176,7 +185,25 @@ public class Individuo implements Comparable<Individuo> {
         else return 0;
     }
 
+    public boolean esMejor(int fitness1, float fitness2) {
+        if (this.getFitnessAsigProfesor() > fitness1)
+            return false;
+        if (this.getFitnessAsigProfesor() < fitness1)
+            return true;
+        // en este punto sabemos que son iguales, empleamos el otro fitness
+        if (this.getFitnessNumHoras() > fitness2)
+            return true;
+        if (this.getFitnessNumHoras() < fitness2)
+            return false;
+            // ambos individuos son iguales
+        else return false;
+    }
+
     public void evaluar() {
         decodificacion.aplicar(this);
+    }
+
+    public boolean esMejor(Individuo vecino) {
+        return this.compareTo(vecino) < 0 ? false : true;
     }
 }

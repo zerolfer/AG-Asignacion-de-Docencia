@@ -101,6 +101,7 @@ public class GrupoAsignatura {
     public String toString() {
         return "GrupoAsignatura{ " +
                 "id=" + id + ',' +
+                "codigoAsignatura=" + codigo + ',' +
                 " grupo='" + grupo + '\'' + ',' +
                 " nombre='" + nombre + '\'' + ',' +
                 " semestre=" + semestre + ',' +

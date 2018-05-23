@@ -20,8 +20,8 @@ public class BD {
             else return 0;
         }
     };
-    ;
-    public static final Comparator<GrupoAsignatura> comparatorAsignaturas = new Comparator<GrupoAsignatura>() {
+
+    public static final Comparator<GrupoAsignatura> comparatorGrupos = new Comparator<GrupoAsignatura>() {
         @Override
         public int compare(GrupoAsignatura o1, GrupoAsignatura o2) {
             if (o1.getBilingue() == true && o2.getBilingue() == false)
@@ -31,6 +31,7 @@ public class BD {
             else return 0;
         }
     };
+
     private static final List<Profesor> profesores = CSVReader.CsvLoadProfesores();
     private static final List<GrupoAsignatura> asignaturas = CSVReader.CsvLoadAsignaturas();
 

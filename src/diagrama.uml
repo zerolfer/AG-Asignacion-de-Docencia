@@ -3,88 +3,113 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="3.5" y="310.0">main.java.genetico.algoritmos.cruce.AlgoritmoCruce</node>
-    <node x="0.0" y="155.0">main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion</node>
-    <node x="0.0" y="390.0">main.java.genetico.algoritmos.cruce.CruceOrderBased</node>
-    <node x="199.0" y="155.0">main.java.genetico.algoritmos.creacion.AlgoritmoCreacion</node>
-    <node x="202.5" y="235.0">main.java.genetico.algoritmos.creacion.CreacionAleatoria</node>
-    <node x="3.5" y="235.0">main.java.genetico.algoritmos.seleccion.SeleccionAleatoria</node>
-    <node x="0.0" y="80.0">main.java.genetico.algoritmos.mutacion.MutacionIntercambio</node>
-    <node x="5.0" y="0.0">main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion</node>
-    <node x="210.0" y="80.0">main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH</node>
-    <node x="187.0" y="310.0">main.java.genetico.algoritmos.AlgoritmoDecodificacion</node>
-    <node x="0.0" y="465.0">main.java.genetico.AlgoritmoGenetico</node>
-    <node x="210.0" y="0.0">main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo</node>
+    <node x="344.0" y="833.0">main.java.genetico.algoritmos.mutacion.MutacionInversion</node>
+    <node x="165.5" y="934.0">main.java.genetico.algoritmos.cruce.AlgoritmoCruce</node>
+    <node x="713.0" y="419.0">main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo</node>
+    <node x="278.0" y="520.0">main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion</node>
+    <node x="0.0" y="1040.0">main.java.genetico.algoritmos.cruce.CruceOrderBased</node>
+    <node x="651.0" y="934.0">main.java.genetico.algoritmos.creacion.AlgoritmoCreacion</node>
+    <node x="446.0" y="0.0">main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion</node>
+    <node x="284.0" y="626.0">main.java.genetico.algoritmos.seleccion.SeleccionAleatoria</node>
+    <node x="657.0" y="1040.0">main.java.genetico.algoritmos.creacion.CreacionAleatoria</node>
+    <node x="301.0" y="1040.0">main.java.genetico.algoritmos.cruce.CrucePositionBased</node>
+    <node x="0.0" y="212.0">main.java.busqueda.BusquedaIntercambioGrupo</node>
+    <node x="0.0" y="626.0">main.java.genetico.algoritmos.seleccion.SeleccionRuleta</node>
+    <node x="439.0" y="212.0">main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo</node>
+    <node x="499.0" y="106.0">main.java.genetico.algoritmos.decodificacion.Decodificacion</node>
+    <node x="175.0" y="727.0">main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion</node>
+    <node x="0.0" y="833.0">main.java.genetico.algoritmos.mutacion.MutacionIntercambio</node>
+    <node x="373.0" y="419.0">main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH</node>
+    <node x="22.0" y="106.0">main.java.busqueda.StandardBusquedaLocal</node>
+    <node x="69.5" y="0.0">main.java.busqueda.BusquedaLocal</node>
+    <node x="991.0" y="934.0">main.java.genetico.AlgoritmoGenetico</node>
+    <node x="595.0" y="626.0">main.java.genetico.algoritmos.seleccion.SeleccionTorneo</node>
+    <node x="0.0" y="419.0">main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional</node>
+    <node x="373.0" y="313.0">main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.cruce.AlgoritmoCruce">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo" target="main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo">
+      <point x="0.0" y="-28.0" />
+      <point x="858.0" y="394.0" />
+      <point x="639.6666666666667" y="394.0" />
+      <point x="106.66666666666674" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.AlgoritmoDecodificacion">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo" target="main.java.genetico.algoritmos.decodificacion.Decodificacion">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.cruce.CruceOrderBased">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.decodificacion.Decodificacion" target="main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.seleccion.SeleccionAleatoria">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.seleccion.SeleccionRuleta" target="main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion">
+      <point x="0.0" y="-28.0" />
+      <point x="132.0" y="601.0" />
+      <point x="328.5" y="601.0" />
+      <point x="-101.0" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.creacion.AlgoritmoCreacion">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.cruce.CrucePositionBased" target="main.java.genetico.algoritmos.cruce.AlgoritmoCruce">
+      <point x="0.0" y="-28.0" />
+      <point x="453.5" y="1015.0" />
+      <point x="362.75" y="1015.0" />
+      <point x="65.75" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.mutacion.MutacionInversion" target="main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion">
+      <point x="0.0" y="-28.0" />
+      <point x="491.0" y="808.0" />
+      <point x="402.25" y="808.0" />
+      <point x="75.75" y="28.0" />
+    </edge>
+    <edge source="main.java.busqueda.BusquedaIntercambioGrupo" target="main.java.busqueda.StandardBusquedaLocal">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
     <edge source="main.java.genetico.algoritmos.cruce.CruceOrderBased" target="main.java.genetico.algoritmos.cruce.AlgoritmoCruce">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-28.0" />
+      <point x="140.5" y="1015.0" />
+      <point x="231.25" y="1015.0" />
+      <point x="-65.75" y="28.0" />
+    </edge>
+    <edge source="main.java.busqueda.StandardBusquedaLocal" target="main.java.busqueda.BusquedaLocal">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
     <edge source="main.java.genetico.algoritmos.creacion.CreacionAleatoria" target="main.java.genetico.algoritmos.creacion.AlgoritmoCreacion">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
-    </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
     <edge source="main.java.genetico.algoritmos.seleccion.SeleccionAleatoria" target="main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional" target="main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo">
+      <point x="0.0" y="-28.0" />
+      <point x="176.5" y="394.0" />
+      <point x="426.3333333333333" y="394.0" />
+      <point x="-106.66666666666669" y="28.0" />
     </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.mutacion.MutacionIntercambio">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-    <edge source="main.java.genetico.AlgoritmoGenetico" target="main.java.genetico.algoritmos.creacion.CreacionAleatoria">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
+    <edge source="main.java.genetico.algoritmos.seleccion.SeleccionTorneo" target="main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion">
+      <point x="0.0" y="-28.0" />
+      <point x="731.5" y="601.0" />
+      <point x="530.5" y="601.0" />
+      <point x="101.0" y="28.0" />
     </edge>
     <edge source="main.java.genetico.algoritmos.mutacion.MutacionIntercambio" target="main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-28.0" />
+      <point x="162.0" y="808.0" />
+      <point x="250.75" y="808.0" />
+      <point x="-75.75" y="28.0" />
     </edge>
     <edge source="main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH" target="main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="28.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="509.0" y="236.5" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="1.0" x="644.0" y="548.0" />
+  <SelectedNodes>
+    <node>main.java.genetico.AlgoritmoGenetico</node>
+  </SelectedNodes>
   <Categories />
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>

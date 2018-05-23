@@ -1,16 +1,13 @@
 package main.java.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Profesor {
 
     private static Integer contador = 0;
 
-    private final Integer id;
+    private final int id;
     private String nombre;
     private Float capacidadInicial;
     private Float capacidad;
@@ -44,9 +41,10 @@ public class Profesor {
         asignadas = new ArrayList<>();
     }
 
-    public float getHorasClaseAsignadas(){
-        return getCapacidadInicial()-this.getCapacidad();
+    public float getHorasClaseAsignadas() {
+        return getCapacidadInicial() - this.getCapacidad();
     }
+
     public String getNombre() {
         return nombre;
     }
@@ -121,4 +119,24 @@ public class Profesor {
         return contador;
     }
 
+    public boolean imparte(String codigoAsignatura) {
+        for (GrupoAsignatura grupo : asignadas)
+            if (grupo.getCodigoAsignatura().equals(codigoAsignatura))
+                return true;
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profesor profesor = (Profesor) o;
+        return id == profesor.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
 }

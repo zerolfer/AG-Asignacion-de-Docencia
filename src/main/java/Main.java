@@ -8,6 +8,7 @@ import main.java.genetico.algoritmos.mutacion.MutacionInversion;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH;
+import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepetir;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
 import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
@@ -35,14 +36,14 @@ public class Main {
         /*
          * Combinaciones de algoritmos, ver cada javadoc
          */
-        lanzarAlgoritmo("1_1", genetico1_1());
-        lanzarAlgoritmo("2_1", genetico2_1());
-        lanzarAlgoritmo("3_1", genetico3_1());
-        lanzarAlgoritmo("4_1", genetico4_1());
-        lanzarAlgoritmo("1_2", genetico1_2());
-        lanzarAlgoritmo("2_2", genetico2_2());
-        lanzarAlgoritmo("3_2", genetico3_2());
-        lanzarAlgoritmo("4_2", genetico4_2());
+        //lanzarAlgoritmo("BL_1_1", genetico1_1());
+        lanzarAlgoritmo("BL_2_1", genetico2_1());
+        //lanzarAlgoritmo("BL_3_1", genetico3_1());
+        //lanzarAlgoritmo("BL_4_1", genetico4_1());
+        //lanzarAlgoritmo("BL_1_2", genetico1_2());
+        lanzarAlgoritmo("BL_2_2", genetico2_2());
+        //lanzarAlgoritmo("BL_3_2", genetico3_2());
+        //lanzarAlgoritmo("BL_4_2", genetico4_2());
 
         printer1.close();
         /*printer3.close();*/
@@ -156,7 +157,7 @@ public class Main {
                 new SeleccionAleatoria(),
                 new CrucePositionBased(PROBABILIDAD_CRUCE),
                 new MutacionInversion(PROBABILIDAD_MUTACION),
-                new ReemplazoTorneoPH());
+                new ReemplazoTorneoPHSinRepetir());
         return genetico2_2;
     }
 
@@ -173,7 +174,7 @@ public class Main {
                 new SeleccionAleatoria(),
                 new CruceOrderBased(PROBABILIDAD_CRUCE),
                 new MutacionInversion(PROBABILIDAD_MUTACION),
-                new ReemplazoTorneoPH());
+                new ReemplazoTorneoPHSinRepetir());
     }
 
     /**
