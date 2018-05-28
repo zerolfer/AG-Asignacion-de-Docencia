@@ -116,9 +116,14 @@ public class Individuo implements Comparable<Individuo> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
+// Se considera igual si tiene el mismo valor de fitness
         Individuo individuo = (Individuo) o;
+        if (this.getFitnessNumHoras() == individuo.getFitnessNumHoras()
+                && this.getFitnessAsigProfesor() == individuo.getFitnessAsigProfesor())
+            return true;
 
-        return Arrays.equals(cromosoma, individuo.cromosoma);
+        return false;
+//        return Arrays.equals(cromosoma, individuo.cromosoma);
     }
 
     public boolean checkHayRepetidos() {

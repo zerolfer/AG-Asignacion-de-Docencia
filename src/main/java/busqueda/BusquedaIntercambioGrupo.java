@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0_123.
- *
- * Could not load the following classes:
- *  main.java.busqueda.BusquedaIntercambioGrupo$1
- *  main.java.busqueda.BusquedaIntercambioGrupo$GrupoAux
- *  main.java.busqueda.StandardBusquedaLocal
- *  main.java.genetico.Individuo
- *  main.java.model.GrupoAsignatura
- *  main.java.model.Profesor
- */
 package main.java.busqueda;
 
 import main.java.genetico.Individuo;
