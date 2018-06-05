@@ -29,7 +29,7 @@ public class ReemplazoTorneoPHSinRepetir implements AlgoritmoReemplazo {
             if(!ordenados[i].equals(resultado))
                 return ordenados[i];
         }
-        return ordenados[0];
+        return ordenados[0]; // todos son iguales asi que uno cualquiera
     }
 
     private Individuo[] agrupar(Individuo[] padres, Individuo[] hijos) {
