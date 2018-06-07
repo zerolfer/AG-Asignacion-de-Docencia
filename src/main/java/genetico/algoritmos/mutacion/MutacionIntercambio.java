@@ -42,6 +42,8 @@ public class MutacionIntercambio implements AlgoritmoMutacion {
             individuo.getCromosoma()[pos1] = individuo.getCromosoma()[pos2];
             individuo.getCromosoma()[pos2] = valor;
 
+            individuo.setYaEvaluado(false);
+
             if (debug) System.out.println("\tDespues: " + individuo);
         }
     }

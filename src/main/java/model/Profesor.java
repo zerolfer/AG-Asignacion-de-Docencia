@@ -9,9 +9,9 @@ public class Profesor {
 
     private final int id;
     private String nombre;
-    private Float capacidadInicial;
-    private Float capacidad;
-    private Boolean bilingue;
+    private float capacidadInicial;
+    private float capacidad;
+    private boolean bilingue;
     private String area; // solo puede tener un área
 
     // ASIGNACIONES
@@ -39,6 +39,27 @@ public class Profesor {
         this.area = area;
 
         asignadas = new ArrayList<>();
+    }
+
+    public boolean asignarGrupo(GrupoAsignatura asignatura) {
+        if (this.getCapacidad() - asignatura.getHoras() < 0)
+            return false;
+        this.getAsignadas().add(asignatura);
+        this.setCapacidad(this.getCapacidad() - asignatura.getHoras());
+        return true;
+    }
+
+    public boolean eliminarGrupo(GrupoAsignatura asignatura) {
+        boolean result = this.getAsignadas().remove(asignatura);
+        this.setCapacidad(this.getCapacidad() + asignatura.getHoras());
+        return result;
+    }
+
+    public Profesor clone() {
+        Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area);
+        for (GrupoAsignatura g : getAsignadas())
+            result.asignarGrupo(g.clone());
+        return result;
     }
 
     public float getHorasClaseAsignadas() {
@@ -106,7 +127,16 @@ public class Profesor {
         return id;
     }
 
+
+    private int numAsignaturas = -1;
+
     public int getNumAsignaturas() {
+        return getNumAsignaturas(false);
+    }
+
+    public int getNumAsignaturas(boolean recalcular) {
+        if (numAsignaturas != -1 && !recalcular)
+            return numAsignaturas;
         Set<String> asignaturas = new HashSet<>();
         int contador = 0;
         for (GrupoAsignatura grupo : asignadas) {
@@ -116,8 +146,11 @@ public class Profesor {
                 contador++;
             }
         }
+        numAsignaturas = contador;
         return contador;
+
     }
+
 
     public boolean imparte(String codigoAsignatura) {
         for (GrupoAsignatura grupo : asignadas)
@@ -139,4 +172,5 @@ public class Profesor {
 
         return Objects.hash(id);
     }
+
 }

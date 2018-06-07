@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class BusquedaIntercambioGrupo
         extends StandardBusquedaLocal {
-    private Individuo individuo;
+    private Individuo original;
     private Comparator<BusquedaIntercambioGrupo.GrupoAux> comparatorAsignatura;
     private String asignaturaAnterior;
     private Profesor profesorAnterior;
@@ -52,15 +52,16 @@ public class BusquedaIntercambioGrupo
     }
 
     public Individuo buscar(Individuo individuo) {
-        this.individuo = individuo.clone();
-        Profesor profesor1 = this.profesorConMenosAsignaturas(this.individuo.getFenotipo2());
+        if(debug) System.out.println(individuo.hashCode()+" -> "+individuo.toString());
+        this.original = individuo.clone();
+        Profesor profesor1 = this.profesorConMenosAsignaturas(individuo.getFenotipo2());
         ArrayList<GrupoAux> grupos = new ArrayList<GrupoAux>();
         for (GrupoAsignatura ga : profesor1.getAsignadas()) {
             grupos.add(new GrupoAux(profesor1, ga));
         }
         grupos.sort(this.comparatorAsignatura);
         for (GrupoAux grupo1 : grupos) {
-            Profesor profesor2 = this.buscarProfeQueImparta(profesor1, this.individuo.getFenotipo2(), grupo1.grupo.getCodigoAsignatura());
+            Profesor profesor2 = this.buscarProfeQueImparta(profesor1, individuo.getFenotipo2(), grupo1.grupo.getCodigoAsignatura());
             if (profesor2 == null) {
                 return individuo;
             }
@@ -70,37 +71,49 @@ public class BusquedaIntercambioGrupo
             }
             grupos2.sort(this.comparatorAsignatura);
             GrupoAux grupo2 = (GrupoAux) grupos2.get(0);
-            if (!this.verificar(profesor1, grupo1, profesor2, grupo2)) continue;
-            return this.buscar(this.individuo);
+            if (this.verificar(individuo, profesor1, grupo1, profesor2, grupo2))
+                return this.buscar(individuo);
+            else individuo=original;
         }
         return individuo;
     }
 
-    private boolean verificar(Profesor profesor1, GrupoAux grupo1, Profesor profesor2, GrupoAux grupo2) {
+    private boolean verificar(Individuo individuo, Profesor profesor1, GrupoAux grupo1,
+                              Profesor profesor2, GrupoAux grupo2) {
         if (grupo1.grupo.getCodigoAsignatura().equals(grupo2.grupo.getCodigoAsignatura())) {
             return false;
         }
-        int[] cromosoma = this.individuo.getCromosoma();
-        int id1 = grupo1.grupo.getId();
-        int id2 = grupo2.grupo.getId();
-        int idx1 = -1;
-        int idx2 = -1;
-        for (int i = 0; i < cromosoma.length; ++i) {
-            if (cromosoma[i] == id1) {
-                idx1 = i;
-            }
-            if (cromosoma[i] != id2) continue;
-            idx2 = i;
+
+        //Individuo original = original.clone();
+
+
+        boolean b1 = profesor1.eliminarGrupo(grupo1.grupo);
+        boolean b2 = profesor1.asignarGrupo(grupo2.grupo);
+
+        boolean b3 = profesor2.eliminarGrupo(grupo2.grupo);
+        boolean b4 = profesor2.asignarGrupo(grupo1.grupo);
+
+        if (!b1 || !b2 || !b3 || !b4) {
+            //individuo = this.original;// no se puede realizar el cambio
+            return false;
         }
-        int aux = cromosoma[idx1];
-        cromosoma[idx1] = cromosoma[idx2];
-        cromosoma[idx2] = aux;
-        int fitness1 = this.individuo.getFitnessAsigProfesor();
-        float fitness2 = this.individuo.getFitnessNumHoras();
-        this.individuo.evaluar();
-        if (this.individuo.esMejor(fitness1, fitness2)) {
+
+        int fitness1 = individuo.getFitnessAsigProfesor();
+        float fitness2 = individuo.getFitnessNumHoras();
+
+        individuo.asignarFitnessPorFenotipo(profesor1, profesor2);
+        if (individuo.esMejor(fitness1, fitness2))
             return true;
-        }
+
+        /*profesor1.getAsignadas().remove(grupo2.grupo);
+        profesor1.getAsignadas().add(grupo1.grupo);
+
+        profesor2.getAsignadas().remove(grupo1.grupo);
+        profesor2.getAsignadas().add(grupo2.grupo);
+
+        original.setFitnessAsigProfesor(fitness1);
+        original.setFitnessNumHoras(fitness2);*/
+        //individuo = this.original;
         return false;
     }
 

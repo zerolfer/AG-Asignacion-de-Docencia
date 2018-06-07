@@ -29,7 +29,7 @@ public class AlgoritmoGenetico {
     public static final Float PROBABILIDAD_CRUCE = 0.7f;
     public static final Float PROBABILIDAD_MUTACION = 0.075f;
     public static final Integer NUMERO_GENERACIONES = 1000;
-    public static final Float PROBABILIDAD_BUSQUEDA = 0f;//0.7f;
+    public static final Float PROBABILIDAD_BUSQUEDA = 1f;//0.7f;
 
     // ALGORITMOS
     AlgoritmoCreacion creacion;
@@ -164,7 +164,8 @@ public class AlgoritmoGenetico {
     private void busquedaLocal(List<Individuo[]> individuos) {
         for (Individuo[] par : individuos)
             for (int i = 0; i < par.length; i++) {
-                par[i] = busqueda.aplicar(par[i]);
+                Individuo mejorado = busqueda.aplicar(par[i]);
+                par[i]=mejorado;
             }
 
     }

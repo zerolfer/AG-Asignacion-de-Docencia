@@ -37,11 +37,11 @@ public class Main {
          * Combinaciones de algoritmos, ver cada javadoc
          */
         //lanzarAlgoritmo("BL_1_1", genetico1_1());
-        lanzarAlgoritmo("BL_2_1", genetico2_1());
+        lanzarAlgoritmo("BL2_2_1", genetico2_1());
         //lanzarAlgoritmo("BL_3_1", genetico3_1());
         //lanzarAlgoritmo("BL_4_1", genetico4_1());
         //lanzarAlgoritmo("BL_1_2", genetico1_2());
-        lanzarAlgoritmo("BL_2_2", genetico2_2());
+//        lanzarAlgoritmo("BL_2_2", genetico2_2());
         //lanzarAlgoritmo("BL_3_2", genetico3_2());
         //lanzarAlgoritmo("BL_4_2", genetico4_2());
 

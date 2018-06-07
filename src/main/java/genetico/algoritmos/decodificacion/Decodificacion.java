@@ -40,8 +40,8 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 noAsignadas++;
                 continue;
             }
-            profesor.getAsignadas().add(asignatura);
-            profesor.setCapacidad(profesor.getCapacidad() - asignatura.getHoras());
+            profesor.asignarGrupo(asignatura);
+
             if (fenotipo.containsKey(profesor.getId())) {
                 Set<Integer> asignadas = fenotipo.get(profesor.getId());
                 asignadas.add(asignatura.getId());
@@ -81,6 +81,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             // en caso de no asignarse asignaturas a un profesor
             i.setFitnessAsigProfesor(Integer.MAX_VALUE);
             i.setFitnessNumHoras(Float.MIN_VALUE);
+            i.noAsignadas=noAsignadas;
         } else {
             int max = 0;
             float min = 1;

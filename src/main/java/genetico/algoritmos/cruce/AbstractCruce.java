@@ -27,7 +27,10 @@ public abstract class AbstractCruce implements AlgoritmoCruce {
         List<Individuo[]> result = new ArrayList<>();
         for (Individuo[] par : pares) {
             assert par.length == 2;
-            result.add(aplicar(par[0], par[1]));
+            Individuo[] hijos = aplicar(par[0], par[1]);
+            hijos[0].setYaEvaluado(false);
+            hijos[1].setYaEvaluado(false);
+            result.add(hijos);
         }
         return result;
     }

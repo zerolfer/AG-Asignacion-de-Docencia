@@ -7,10 +7,7 @@ import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -26,7 +23,9 @@ public class Individuo implements Comparable<Individuo> {
 
     private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
     public Map<Profesor, Set<GrupoAsignatura>> fenotipo2;
+    public int noAsignadas;
 
+    private boolean yaEvaluado =false; // inicialmente no evaluado
 
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
@@ -141,11 +140,25 @@ public class Individuo implements Comparable<Individuo> {
 
     @Override
     public Individuo clone() {
-        Individuo result = new Individuo(this.cromosoma.clone());
+        Individuo result = new Individuo(Arrays.copyOf(this.cromosoma, this.cromosoma.length));
         result.setFitnessAsigProfesor(getFitnessAsigProfesor());
         result.setFitnessNumHoras(getFitnessNumHoras());
-        if (getFenotipo() != null)  result.setFenotipo(new HashMap<>(getFenotipo()));
-        if (getFenotipo2() != null) result.fenotipo2 = new HashMap<>(getFenotipo2());
+        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
+        if (getFenotipo2() != null) result.fenotipo2 = clonarFenotipo2();
+        return result;
+    }
+
+    private Map<Profesor, Set<GrupoAsignatura>> clonarFenotipo2() {
+        Map<Profesor, Set<GrupoAsignatura>>result = new HashMap<>();
+        for (Map.Entry<Profesor, Set<GrupoAsignatura>> e : fenotipo2.entrySet()) {
+            Profesor key = e.getKey();
+            Set<GrupoAsignatura> value = e.getValue();
+            Set<GrupoAsignatura> nuevoValue = new HashSet<GrupoAsignatura>();
+            for (GrupoAsignatura as : value)
+                nuevoValue.add(as.clone());
+            Profesor nuevoKey= key.clone();
+            result.put(nuevoKey,nuevoValue);
+        }
         return result;
     }
 
@@ -200,15 +213,51 @@ public class Individuo implements Comparable<Individuo> {
             return true;
         if (this.getFitnessNumHoras() < fitness2)
             return false;
-            // ambos individuos son iguales
-        else return false;
+        else return false; // ambos individuos son iguales
     }
 
     public void evaluar() {
-        decodificacion.aplicar(this);
+        if(!yaEvaluado) { // si ya estaba evaluado no es necesario volver a hacerlo
+            decodificacion.aplicar(this);
+            this.yaEvaluado = true;
+        }
     }
 
     public boolean esMejor(Individuo vecino) {
         return this.compareTo(vecino) < 0 ? false : true;
+    }
+
+    public void asignarFitnessPorFenotipo(Profesor profesor1, Profesor profesor2) {
+        if (noAsignadas != 0) {
+            // en caso de no asignarse asignaturas a un profesor
+            setFitnessAsigProfesor(Integer.MAX_VALUE);
+            setFitnessNumHoras(Float.MIN_VALUE);
+        } else {
+            int max = 0;
+            float min = 1;
+
+            for (Profesor profesor : getFenotipo2().keySet()) {
+                // FITNESS 1
+                int numAsignaturas;
+                if (profesor.equals(profesor1) || profesor.equals(profesor2))
+                     numAsignaturas = profesor.getNumAsignaturas(true);
+                else numAsignaturas = profesor.getNumAsignaturas();
+                if (numAsignaturas > max)
+                    max = numAsignaturas;
+
+                // FITNESS 2
+                float horasAsignadas = profesor.getCapacidadInicial() - profesor.getCapacidad();
+                float proporcion = horasAsignadas / profesor.getCapacidadInicial();
+                if (proporcion < min) {
+                    min = proporcion;
+                }
+            }
+            setFitnessAsigProfesor(max);
+            setFitnessNumHoras(min);
+        }
+    }
+
+    public void setYaEvaluado(boolean yaEvaluado) {
+        this.yaEvaluado = yaEvaluado;
     }
 }

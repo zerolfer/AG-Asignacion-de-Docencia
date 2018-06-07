@@ -45,6 +45,8 @@ public class MutacionInversion implements AlgoritmoMutacion {
             while (pos2 > pos1)
                 Util.swap(individuo.getCromosoma(), pos1++, pos2--);
 
+            individuo.setYaEvaluado(false);
+
             if (debug) System.out.println("\tDespues: " + individuo);
         }
     }

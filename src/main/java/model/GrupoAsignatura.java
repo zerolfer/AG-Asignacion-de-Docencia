@@ -41,7 +41,7 @@ public class GrupoAsignatura {
 
     private void inicializar(String codigo, String nombre, String grupo, int semestre, Horario horario,
                              String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
-        this.codigo=codigo;
+        this.codigo = codigo;
         this.grupo = grupo;
         this.nombre = nombre;
         this.semestre = semestre;
@@ -51,6 +51,11 @@ public class GrupoAsignatura {
         this.horas = horas;
         this.bilingue = bilingue;
         this.areas = areas;
+    }
+
+    public GrupoAsignatura clone() {
+        return new GrupoAsignatura(id, codigo, nombre, grupo, semestre,
+                horario, escuela, ciudad, horas, bilingue, areas);
     }
 
     public Integer getId() {
@@ -113,7 +118,6 @@ public class GrupoAsignatura {
                 " areas=" + Arrays.toString(areas) + '\n' +
                 '}';
     }
-
 
 
 }
