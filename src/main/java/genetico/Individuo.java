@@ -59,7 +59,7 @@ public class Individuo implements Comparable<Individuo> {
 
     @Override
     public String toString() {
-        return "Individuo:{ fitness: (" + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
+        return "Individuo:{ fitness: ("+ yaEvaluado + ", " + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
                 + "Codigo cromosoma: " + cromosomaToString() + " }";
         //super.toString();//Arrays.toString(cromosoma);
     }
@@ -143,6 +143,7 @@ public class Individuo implements Comparable<Individuo> {
         Individuo result = new Individuo(Arrays.copyOf(this.cromosoma, this.cromosoma.length));
         result.setFitnessAsigProfesor(getFitnessAsigProfesor());
         result.setFitnessNumHoras(getFitnessNumHoras());
+        result.setYaEvaluado(yaEvaluado);
         if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
         if (getFenotipo2() != null) result.fenotipo2 = clonarFenotipo2();
         return result;
@@ -163,7 +164,8 @@ public class Individuo implements Comparable<Individuo> {
     }
 
     public String toStringFull() {
-        StringBuilder sb = new StringBuilder("Individuo:{ \n\tfitness: (" + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
+        StringBuilder sb = new StringBuilder("Individuo:{ \n\tfitness: (" + fitnessAsigProfesor +
+                ", " + fitnessNumHoras + ", "+yaEvaluado+"), "
                 + "Codigo cromosoma: " + cromosomaToString() + "\n");
         for (Integer key : fenotipo.keySet()) { // profesores
             sb.append(BD.getProfesorById(key) + " asignadas: [ ");
