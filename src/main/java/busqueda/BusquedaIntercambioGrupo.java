@@ -4,10 +4,7 @@ import main.java.genetico.Individuo;
 import main.java.model.GrupoAsignatura;
 import main.java.model.Profesor;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BusquedaIntercambioGrupo
         extends StandardBusquedaLocal {
@@ -55,7 +52,7 @@ public class BusquedaIntercambioGrupo
         if(debug) System.out.println(individuo.hashCode()+" -> "+individuo.toString());
         this.original = individuo.clone();
         Profesor profesor1 = this.profesorConMenosAsignaturas(individuo.getFenotipo2());
-        ArrayList<GrupoAux> grupos = new ArrayList<GrupoAux>();
+        List<GrupoAux> grupos = new ArrayList<GrupoAux>();
         for (GrupoAsignatura ga : profesor1.getAsignadas()) {
             grupos.add(new GrupoAux(profesor1, ga));
         }
@@ -70,17 +67,19 @@ public class BusquedaIntercambioGrupo
                 grupos2.add(new GrupoAux(profesor2, ga));
             }
             grupos2.sort(this.comparatorAsignatura);
-            GrupoAux grupo2 = (GrupoAux) grupos2.get(0);
-            if (this.verificar(individuo, profesor1, grupo1, profesor2, grupo2))
-                return this.buscar(individuo);
-            else individuo=original;
+            for (GrupoAux grupo2:grupos2) {
+                if (this.verificar(individuo, profesor1, grupo1, profesor2, grupo2))
+                    return this.buscar(individuo);
+                else individuo = original;
+            }
         }
         return individuo;
     }
 
     private boolean verificar(Individuo individuo, Profesor profesor1, GrupoAux grupo1,
                               Profesor profesor2, GrupoAux grupo2) {
-        if (grupo1.grupo.getCodigoAsignatura().equals(grupo2.grupo.getCodigoAsignatura())) {
+        if (grupo1.grupo.getCodigoAsignatura().equals(grupo2.grupo.getCodigoAsignatura())
+                && grupo1.grupo.getHoras()==grupo2.grupo.getHoras()) {
             return false;
         }
 
