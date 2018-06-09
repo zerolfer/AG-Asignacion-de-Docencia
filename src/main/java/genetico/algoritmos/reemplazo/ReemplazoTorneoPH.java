@@ -14,7 +14,7 @@ public class ReemplazoTorneoPH implements AlgoritmoReemplazo {
 
     @Override
     public Generacion aplicar(List<Individuo[]> padres, List<Individuo[]> hijos) {
-        Individuo[] resultados = new Individuo[AlgoritmoGenetico.POPULATION_SIZE];
+        Individuo[] resultados = new Individuo[AlgoritmoGenetico.populationSize];
         assert padres.size() == hijos.size();
         for (int i = 0, j = 0; i < resultados.length && j < padres.size(); i += 2, j++) {
             Individuo[] ordenados = agrupar(padres.get(j), hijos.get(j));

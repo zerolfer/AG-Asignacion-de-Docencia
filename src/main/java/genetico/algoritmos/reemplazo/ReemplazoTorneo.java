@@ -26,8 +26,8 @@ public class ReemplazoTorneo implements AlgoritmoReemplazo {
     @Override
     public Generacion aplicar(List<Individuo[]> padres, List<Individuo[]> hijos) {
         Individuo[] union = agrupar(padres, hijos);
-        Individuo[] resultados = new Individuo[AlgoritmoGenetico.POPULATION_SIZE];
-        for (int i = 0; i < AlgoritmoGenetico.POPULATION_SIZE; i++) {
+        Individuo[] resultados = new Individuo[AlgoritmoGenetico.populationSize];
+        for (int i = 0; i < AlgoritmoGenetico.populationSize; i++) {
             resultados[i] = torneo(union);
         }
         return new Generacion(resultados);

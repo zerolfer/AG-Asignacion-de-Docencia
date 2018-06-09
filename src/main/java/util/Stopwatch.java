@@ -23,7 +23,7 @@ public class Stopwatch {
     }
 
     public Long getFinalTime() {
-        return timeSlot.get(AlgoritmoGenetico.NUMERO_GENERACIONES);
+        return timeSlot.get(AlgoritmoGenetico.numeroGeneraciones);
     }
 
     public void start() {

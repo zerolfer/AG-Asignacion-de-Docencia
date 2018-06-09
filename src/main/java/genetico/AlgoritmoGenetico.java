@@ -25,11 +25,11 @@ import java.util.List;
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
-    public static final Integer POPULATION_SIZE = 100;
-    public static final Float PROBABILIDAD_CRUCE = 0.7f;
-    public static final Float PROBABILIDAD_MUTACION = 0.075f;
-    public static final Integer NUMERO_GENERACIONES = 1000;
-    public static final Float PROBABILIDAD_BUSQUEDA = 1f;//0.7f;
+    public static Integer populationSize = 100;
+    public static Float probabilidadCruce = 0.7f;
+    public static Float probabilidadMutacion = 0.075f;
+    public static Integer numeroGeneraciones = 1000;
+    public static Float probabilidadBusqueda = 1f; //0.7f;
 
     // ALGORITMOS
     AlgoritmoCreacion creacion;
@@ -45,6 +45,14 @@ public class AlgoritmoGenetico {
     private Stopwatch timer = new Stopwatch();
     private boolean printed = false;
 
+    public void setParameters(int tamPob, float probCruce, float probMuta, int numGen, float probBusq){
+        this.populationSize =tamPob;
+        this.probabilidadCruce =probCruce;
+        this.probabilidadMutacion =probMuta;
+        this.numeroGeneraciones =numGen;
+        this.probabilidadBusqueda =probBusq;
+    }
+
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
                              AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
         this.creacion = creator;
@@ -52,7 +60,7 @@ public class AlgoritmoGenetico {
         this.cruce = cruce;
         this.mutacion = mutacion;
         this.reemplazo = reemplazo;
-        this.busqueda = new BusquedaIntercambioGrupo(PROBABILIDAD_BUSQUEDA);
+        this.busqueda = new BusquedaIntercambioGrupo(probabilidadBusqueda);
         // this.decodificacion = new Decodificacion();
         // ordenarAsignaturas();
         ordenarProfesores();
@@ -60,8 +68,8 @@ public class AlgoritmoGenetico {
     }
 
     public AlgoritmoGenetico() {
-        this(new CreacionAleatoria(), new SeleccionAleatoria(), new CruceOrderBased(PROBABILIDAD_CRUCE),
-                new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoGeneracional());
+        this(new CreacionAleatoria(), new SeleccionAleatoria(), new CruceOrderBased(probabilidadCruce),
+                new MutacionIntercambio(probabilidadMutacion), new ReemplazoGeneracional());
     }
 
     public void iniciar(String ejecucion, int seed) {
@@ -91,7 +99,7 @@ public class AlgoritmoGenetico {
                     "files/DatosFenotipoEjecuciones.csv", ejecucion);
         }
 
-        Generacion generacion = creacion.createPopulation(POPULATION_SIZE);
+        Generacion generacion = creacion.createPopulation(populationSize);
         int numGeneraciones = 1;
         timer.start();
 
@@ -121,7 +129,7 @@ public class AlgoritmoGenetico {
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
             numGeneraciones++;
-        } while (numGeneraciones <= NUMERO_GENERACIONES);
+        } while (numGeneraciones <= numeroGeneraciones);
 
         mejorIndividuo = obtenerMejor(generacion);
         if (!printed)

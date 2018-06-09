@@ -16,7 +16,7 @@ public class ReemplazoGeneracional implements AlgoritmoReemplazo {
         List<Individuo> generacion = new ArrayList<>();
         for (Individuo[] par : hijos)
             for (Individuo hijo : par)
-                if (generacion.size() < AlgoritmoGenetico.POPULATION_SIZE)
+                if (generacion.size() < AlgoritmoGenetico.populationSize)
                     generacion.add(hijo);
         return new Generacion(generacion.toArray(new Individuo[generacion.size()]));
     }
