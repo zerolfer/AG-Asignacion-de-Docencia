@@ -6,7 +6,7 @@ import main.java.util.RandomManager;
 public abstract class StandardBusquedaLocal implements BusquedaLocal {
 
     private float probabilidad;
-    public boolean debug=true; // imprime por consola el hashCode y el toString de cada iteración
+    public boolean debug=false; // imprime por consola el hashCode y el toString de cada iteración
 
     public StandardBusquedaLocal(float probabilidad) {
         if (probabilidad < 0 || probabilidad > 1)

@@ -49,7 +49,7 @@ public class Main {
 
     }
 
-    private static void lanzarAlgoritmo(String id, AlgoritmoGenetico genetico) {
+    public static void lanzarAlgoritmo(String id, AlgoritmoGenetico genetico) {
 
         List<String> configuracion = new ArrayList<>();
 

@@ -46,4 +46,9 @@ public class CreacionAleatoria implements AlgoritmoCreacion {
         }
         return new Generacion(result.toArray(new Individuo[size]));
     }
+
+    @Override
+    public String toString() {
+        return "Creacion Aleatoria";
+    }
 }

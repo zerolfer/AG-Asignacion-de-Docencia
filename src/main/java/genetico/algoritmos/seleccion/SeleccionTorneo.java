@@ -2,6 +2,7 @@ package main.java.genetico.algoritmos.seleccion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
+import test.java.genetico.SeleccionTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,9 @@ public class SeleccionTorneo implements AlgoritmoSeleccion {
 
     private int torneoSize;
 
+    public SeleccionTorneo(){
+        this.torneoSize=4; // por defecto el valor es de 4
+    }
     public SeleccionTorneo(int torneoSize) {
         this.torneoSize = torneoSize;
     }
