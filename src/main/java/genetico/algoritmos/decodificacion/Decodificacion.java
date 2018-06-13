@@ -165,8 +165,8 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                         } else if (inicioActualFinNueva >= 0) {
                             if (!asignatura.getEscuela().equals(a.getEscuela()))
                                 if (Math.abs(
-                                        horariosGrupoActual.getHoraFin().getTime() -
-                                                horariosGrupoNuevo.getHoraInicio().getTime()
+                                        horariosGrupoNuevo.getHoraFin().getTime() -
+                                                horariosGrupoActual.getHoraInicio().getTime()
                                 ) < TimeUnit.MINUTES.toMillis(lapso))
                                     return false;
                         } else // en los demas casos hay solapamiento y no es válido
@@ -183,7 +183,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     }
 
     boolean checkCapacidad(Grupo a, Profesor p) {
-        return p.getCapacidad() >= a.getHorasPonderadas(p);
+        return p.getCapacidad() >= a.getHorasComputables(p);
     }
 
     Grupo getAsignaturaById(int idAsignatura) {

@@ -79,7 +79,7 @@ public class BusquedaIntercambioGrupo
     private boolean verificar(Individuo individuo, Profesor profesor1, GrupoAux grupo1,
                               Profesor profesor2, GrupoAux grupo2) {
         if (grupo1.grupo.getCodigoAsignatura().equals(grupo2.grupo.getCodigoAsignatura())
-                && grupo1.grupo.getHorasPonderadas(profesor1)==grupo2.grupo.getHorasPonderadas(profesor2)) {
+                && grupo1.grupo.getHorasComputables(profesor1)==grupo2.grupo.getHorasComputables(profesor2)) {
             return false;
         }
 
