@@ -24,7 +24,7 @@ import static main.java.genetico.AlgoritmoGenetico.probabilidadMutacion;
 
 public class Main {
 
-    private static final int NUM_EJECUCIONES = 1; // TODO reestablecer valor a 10
+    private static final int NUM_EJECUCIONES = 10; // TODO reestablecer valor a 10
 
     private static CSVWriter printer1 =
             new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");

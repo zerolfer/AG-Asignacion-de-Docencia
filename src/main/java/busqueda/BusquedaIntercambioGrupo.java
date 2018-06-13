@@ -1,7 +1,7 @@
 package main.java.busqueda;
 
 import main.java.genetico.Individuo;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Profesor;
 
 import java.util.*;
@@ -31,12 +31,12 @@ public class BusquedaIntercambioGrupo
     }
 
     private class GrupoAux {
-        GrupoAsignatura grupo;
+        Grupo grupo;
         int numGrupos;
 
-        GrupoAux(Profesor p, GrupoAsignatura grupo) {
+        GrupoAux(Profesor p, Grupo grupo) {
             this.numGrupos = 0;
-            for (GrupoAsignatura g : p.getAsignadas()) {
+            for (Grupo g : p.getAsignadas()) {
                 if (!grupo.getCodigoAsignatura().equals(g.getCodigoAsignatura())) continue;
                 ++this.numGrupos;
             }
@@ -53,7 +53,7 @@ public class BusquedaIntercambioGrupo
         this.original = individuo.clone();
         Profesor profesor1 = this.profesorConMenosAsignaturas(individuo.getFenotipo2());
         List<GrupoAux> grupos = new ArrayList<GrupoAux>();
-        for (GrupoAsignatura ga : profesor1.getAsignadas()) {
+        for (Grupo ga : profesor1.getAsignadas()) {
             grupos.add(new GrupoAux(profesor1, ga));
         }
         grupos.sort(this.comparatorAsignatura);
@@ -63,7 +63,7 @@ public class BusquedaIntercambioGrupo
                 return individuo;
             }
             ArrayList<GrupoAux> grupos2 = new ArrayList<GrupoAux>();
-            for (GrupoAsignatura ga : profesor2.getAsignadas()) {
+            for (Grupo ga : profesor2.getAsignadas()) {
                 grupos2.add(new GrupoAux(profesor2, ga));
             }
             grupos2.sort(this.comparatorAsignatura);
@@ -79,7 +79,7 @@ public class BusquedaIntercambioGrupo
     private boolean verificar(Individuo individuo, Profesor profesor1, GrupoAux grupo1,
                               Profesor profesor2, GrupoAux grupo2) {
         if (grupo1.grupo.getCodigoAsignatura().equals(grupo2.grupo.getCodigoAsignatura())
-                && grupo1.grupo.getHoras()==grupo2.grupo.getHoras()) {
+                && grupo1.grupo.getHorasPonderadas(profesor1)==grupo2.grupo.getHorasPonderadas(profesor2)) {
             return false;
         }
 
@@ -116,7 +116,7 @@ public class BusquedaIntercambioGrupo
         return false;
     }
 
-    private Profesor buscarProfeQueImparta(Profesor profesor1, Map<Profesor, Set<GrupoAsignatura>> fenotipo, String codigoAsignatura) {
+    private Profesor buscarProfeQueImparta(Profesor profesor1, Map<Profesor, Set<Grupo>> fenotipo, String codigoAsignatura) {
         if (this.asignaturaAnterior == null || this.profesorAnterior == null || !this.asignaturaAnterior.equals(codigoAsignatura)) {
             this.asignaturaAnterior = codigoAsignatura;
             for (Profesor p : fenotipo.keySet()) {
@@ -131,7 +131,7 @@ public class BusquedaIntercambioGrupo
         return this.profesorAnterior;
     }
 
-    private Profesor profesorConMenosAsignaturas(Map<Profesor, Set<GrupoAsignatura>> fenotipo) {
+    private Profesor profesorConMenosAsignaturas(Map<Profesor, Set<Grupo>> fenotipo) {
         Profesor min = null;
         for (Profesor p : fenotipo.keySet()) {
             if (min != null && p.getNumAsignaturas() >= min.getNumAsignaturas()) continue;

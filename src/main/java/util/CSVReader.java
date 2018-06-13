@@ -1,6 +1,6 @@
 package main.java.util;
 
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Horario;
 import main.java.model.Profesor;
 
@@ -70,10 +70,10 @@ public class CSVReader {
         }
     }
 
-    public static List<GrupoAsignatura> CsvLoadAsignaturas() {
+    public static List<Grupo> CsvLoadAsignaturas() {
         BufferedReader br = null;
         String line = "";
-        List<GrupoAsignatura> asignaturas = new ArrayList<>();
+        List<Grupo> asignaturas = new ArrayList<>();
         try {
 
             br = new BufferedReader(new FileReader(ASIGNATURAS_PATH));
@@ -85,7 +85,7 @@ public class CSVReader {
                 try {
                     List<Horario> horarios = crearListaHorarios(split);
                     asignaturas.add(
-                            new GrupoAsignatura(
+                            new Grupo(
                                     split[0],
                                     split[1],
                                     split[2],
@@ -104,7 +104,7 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
-            if (debug) for (GrupoAsignatura a : asignaturas) System.out.println(a);
+            if (debug) for (Grupo a : asignaturas) System.out.println(a);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);

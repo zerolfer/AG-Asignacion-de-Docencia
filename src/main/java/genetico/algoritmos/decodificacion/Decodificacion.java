@@ -2,7 +2,7 @@ package main.java.genetico.algoritmos.decodificacion;
 
 import main.java.genetico.Individuo;
 import main.java.model.BD;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Horario;
 import main.java.model.Profesor;
 import main.java.util.Util;
@@ -18,19 +18,31 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     /**
      * Mínimo lapso de tiempo en minutos que se deberá dejar
      * transcurrir como margen en caso de que la docencia a
-     * sea en diferentes lugares (escuela, ciudad, etc)
+     * sea en diferentes escuelas pero sea en la misma ciudad.
+     *
+     * @see #checkSolapamiento(Profesor, Grupo)
      */
-    private static final int minutosIntervalo = 60;
+    private static final int minutosIntervaloMismaCiudad = 30;
+
+    /**
+     * Mínimo lapso de tiempo en minutos que se deberá dejar
+     * transcurrir como margen en caso de que la docencia a
+     * sea en una escuela y una ciudad diferente.
+     *
+     * @see #checkSolapamiento(Profesor, Grupo)
+     */
+    private static final int minutosIntervaloDistintaCiudad = 60;
+
 
     public static boolean debug = false;
     List<Profesor> profesores;
-    List<GrupoAsignatura> asignaturas;
+    List<Grupo> asignaturas;
 
     @Override
     public void aplicar(Individuo individuo) {
 
         Map<Integer, Set<Integer>> fenotipo = new HashMap<>();
-        Map<Profesor, Set<GrupoAsignatura>> fenotipo2 = new HashMap<>();
+        Map<Profesor, Set<Grupo>> fenotipo2 = new HashMap<>();
 
         this.profesores = Util.copyOfProfesor(BD.getProfesores());
         this.asignaturas = Util.copyOfGrupo(BD.getAsignaturas());
@@ -41,7 +53,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
         int noAsignadas = 0;
         for (int idAsignatura : individuo.getCromosoma()) { // O(n^3)
-            GrupoAsignatura asignatura = getAsignaturaById(idAsignatura);
+            Grupo asignatura = getAsignaturaById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);
             if (profesor == null) {
                 noAsignadas++;
@@ -60,10 +72,10 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
 
             if (fenotipo2.containsKey(profesor)) {
-                Set<GrupoAsignatura> asignadas = fenotipo2.get(profesor);
+                Set<Grupo> asignadas = fenotipo2.get(profesor);
                 asignadas.add(asignatura);
             } else {
-                Set<GrupoAsignatura> nuevoSet = new HashSet<>();
+                Set<Grupo> nuevoSet = new HashSet<>();
                 nuevoSet.add(asignatura);
                 fenotipo2.put(profesor, nuevoSet);
             }
@@ -82,7 +94,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         }
     }
 
-    void asignarFitness(Individuo i, int noAsignadas, List<Profesor> profesores, List<GrupoAsignatura> asignaturas) {
+    void asignarFitness(Individuo i, int noAsignadas, List<Profesor> profesores, List<Grupo> asignaturas) {
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
             i.setFitnessAsigProfesor(Integer.MAX_VALUE);
@@ -110,7 +122,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         }
     }
 
-    Profesor getProfesor(GrupoAsignatura a) {
+    Profesor getProfesor(Grupo a) {
         for (Profesor p : this.profesores) {
             if (checkCapacidad(a, p) && checkBilingue(a, p) && checkArea(p, a))
                 if (checkSolapamiento(p, a))
@@ -119,12 +131,12 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         return null; // en caso de no haber profesoresa cubrir se le asignará un fitness infinito
     }
 
-    boolean checkArea(Profesor p, GrupoAsignatura a) {
+    boolean checkArea(Profesor p, Grupo a) {
         return Arrays.binarySearch(a.getAreas(), p.getArea()) != -1;
     }
 
-    boolean checkSolapamiento(Profesor p, GrupoAsignatura a) {
-        for (GrupoAsignatura asignatura : p.getAsignadas()) {
+    boolean checkSolapamiento(Profesor p, Grupo a) {
+        for (Grupo asignatura : p.getAsignadas()) {
             for (Horario horariosGrupoActual : asignatura.getHorarios()) { // actual(es)
                 for (Horario horariosGrupoNuevo : a.getHorarios()) { // nuevo(s)
                     if (horariosGrupoActual.getDia() == horariosGrupoNuevo.getDia()
@@ -134,22 +146,30 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                         int inicioActualFinNueva =
                                 horariosGrupoActual.getHoraInicio().compareTo(horariosGrupoNuevo.getHoraFin());
 
+                        int lapso;
+                        if (asignatura.getCiudad().equals(a.getCiudad())) // misma ciudad pero distinta escuela
+                            lapso = minutosIntervaloMismaCiudad;
+                        else lapso = minutosIntervaloDistintaCiudad;
+
+                        // si el fin de la actual es anterior al comienzo de la nueva a asignar
                         if (finActualInicioNueva <= 0) {
-                            if (!asignatura.getEscuela().equals(a.getEscuela()))
+                            if (!asignatura.getEscuela().equals(a.getEscuela())) {
                                 if (Math.abs(
                                         horariosGrupoNuevo.getHoraInicio().getTime() -
                                                 horariosGrupoActual.getHoraFin().getTime()
-                                ) < TimeUnit.MINUTES.toMillis(minutosIntervalo))
+                                ) < TimeUnit.MINUTES.toMillis(lapso))
                                     return false;
+                            }
 
+                        // si comienzo de la actual es posterior al final de la nueva a asignar
                         } else if (inicioActualFinNueva >= 0) {
                             if (!asignatura.getEscuela().equals(a.getEscuela()))
                                 if (Math.abs(
                                         horariosGrupoActual.getHoraFin().getTime() -
                                                 horariosGrupoNuevo.getHoraInicio().getTime()
-                                ) < TimeUnit.HOURS.toMillis(1))
+                                ) < TimeUnit.MINUTES.toMillis(lapso))
                                     return false;
-                        } else
+                        } else // en los demas casos hay solapamiento y no es válido
                             return false;
                     }
                 }
@@ -158,16 +178,16 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         return true;
     }
 
-    boolean checkBilingue(GrupoAsignatura a, Profesor p) {
+    boolean checkBilingue(Grupo a, Profesor p) {
         return p.getBilingue() || !a.getBilingue();
     }
 
-    boolean checkCapacidad(GrupoAsignatura a, Profesor p) {
-        return p.getCapacidad() >= a.getHoras();
+    boolean checkCapacidad(Grupo a, Profesor p) {
+        return p.getCapacidad() >= a.getHorasPonderadas(p);
     }
 
-    GrupoAsignatura getAsignaturaById(int idAsignatura) {
-        for (GrupoAsignatura a : this.asignaturas) {
+    Grupo getAsignaturaById(int idAsignatura) {
+        for (Grupo a : this.asignaturas) {
             if (a.getId() == idAsignatura)
                 return a;
         }

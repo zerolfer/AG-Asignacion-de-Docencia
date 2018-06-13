@@ -1,7 +1,7 @@
 package main.java.util.writer;
 
 import main.java.genetico.AlgoritmoGenetico;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Horario;
 import main.java.model.Profesor;
 
@@ -19,7 +19,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
     @Override
     public void csvWriteData(AlgoritmoGenetico genetico) {
         //Map<Integer, Set<Integer>> fenotipo = genetico.getMejorIndividuo().getFenotipo();
-        Map<Profesor, Set<GrupoAsignatura>> fenotipo = genetico.getMejorIndividuo().fenotipo2;
+        Map<Profesor, Set<Grupo>> fenotipo = genetico.getMejorIndividuo().fenotipo2;
         Date d = new Date();
         super.csvWriteData("ejecucion" + SPLITTER + ejecucion + SPLITTER
                 + "hora" + SPLITTER +
@@ -67,7 +67,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
             sb.append(LINE_SEP);
 
             for (Integer grupoId : fenotipo.get(key)) {
-                GrupoAsignatura grupo = BD.getGrupoById(grupoId);
+                Grupo grupo = BD.getGrupoById(grupoId);
                 //sb.append(SPLITTER);
                 sb.append(grupo.getId());
                 sb.append(SPLITTER);
@@ -104,7 +104,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
         return sb.toString();
     }
 */
-    private String fenotipoToString(Map<Profesor, Set<GrupoAsignatura>> fenotipo) {
+    private String fenotipoToString(Map<Profesor, Set<Grupo>> fenotipo) {
         StringBuilder sb = new StringBuilder();
         for (Profesor key : fenotipo.keySet()) { // profesores
             sb.append("profesor");
@@ -150,12 +150,13 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
             sb.append(SPLITTER + "escuela");
             sb.append(SPLITTER + "ciudad");
             sb.append(SPLITTER + "horas");
+            sb.append(SPLITTER + "h. computadas");
             sb.append(SPLITTER + "bilingue");
             sb.append(SPLITTER + "areas");
             sb.append(SPLITTER + "horarios");
             sb.append(LINE_SEP);
 
-            for (GrupoAsignatura grupo : fenotipo.get(key)) {
+            for (Grupo grupo : fenotipo.get(key)) {
                 //sb.append(SPLITTER);
                 sb.append(grupo.getId());
                 sb.append(SPLITTER);
@@ -173,18 +174,23 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
                 sb.append(SPLITTER);
                 sb.append(grupo.getHoras());
                 sb.append(SPLITTER);
+                sb.append(grupo.getHorasComputables(key));
+                sb.append(SPLITTER);
                 sb.append((grupo.getBilingue() ? "SI" : "NO"));
                 sb.append(SPLITTER);
-                for (Horario horario:grupo.getHorarios()) {
-                    sb.append(horario.toFormatedString());
-                    sb.append(SPLITTER);
-                }
-
+                // áreas
                 for (int i = 0; i < grupo.getAreas().length; i++) {
                     sb.append(grupo.getAreas()[i]);
                     if (i < grupo.getAreas().length - 1)
                         sb.append("/");
                 }
+                sb.append(SPLITTER);
+                //horarios
+                for (Horario horario:grupo.getHorarios()) {
+                    sb.append(horario.toFormatedString());
+                    sb.append(SPLITTER);
+                }
+
 
                 sb.append(LINE_SEP);
 

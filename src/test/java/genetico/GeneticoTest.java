@@ -13,7 +13,7 @@ import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Profesor;
 import main.java.util.RandomManager;
 import org.junit.Assert;
@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 public class GeneticoTest {
 
     private List<Profesor> profesores;
-    private List<GrupoAsignatura> asignaturas;
+    private List<Grupo> asignaturas;
 
 /*
     @Before

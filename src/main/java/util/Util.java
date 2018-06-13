@@ -1,7 +1,7 @@
 package main.java.util;
 
 import main.java.genetico.Individuo;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Profesor;
 
 import java.util.ArrayList;
@@ -47,11 +47,11 @@ public class Util {
         return res;
     }
 
-    public static List<GrupoAsignatura> copyOfGrupo(List<GrupoAsignatura> ts) {
-        List<GrupoAsignatura> res = new ArrayList<>();
+    public static List<Grupo> copyOfGrupo(List<Grupo> ts) {
+        List<Grupo> res = new ArrayList<>();
         for (int i = 0; i < ts.size(); i++) {
-            GrupoAsignatura t = ts.get(i);
-            res.add(new GrupoAsignatura(t.getId(),t.getCodigoAsignatura(), t.getNombre(), t.getGrupo(), t.getSemestre(), t.getHorarios(),
+            Grupo t = ts.get(i);
+            res.add(new Grupo(t.getId(),t.getCodigoAsignatura(), t.getNombre(), t.getGrupo(), t.getSemestre(), t.getHorarios(),
                     t.getEscuela(), t.getCiudad(), t.getHoras(), t.getBilingue(), t.getAreas()));
         }
         return res;
@@ -61,8 +61,8 @@ public class Util {
         return profesors.toArray(new Profesor[profesors.size()]);
     }
 
-    public static GrupoAsignatura[] listToArrayGrupo(List<GrupoAsignatura> clases) {
-        return clases.toArray(new GrupoAsignatura[clases.size()]);
+    public static Grupo[] listToArrayGrupo(List<Grupo> clases) {
+        return clases.toArray(new Grupo[clases.size()]);
     }
 
     public static Individuo createIndividual(int... valores) {

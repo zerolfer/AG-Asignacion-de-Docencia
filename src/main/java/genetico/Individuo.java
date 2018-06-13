@@ -4,7 +4,7 @@ package main.java.genetico;
 import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
 import main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.BD;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Profesor;
 
 import java.util.*;
@@ -22,7 +22,7 @@ public class Individuo implements Comparable<Individuo> {
     private float fitnessNumHoras;
 
     private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
-    public Map<Profesor, Set<GrupoAsignatura>> fenotipo2;
+    public Map<Profesor, Set<Grupo>> fenotipo2;
     public int noAsignadas;
 
     private boolean yaEvaluado =false; // inicialmente no evaluado
@@ -89,7 +89,7 @@ public class Individuo implements Comparable<Individuo> {
         return fenotipo;
     }
 
-    public Map<Profesor, Set<GrupoAsignatura>> getFenotipo2() {
+    public Map<Profesor, Set<Grupo>> getFenotipo2() {
         return fenotipo2;
     }
 
@@ -149,13 +149,13 @@ public class Individuo implements Comparable<Individuo> {
         return result;
     }
 
-    private Map<Profesor, Set<GrupoAsignatura>> clonarFenotipo2() {
-        Map<Profesor, Set<GrupoAsignatura>>result = new HashMap<>();
-        for (Map.Entry<Profesor, Set<GrupoAsignatura>> e : fenotipo2.entrySet()) {
+    private Map<Profesor, Set<Grupo>> clonarFenotipo2() {
+        Map<Profesor, Set<Grupo>>result = new HashMap<>();
+        for (Map.Entry<Profesor, Set<Grupo>> e : fenotipo2.entrySet()) {
             Profesor key = e.getKey();
-            Set<GrupoAsignatura> value = e.getValue();
-            Set<GrupoAsignatura> nuevoValue = new HashSet<GrupoAsignatura>();
-            for (GrupoAsignatura as : value)
+            Set<Grupo> value = e.getValue();
+            Set<Grupo> nuevoValue = new HashSet<Grupo>();
+            for (Grupo as : value)
                 nuevoValue.add(as.clone());
             Profesor nuevoKey= key.clone();
             result.put(nuevoKey,nuevoValue);

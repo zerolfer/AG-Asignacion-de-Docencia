@@ -21,9 +21,9 @@ public class BD {
         }
     };
 
-    public static final Comparator<GrupoAsignatura> comparatorGrupos = new Comparator<GrupoAsignatura>() {
+    public static final Comparator<Grupo> comparatorGrupos = new Comparator<Grupo>() {
         @Override
-        public int compare(GrupoAsignatura o1, GrupoAsignatura o2) {
+        public int compare(Grupo o1, Grupo o2) {
             if (o1.getBilingue() == true && o2.getBilingue() == false)
                 return -1;
             if (o1.getBilingue() == false && o2.getBilingue() == true)
@@ -33,13 +33,13 @@ public class BD {
     };
 
     private static final List<Profesor> profesores = CSVReader.CsvLoadProfesores();
-    private static final List<GrupoAsignatura> asignaturas = CSVReader.CsvLoadAsignaturas();
+    private static final List<Grupo> asignaturas = CSVReader.CsvLoadAsignaturas();
 
     public static List<Profesor> getProfesores() {
         return profesores;
     }
 
-    public static List<GrupoAsignatura> getAsignaturas() {
+    public static List<Grupo> getAsignaturas() {
         return asignaturas;
     }
 
@@ -51,8 +51,8 @@ public class BD {
         return null;
     }
 
-    public static GrupoAsignatura getGrupoById(int id) {
-        for (GrupoAsignatura grupo : asignaturas) {
+    public static Grupo getGrupoById(int id) {
+        for (Grupo grupo : asignaturas) {
             if (grupo.getId() == id)
                 return grupo;
         }

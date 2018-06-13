@@ -2,7 +2,7 @@ package main.java.genetico.algoritmos.creacion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.util.RandomManager;
 
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ public class CreacionAleatoria implements AlgoritmoCreacion {
 
     @Override
     public Individuo generateIndividual() {
-        int ultimo = GrupoAsignatura.getUltimoId();
+        int ultimo = Grupo.getUltimoId();
         int[] elementos = inicializar(ultimo);
-        if (ultimo == GrupoAsignatura.INICIO) throw new RuntimeException("No hay asignaturas");
+        if (ultimo == Grupo.INICIO) throw new RuntimeException("No hay grupos");
 
         // permutación de elementos == elementos no repetidos
         for (int i = 0; i < ultimo; i++) {

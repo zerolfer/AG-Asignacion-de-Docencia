@@ -1,6 +1,6 @@
 package main.java.genetico.algoritmos.decodificacion;
 
-import main.java.model.GrupoAsignatura;
+import main.java.model.Grupo;
 import main.java.model.Profesor;
 
 /**
@@ -9,7 +9,7 @@ import main.java.model.Profesor;
 public class DecodificacionFiltroGrupo extends Decodificacion {
 
     @Override
-    Profesor getProfesor(GrupoAsignatura a) {
+    Profesor getProfesor(Grupo a) {
         Profesor conMenosHorasClase = null;
         for (Profesor p : this.profesores) {
             if (super.checkCapacidad(a, p) && super.checkBilingue(a, p) && super.checkArea(p, a))
@@ -26,8 +26,8 @@ public class DecodificacionFiltroGrupo extends Decodificacion {
         return conMenosHorasClase; // en caso de no haber profesores a cubrir se le asignará un fitness infinito
     }
 
-    private boolean checkImparteAsignatura(Profesor p, GrupoAsignatura a) {
-        for (GrupoAsignatura imparte : p.getAsignadas())
+    private boolean checkImparteAsignatura(Profesor p, Grupo a) {
+        for (Grupo imparte : p.getAsignadas())
             if (imparte.getCodigoAsignatura().equals(a.getCodigoAsignatura()))
                 return true;
         return false;

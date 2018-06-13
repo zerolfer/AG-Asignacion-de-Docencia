@@ -15,7 +15,7 @@ public class Profesor {
     private String area; // solo puede tener un área
 
     // ASIGNACIONES
-    private List<GrupoAsignatura> asignadas;
+    private List<Grupo> asignadas;
 
     public Profesor(Integer id, String nombre, Float capacidad, Boolean bilingue, String area) {
         this.id = id;
@@ -41,23 +41,23 @@ public class Profesor {
         asignadas = new ArrayList<>();
     }
 
-    public boolean asignarGrupo(GrupoAsignatura asignatura) {
-        if (this.getCapacidad() - asignatura.getHoras() < 0)
+    public boolean asignarGrupo(Grupo asignatura) {
+        if (this.getCapacidad() - asignatura.getHorasComputables(this) < 0)
             return false;
         this.getAsignadas().add(asignatura);
-        this.setCapacidad(this.getCapacidad() - asignatura.getHoras());
+        this.setCapacidad(this.getCapacidad() - asignatura.getHorasComputables(this));
         return true;
     }
 
-    public boolean eliminarGrupo(GrupoAsignatura asignatura) {
+    public boolean eliminarGrupo(Grupo asignatura) {
         boolean result = this.getAsignadas().remove(asignatura);
-        this.setCapacidad(this.getCapacidad() + asignatura.getHoras());
+        this.setCapacidad(this.getCapacidad() + asignatura.getHorasComputables(this));
         return result;
     }
 
     public Profesor clone() {
         Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area);
-        for (GrupoAsignatura g : getAsignadas())
+        for (Grupo g : getAsignadas())
             result.asignarGrupo(g.clone());
         return result;
     }
@@ -102,7 +102,7 @@ public class Profesor {
         this.area = area;
     }
 
-    public List<GrupoAsignatura> getAsignadas() {
+    public List<Grupo> getAsignadas() {
         return asignadas;
     }
 
@@ -116,9 +116,9 @@ public class Profesor {
                 ", bilingue=" + bilingue +
                 ", area='" + area + '\'';
         if (!asignadas.isEmpty())
-            s += ", asignadas{ " + asignadas.stream().map(GrupoAsignatura::getId).collect(Collectors.toList());
+            s += ", asignadas{ " + asignadas.stream().map(Grupo::getId).collect(Collectors.toList());
         ;
-        //Arrays.toString(asignadas.toArray(new GrupoAsignatura[asignadas.size()])) + " }";
+        //Arrays.toString(asignadas.toArray(new Grupo[asignadas.size()])) + " }";
         s += '}';
         return s;
     }
@@ -139,7 +139,7 @@ public class Profesor {
             return numAsignaturas;
         Set<String> asignaturas = new HashSet<>();
         int contador = 0;
-        for (GrupoAsignatura grupo : asignadas) {
+        for (Grupo grupo : asignadas) {
             String codigoAsignatura = grupo.getCodigoAsignatura();
             if (!asignaturas.contains(codigoAsignatura)) {
                 asignaturas.add(codigoAsignatura);
@@ -153,7 +153,7 @@ public class Profesor {
 
 
     public boolean imparte(String codigoAsignatura) {
-        for (GrupoAsignatura grupo : asignadas)
+        for (Grupo grupo : asignadas)
             if (grupo.getCodigoAsignatura().equals(codigoAsignatura))
                 return true;
         return false;
