@@ -1,6 +1,7 @@
 package main.java.model;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class GrupoAsignatura {
 
@@ -12,7 +13,7 @@ public class GrupoAsignatura {
     private String grupo;
     private String nombre;
     private Integer semestre;
-    private Horario horario;
+    private List<Horario> horarios;
     private String escuela;
     private String ciudad;
     private Float horas;
@@ -20,18 +21,18 @@ public class GrupoAsignatura {
     private String[] areas;
 
     public GrupoAsignatura(Integer id, String codigo, String nombre, String grupo, int semestre,
-                           Horario horario, String escuela, String ciudad, Float horas,
+                           List<Horario> horarios, String escuela, String ciudad, Float horas,
                            Boolean bilingue, String[] areas) {
         this.id = id;
-        inicializar(codigo, nombre, grupo, semestre, horario,
+        inicializar(codigo, nombre, grupo, semestre, horarios,
                 escuela, ciudad, horas, bilingue, areas);
     }
 
 
-    public GrupoAsignatura(String codigo, String nombre, String grupo, int semestre, Horario horario,
+    public GrupoAsignatura(String codigo, String nombre, String grupo, int semestre, List<Horario> horarios,
                            String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
         this.id = contador++;
-        inicializar(codigo, nombre, grupo, semestre, horario,
+        inicializar(codigo, nombre, grupo, semestre, horarios,
                 escuela, ciudad, horas, bilingue, areas);
     }
 
@@ -39,13 +40,13 @@ public class GrupoAsignatura {
         return contador;
     }
 
-    private void inicializar(String codigo, String nombre, String grupo, int semestre, Horario horario,
+    private void inicializar(String codigo, String nombre, String grupo, int semestre, List<Horario> horario,
                              String escuela, String ciudad, Float horas, Boolean bilingue, String[] areas) {
         this.codigo = codigo;
         this.grupo = grupo;
         this.nombre = nombre;
         this.semestre = semestre;
-        this.horario = horario;
+        this.horarios = horario;
         this.escuela = escuela;
         this.ciudad = ciudad;
         this.horas = horas;
@@ -55,7 +56,7 @@ public class GrupoAsignatura {
 
     public GrupoAsignatura clone() {
         return new GrupoAsignatura(id, codigo, nombre, grupo, semestre,
-                horario, escuela, ciudad, horas, bilingue, areas);
+                horarios, escuela, ciudad, horas, bilingue, areas);
     }
 
     public Integer getId() {
@@ -78,8 +79,8 @@ public class GrupoAsignatura {
         return semestre;
     }
 
-    public Horario getHorario() {
-        return horario;
+    public List<Horario> getHorarios() {
+        return horarios;
     }
 
     public String getEscuela() {
@@ -110,7 +111,7 @@ public class GrupoAsignatura {
                 " grupo='" + grupo + '\'' + ',' +
                 " nombre='" + nombre + '\'' + ',' +
                 " semestre=" + semestre + ',' +
-                " horario=" + horario + '\n' +
+                " horarios=" + horarios + '\n' +
                 "\tescuela='" + escuela + '\'' + ',' +
                 " ciudad='" + ciudad + '\'' + ',' +
                 " horas=" + horas + ',' +

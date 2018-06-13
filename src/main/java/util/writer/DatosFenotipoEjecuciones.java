@@ -2,6 +2,7 @@ package main.java.util.writer;
 
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.model.GrupoAsignatura;
+import main.java.model.Horario;
 import main.java.model.Profesor;
 
 import java.text.SimpleDateFormat;
@@ -78,7 +79,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
                 sb.append(SPLITTER);
                 sb.append(grupo.getSemestre());
                 sb.append(SPLITTER);
-                sb.append(grupo.getHorario().toFormatedString());
+                sb.append(grupo.getHorarios().toFormatedString());
                 sb.append(SPLITTER);
                 sb.append(grupo.getEscuela());
                 sb.append(SPLITTER);
@@ -146,12 +147,12 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
             sb.append(SPLITTER + "grupo");
             sb.append(SPLITTER + "nombre");
             sb.append(SPLITTER + "semestre");
-            sb.append(SPLITTER + "horario");
             sb.append(SPLITTER + "escuela");
             sb.append(SPLITTER + "ciudad");
             sb.append(SPLITTER + "horas");
             sb.append(SPLITTER + "bilingue");
             sb.append(SPLITTER + "areas");
+            sb.append(SPLITTER + "horarios");
             sb.append(LINE_SEP);
 
             for (GrupoAsignatura grupo : fenotipo.get(key)) {
@@ -166,8 +167,6 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
                 sb.append(SPLITTER);
                 sb.append(grupo.getSemestre());
                 sb.append(SPLITTER);
-                sb.append(grupo.getHorario().toFormatedString());
-                sb.append(SPLITTER);
                 sb.append(grupo.getEscuela());
                 sb.append(SPLITTER);
                 sb.append(grupo.getCiudad());
@@ -176,6 +175,10 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
                 sb.append(SPLITTER);
                 sb.append((grupo.getBilingue() ? "SI" : "NO"));
                 sb.append(SPLITTER);
+                for (Horario horario:grupo.getHorarios()) {
+                    sb.append(horario.toFormatedString());
+                    sb.append(SPLITTER);
+                }
 
                 for (int i = 0; i < grupo.getAreas().length; i++) {
                     sb.append(grupo.getAreas()[i]);

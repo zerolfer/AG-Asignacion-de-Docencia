@@ -83,18 +83,19 @@ public class CSVReader {
 
                 String[] split = line.split(SPLITTER);
                 try {
+                    List<Horario> horarios = crearListaHorarios(split);
                     asignaturas.add(
                             new GrupoAsignatura(
                                     split[0],
                                     split[1],
                                     split[2],
                                     Integer.parseInt(split[3]),
-                                    horarioProvider(split[4]), // tipo horario
+                                    horarios,
+                                    split[4],
                                     split[5],
-                                    split[6],
-                                    Float.parseFloat(split[7]),
-                                    parseBoolean(split[8]),
-                                    split[9].split(AREA_SPLITTER)
+                                    Float.parseFloat(split[6]),
+                                    parseBoolean(split[7]),
+                                    split[8].split(AREA_SPLITTER)
                             )
                     );
                 } catch (ClassCastException e) {
@@ -109,6 +110,14 @@ public class CSVReader {
             System.exit(-1);
         }
         return asignaturas;
+    }
+
+    private static List<Horario> crearListaHorarios(String[] split) throws ParseException {
+        List<Horario> result=new ArrayList<>();
+        for (int i = 9; i < split.length; i++) {
+            result.add(horarioProvider(split[i]));
+        }
+        return result;
     }
 
     private static Horario horarioProvider(String string) throws ParseException {

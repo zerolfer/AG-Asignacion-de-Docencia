@@ -1,9 +1,9 @@
 package main.java.genetico.algoritmos.decodificacion;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
 import main.java.model.BD;
 import main.java.model.GrupoAsignatura;
+import main.java.model.Horario;
 import main.java.model.Profesor;
 import main.java.util.Util;
 
@@ -14,6 +14,13 @@ import java.util.concurrent.TimeUnit;
  * Created by Sergio Florez on 09/03/2018.
  */
 public class Decodificacion implements AlgoritmoDecodificacion {
+
+    /**
+     * Mínimo lapso de tiempo en minutos que se deberá dejar
+     * transcurrir como margen en caso de que la docencia a
+     * sea en diferentes lugares (escuela, ciudad, etc)
+     */
+    private static final int minutosIntervalo = 60;
 
     public static boolean debug = false;
     List<Profesor> profesores;
@@ -52,7 +59,6 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             }
 
 
-
             if (fenotipo2.containsKey(profesor)) {
                 Set<GrupoAsignatura> asignadas = fenotipo2.get(profesor);
                 asignadas.add(asignatura);
@@ -66,7 +72,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         asignarFitness(individuo, noAsignadas, this.profesores, this.asignaturas);
 
         individuo.setFenotipo(fenotipo);
-        individuo.fenotipo2=fenotipo2;
+        individuo.fenotipo2 = fenotipo2;
 
         if (debug) {
             if (individuo.getFitnessAsigProfesor() >= Integer.MAX_VALUE)
@@ -81,7 +87,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             // en caso de no asignarse asignaturas a un profesor
             i.setFitnessAsigProfesor(Integer.MAX_VALUE);
             i.setFitnessNumHoras(Float.MIN_VALUE);
-            i.noAsignadas=noAsignadas;
+            i.noAsignadas = noAsignadas;
         } else {
             int max = 0;
             float min = 1;
@@ -93,8 +99,8 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                     max = numAsignaturas;
 
                 // FITNESS 2
-                float horasAsignadas=profesor.getCapacidadInicial() - profesor.getCapacidad();
-                float proporcion = horasAsignadas/profesor.getCapacidadInicial();
+                float horasAsignadas = profesor.getCapacidadInicial() - profesor.getCapacidad();
+                float proporcion = horasAsignadas / profesor.getCapacidadInicial();
                 if (proporcion < min) {
                     min = proporcion;
                 }
@@ -119,25 +125,34 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
     boolean checkSolapamiento(Profesor p, GrupoAsignatura a) {
         for (GrupoAsignatura asignatura : p.getAsignadas()) {
-            if (asignatura.getHorario().getDia() == a.getHorario().getDia()
-                    && asignatura.getSemestre() == a.getSemestre()) {
-                int finActualInicioNueva = asignatura.getHorario().getHoraFin().compareTo(a.getHorario().getHoraInicio());
-                int inicioActualFinNueva = asignatura.getHorario().getHoraInicio().compareTo(a.getHorario().getHoraFin());
-                if (finActualInicioNueva <= 0) {
-                    if (!asignatura.getEscuela().equals(a.getEscuela()))
-                        if (Math.abs(
-                                a.getHorario().getHoraInicio().getTime() - asignatura.getHorario().getHoraFin().getTime()
-                        ) < TimeUnit.HOURS.toMillis(1))
-                            return false;
-                } else if (inicioActualFinNueva >= 0) {
-                    if (!asignatura.getEscuela().equals(a.getEscuela()))
-                        if (Math.abs(
-                                asignatura.getHorario().getHoraFin().getTime() - a.getHorario().getHoraInicio().getTime()
-                        ) < TimeUnit.HOURS.toMillis(1))
-                            return false;
-                } else
-                    return false;
+            for (Horario horariosGrupoActual : asignatura.getHorarios()) { // actual(es)
+                for (Horario horariosGrupoNuevo : a.getHorarios()) { // nuevo(s)
+                    if (horariosGrupoActual.getDia() == horariosGrupoNuevo.getDia()
+                            && asignatura.getSemestre() == a.getSemestre()) {
+                        int finActualInicioNueva =
+                                horariosGrupoActual.getHoraFin().compareTo(horariosGrupoNuevo.getHoraInicio());
+                        int inicioActualFinNueva =
+                                horariosGrupoActual.getHoraInicio().compareTo(horariosGrupoNuevo.getHoraFin());
 
+                        if (finActualInicioNueva <= 0) {
+                            if (!asignatura.getEscuela().equals(a.getEscuela()))
+                                if (Math.abs(
+                                        horariosGrupoNuevo.getHoraInicio().getTime() -
+                                                horariosGrupoActual.getHoraFin().getTime()
+                                ) < TimeUnit.MINUTES.toMillis(minutosIntervalo))
+                                    return false;
+
+                        } else if (inicioActualFinNueva >= 0) {
+                            if (!asignatura.getEscuela().equals(a.getEscuela()))
+                                if (Math.abs(
+                                        horariosGrupoActual.getHoraFin().getTime() -
+                                                horariosGrupoNuevo.getHoraInicio().getTime()
+                                ) < TimeUnit.HOURS.toMillis(1))
+                                    return false;
+                        } else
+                            return false;
+                    }
+                }
             }
         }
         return true;
