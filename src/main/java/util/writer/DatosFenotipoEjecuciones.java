@@ -4,6 +4,7 @@ import main.java.genetico.AlgoritmoGenetico;
 import main.java.model.Grupo;
 import main.java.model.Horario;
 import main.java.model.Profesor;
+import main.java.util.RandomManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,7 +29,8 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
                 + "hora" + SPLITTER +
                 new SimpleDateFormat("HH:mm:ss").format(d) + SPLITTER
                 + new SimpleDateFormat("dd/MM/yyyy").format(d)
-                + LINE_SEP + fenotipoToString(fenotipo) + LINE_SEP +
+                + SPLITTER + "semilla" + SPLITTER + RandomManager.seed + LINE_SEP
+                + fenotipoToString(fenotipo) + LINE_SEP +
                 "________________________________________________" +
                 "________________________________________________" +
                 "________________________________________________" +

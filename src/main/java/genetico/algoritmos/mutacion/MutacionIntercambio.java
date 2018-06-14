@@ -1,50 +1,21 @@
 package main.java.genetico.algoritmos.mutacion;
 
 import main.java.genetico.Individuo;
-import main.java.util.RandomManager;
-
-import java.util.List;
+import main.java.util.Util;
 
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class MutacionIntercambio implements AlgoritmoMutacion {
-
-    private static final boolean debug = false;
-    private final float probabilidad;
+public class MutacionIntercambio extends AbstractMutacion {
 
     public MutacionIntercambio(final float probabilidad) {
-        this.probabilidad = probabilidad;
+        super(probabilidad);
     }
 
     @Override
-    public void mutar(List<Individuo[]> individuos) {
-        for (Individuo[] par : individuos) {
-            for (Individuo individuo : par) {
-                mutar(individuo);
-            }
-
-        }
+    protected void estrategiaDeMutacion(Individuo individuo, int pos1, int pos2) {
+        // intercambio
+        Util.swap(individuo.getCromosoma(), pos1, pos2);
     }
 
-    @Override
-    public void mutar(Individuo individuo) {
-        if (RandomManager.getInstance().getRandomProbability() <= probabilidad) {
-            if (debug) System.out.println("MUTACION:\n\tAntes: \t " + individuo);
-            int pos1 = RandomManager.getInstance().getRandomNumber(individuo.size());
-            int pos2;
-            do {
-                pos2 = RandomManager.getInstance().getRandomNumber(individuo.size());
-            } while ((pos1 == pos2));
-
-            // swap
-            int valor = individuo.getCromosoma()[pos1];
-            individuo.getCromosoma()[pos1] = individuo.getCromosoma()[pos2];
-            individuo.getCromosoma()[pos2] = valor;
-
-            individuo.setYaEvaluado(false);
-
-            if (debug) System.out.println("\tDespues: " + individuo);
-        }
-    }
 }

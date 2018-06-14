@@ -8,9 +8,11 @@ import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.mutacion.MutacionInversion;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo;
+import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepeticion;
 import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
 import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
+import main.java.genetico.algoritmos.seleccion.SeleccionRuletaAntiguo;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
 import main.java.util.writer.CSVWriter;
 import main.java.util.writer.DatosGlobalesEjecuciones;
@@ -30,20 +32,17 @@ public class Main {
     private static CSVWriter printer1 =
             new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
 
+    private static float probabilidadCruce08=0.8f;
+    private static float probabilidadCruce09=0.9f;
+    private static float probabilidadCruce1=1f;
+
     public static void main(String args[]) {
         new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existir
 
-        /*
-         * Combinaciones de algoritmos, ver cada javadoc
-         */
-        //lanzarAlgoritmo("BL_1_1", genetico1_1());
-        lanzarAlgoritmo("AnalisisParametrico_configuracionBase", genetico2_1());
-        //lanzarAlgoritmo("BL_3_1", genetico3_1());
-        //lanzarAlgoritmo("BL_4_1", genetico4_1());
-        //lanzarAlgoritmo("BL_1_2", genetico1_2());
-//        lanzarAlgoritmo("BL_2_2", genetico2_2());
-        //lanzarAlgoritmo("BL_3_2", genetico3_2());
-        //lanzarAlgoritmo("BL_4_2", genetico4_2());
+        lanzarAlgoritmo("AP6_mutacionInversion", genetico1());
+        lanzarAlgoritmo("AP6_mutacionIntercambio", genetico2());
+        //lanzarAlgoritmo("AP5_probabilidadCruce1", genetico3());
+        //lanzarAlgoritmo("AP5_probabilidadCruce09SinRepeticion", genetico4());
 
         printer1.close();
         /*printer3.close();*/
@@ -74,140 +73,39 @@ public class Main {
         }
     }
 
-    /**
-     * CreacionAleatoria(),
-     * SeleccionTorneo(4),
-     * CrucePositionBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoGeneracional());
-     */
-    private static AlgoritmoGenetico genetico4_2() {
-        AlgoritmoGenetico genetico4_2 = new AlgoritmoGenetico(
-                new CreacionAleatoria(),
-                new SeleccionTorneo(4),
-                new CrucePositionBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoGeneracional());
-        return genetico4_2;
-    }
-
-    /**
-     * CreacionAleatoria(),
-     * SeleccionTorneo(4),
-     * CruceOrderBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoGeneracional());
-     */
-    private static AlgoritmoGenetico genetico4_1() {
-        AlgoritmoGenetico genetico4_1 = new AlgoritmoGenetico(
-                new CreacionAleatoria(),
-                new SeleccionTorneo(4),
-                new CruceOrderBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoGeneracional());
-        return genetico4_1;
-    }
-
-    /**
-     * CreacionAleatoria(),
-     * SeleccionRuleta(),
-     * CrucePositionBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoGeneracional());
-     *
-     * @return
-     */
-    private static AlgoritmoGenetico genetico3_2() {
-        AlgoritmoGenetico genetico3_2 = new AlgoritmoGenetico(
-                new CreacionAleatoria(),
-                new SeleccionRuleta(),
-                new CrucePositionBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoGeneracional());
-        return genetico3_2;
-    }
-
-    /**
-     * CreacionAleatoria(),
-     * SeleccionRuleta(),
-     * CruceOrderBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoGeneracional());
-     */
-    private static AlgoritmoGenetico genetico3_1() {
-        AlgoritmoGenetico genetico3_1 = new AlgoritmoGenetico(
-                new CreacionAleatoria(),
-                new SeleccionRuleta(),
-                new CruceOrderBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoGeneracional());
-        return genetico3_1;
-    }
-
-    /**
-     * CreacionAleatoria(),
-     * SeleccionParesAleatorios(),
-     * CrucePositionBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoTorneoPH());
-     */
-    private static AlgoritmoGenetico genetico2_2() {
-        AlgoritmoGenetico genetico2_2 = new AlgoritmoGenetico(
-                new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepeticion());
-        return genetico2_2;
-    }
-
-    /**
-     * CreacionAleatoria(),
-     * SeleccionParesAleatorios(),
-     * CruceOrderBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoTorneoPH());
-     */
-    private static AlgoritmoGenetico genetico2_1() {
+    private static AlgoritmoGenetico genetico1() {
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
-                new CruceOrderBased(probabilidadCruce),
+                new CrucePositionBased(probabilidadCruce08),
+                new MutacionIntercambio(probabilidadMutacion),
+                new ReemplazoTorneoPHSinRepeticion());
+    }
+    private static AlgoritmoGenetico genetico2() {
+        return new AlgoritmoGenetico(
+                new CreacionAleatoria(),
+                new SeleccionParesAleatorios(),
+                new CrucePositionBased(probabilidadCruce09),
                 new MutacionIntercambio(probabilidadMutacion),
                 new ReemplazoTorneoPHSinRepeticion());
     }
 
-    /**
-     * CreacionAleatoria(),
-     * SeleccionParesAleatorios(),
-     * CrucePositionBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoTorneo());
-     */
-    private static AlgoritmoGenetico genetico1_2() {
-        AlgoritmoGenetico genetico1_2 = new AlgoritmoGenetico(
+    private static AlgoritmoGenetico genetico3() {
+        return new AlgoritmoGenetico(
+                new CreacionAleatoria(),
+                new SeleccionParesAleatorios(),
+                new CrucePositionBased(probabilidadCruce1),
+                new MutacionIntercambio(probabilidadMutacion),
+                new ReemplazoTorneoPHSinRepeticion());
+    }
+
+    private static AlgoritmoGenetico genetico4() {
+        return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
                 new CrucePositionBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoTorneo());
-        return genetico1_2;
+                new MutacionIntercambio(probabilidadMutacion),
+                new ReemplazoTorneoPHSinRepeticion());
     }
 
-    /**
-     * CreacionAleatoria(),
-     * SeleccionParesAleatorios(),
-     * CruceOrderBased(probabilidadCruce),
-     * MutacionInversion(probabilidadMutacion),
-     * ReemplazoTorneo());
-     */
-    private static AlgoritmoGenetico genetico1_1() {
-        AlgoritmoGenetico genetico1_1 = new AlgoritmoGenetico(
-                new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CruceOrderBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoTorneo());
-        return genetico1_1;
-    }
 }

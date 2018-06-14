@@ -1,5 +1,7 @@
 package main.java.genetico.algoritmos.cruce;
 
+import main.java.genetico.AlgoritmoGenetico;
+import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public abstract class AbstractCruce implements AlgoritmoCruce {
 
     public AbstractCruce(float probabilidad) {
         this.probabilidad = probabilidad;
+        AlgoritmoGenetico.probabilidadCruce=probabilidad;
     }
 
     @Override
