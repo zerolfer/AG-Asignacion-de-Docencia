@@ -167,9 +167,9 @@ public class Controller implements Initializable{
             case "Torneo Padres-Hijos":
                 return new ReemplazoTorneoPH();
             case "Torneo Padres-Hijos sin repetición":
-                return new ReemplazoTorneoPHSinRepetir();
+                return new ReemplazoTorneoPHSinRepeticion();
             default:
-                return new ReemplazoTorneoPHSinRepetir();
+                return new ReemplazoTorneoPHSinRepeticion();
         }
     }
 

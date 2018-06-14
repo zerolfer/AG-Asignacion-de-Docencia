@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class ReemplazoTorneoPHSinRepetir implements AlgoritmoReemplazo {
+public class ReemplazoTorneoPHSinRepeticion implements AlgoritmoReemplazo {
 
     @Override
     public Generacion aplicar(List<Individuo[]> padres, List<Individuo[]> hijos) {

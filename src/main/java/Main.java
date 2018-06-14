@@ -4,10 +4,11 @@ import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
 import main.java.genetico.algoritmos.cruce.CruceOrderBased;
 import main.java.genetico.algoritmos.cruce.CrucePositionBased;
+import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.mutacion.MutacionInversion;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepetir;
+import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepeticion;
 import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
 import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
@@ -36,7 +37,7 @@ public class Main {
          * Combinaciones de algoritmos, ver cada javadoc
          */
         //lanzarAlgoritmo("BL_1_1", genetico1_1());
-        lanzarAlgoritmo("BL2_2_1", genetico2_1());
+        lanzarAlgoritmo("AnalisisParametrico_configuracionBase", genetico2_1());
         //lanzarAlgoritmo("BL_3_1", genetico3_1());
         //lanzarAlgoritmo("BL_4_1", genetico4_1());
         //lanzarAlgoritmo("BL_1_2", genetico1_2());
@@ -156,7 +157,7 @@ public class Main {
                 new SeleccionParesAleatorios(),
                 new CrucePositionBased(probabilidadCruce),
                 new MutacionInversion(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepetir());
+                new ReemplazoTorneoPHSinRepeticion());
         return genetico2_2;
     }
 
@@ -172,8 +173,8 @@ public class Main {
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
                 new CruceOrderBased(probabilidadCruce),
-                new MutacionInversion(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepetir());
+                new MutacionIntercambio(probabilidadMutacion),
+                new ReemplazoTorneoPHSinRepeticion());
     }
 
     /**
