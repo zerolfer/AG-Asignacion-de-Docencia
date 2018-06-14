@@ -12,7 +12,7 @@ import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
-import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
+import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
 import main.java.util.RandomManager;
@@ -43,7 +43,7 @@ public class GeneticoTest {
     @Test
     public void algortimoHastaElCruce() {
         AlgoritmoCreacion creacion = new CreacionAleatoria();
-        AlgoritmoSeleccion seleccion = new SeleccionAleatoria();
+        AlgoritmoSeleccion seleccion = new SeleccionParesAleatorios();
         AlgoritmoCruce cruce = new CruceOrderBased(1);
         AlgoritmoMutacion mutacion = new MutacionIntercambio(1);
         AlgoritmoReemplazo reemplazo = new ReemplazoGeneracional();

@@ -199,7 +199,7 @@ public class Controller implements Initializable{
     private AlgoritmoSeleccion obtenerOperadorSeleccion() {
         switch (cmbSeleccion.getValue()) {
             case "Aleatoria":
-                return new SeleccionAleatoria();
+                return new SeleccionParesAleatorios();
             case "Ruleta":
                 return new SeleccionRuleta();
             case "Ruleta Antiguo":
@@ -207,7 +207,7 @@ public class Controller implements Initializable{
             case "Torneo":
                 return new SeleccionTorneo();
             default:
-                return new SeleccionAleatoria();
+                return new SeleccionParesAleatorios();
         }
     }
 

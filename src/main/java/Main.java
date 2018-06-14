@@ -8,7 +8,7 @@ import main.java.genetico.algoritmos.mutacion.MutacionInversion;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepetir;
-import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
+import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
 import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
 import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
 import main.java.util.writer.CSVWriter;
@@ -145,7 +145,7 @@ public class Main {
 
     /**
      * CreacionAleatoria(),
-     * SeleccionAleatoria(),
+     * SeleccionParesAleatorios(),
      * CrucePositionBased(probabilidadCruce),
      * MutacionInversion(probabilidadMutacion),
      * ReemplazoTorneoPH());
@@ -153,7 +153,7 @@ public class Main {
     private static AlgoritmoGenetico genetico2_2() {
         AlgoritmoGenetico genetico2_2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionAleatoria(),
+                new SeleccionParesAleatorios(),
                 new CrucePositionBased(probabilidadCruce),
                 new MutacionInversion(probabilidadMutacion),
                 new ReemplazoTorneoPHSinRepetir());
@@ -162,7 +162,7 @@ public class Main {
 
     /**
      * CreacionAleatoria(),
-     * SeleccionAleatoria(),
+     * SeleccionParesAleatorios(),
      * CruceOrderBased(probabilidadCruce),
      * MutacionInversion(probabilidadMutacion),
      * ReemplazoTorneoPH());
@@ -170,7 +170,7 @@ public class Main {
     private static AlgoritmoGenetico genetico2_1() {
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionAleatoria(),
+                new SeleccionParesAleatorios(),
                 new CruceOrderBased(probabilidadCruce),
                 new MutacionInversion(probabilidadMutacion),
                 new ReemplazoTorneoPHSinRepetir());
@@ -178,7 +178,7 @@ public class Main {
 
     /**
      * CreacionAleatoria(),
-     * SeleccionAleatoria(),
+     * SeleccionParesAleatorios(),
      * CrucePositionBased(probabilidadCruce),
      * MutacionInversion(probabilidadMutacion),
      * ReemplazoTorneo());
@@ -186,7 +186,7 @@ public class Main {
     private static AlgoritmoGenetico genetico1_2() {
         AlgoritmoGenetico genetico1_2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionAleatoria(),
+                new SeleccionParesAleatorios(),
                 new CrucePositionBased(probabilidadCruce),
                 new MutacionInversion(probabilidadMutacion),
                 new ReemplazoTorneo());
@@ -195,7 +195,7 @@ public class Main {
 
     /**
      * CreacionAleatoria(),
-     * SeleccionAleatoria(),
+     * SeleccionParesAleatorios(),
      * CruceOrderBased(probabilidadCruce),
      * MutacionInversion(probabilidadMutacion),
      * ReemplazoTorneo());
@@ -203,7 +203,7 @@ public class Main {
     private static AlgoritmoGenetico genetico1_1() {
         AlgoritmoGenetico genetico1_1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionAleatoria(),
+                new SeleccionParesAleatorios(),
                 new CruceOrderBased(probabilidadCruce),
                 new MutacionInversion(probabilidadMutacion),
                 new ReemplazoTorneo());

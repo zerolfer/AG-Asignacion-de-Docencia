@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import main.java.genetico.algoritmos.creacion.CreacionAleatoria?>
-<?import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria?>
+<?import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios?>
 <?import main.java.genetico.algoritmos.seleccion.SeleccionRuleta?>
 <?import main.java.genetico.algoritmos.seleccion.SeleccionRuletaAntiguo?>
 <?import main.java.genetico.algoritmos.seleccion.SeleccionTorneo?>

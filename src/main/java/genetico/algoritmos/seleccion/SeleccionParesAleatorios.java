@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class SeleccionAleatoria implements AlgoritmoSeleccion {
+public class SeleccionParesAleatorios implements AlgoritmoSeleccion {
     @Override
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> resultado = new ArrayList<>();

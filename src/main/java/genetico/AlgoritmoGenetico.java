@@ -12,7 +12,7 @@ import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
-import main.java.genetico.algoritmos.seleccion.SeleccionAleatoria;
+import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
 import main.java.model.BD;
 import main.java.util.RandomManager;
 import main.java.util.Stopwatch;
@@ -68,7 +68,7 @@ public class AlgoritmoGenetico {
     }
 
     public AlgoritmoGenetico() {
-        this(new CreacionAleatoria(), new SeleccionAleatoria(), new CruceOrderBased(probabilidadCruce),
+        this(new CreacionAleatoria(), new SeleccionParesAleatorios(), new CruceOrderBased(probabilidadCruce),
                 new MutacionIntercambio(probabilidadMutacion), new ReemplazoGeneracional());
     }
 
