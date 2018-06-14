@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,17 +35,24 @@ public class CSVReader {
                 try {
                     // use comma as separator
                     String[] split = line.split(SPLITTER);
+                    Horario disponibilidad = DisponibilidadProvider(
+                            split.length >= 5 ? split[4] : "Ilimitada"
+                    );
                     profesores.add(
                             new Profesor(
                                     split[0],
                                     Float.parseFloat(split[1]),
                                     parseBoolean(split[2]),
-                                    split[3]
+                                    split[3],
+                                    disponibilidad
                             )
                     );
                 } catch (ClassCastException e) {
                     e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+
             }
             if (debug) for (Profesor p : profesores) System.out.println(p);
 
@@ -57,6 +63,28 @@ public class CSVReader {
         }
         return profesores;
     }
+
+    private static Horario DisponibilidadProvider(String string) throws ParseException {
+
+        String[] horas = string.split("-");
+
+        /* en caso de que el profesor no sea asociado, la columna podra ser vacia,
+         * con la palabra total o la palabra ilimitada y creará un intervalo
+         * de 24 horas para ese profesor a tiempo completo
+         */
+        if (horas.length == 0 || horas[0].equalsIgnoreCase("Total") ||
+                horas[0].equalsIgnoreCase("Ilimitada")) {
+            return Horario.disponibilidadTotal;
+        }
+        Date parsedDate1 = Horario.horaFormat.parse(horas[0]);
+        Date parsedDate2 = Horario.horaFormat.parse(horas[1]);
+        Timestamp timestamp1 = new java.sql.Timestamp(parsedDate1.getTime());
+        Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+
+        return new Horario(timestamp1, timestamp2);
+
+
+}
 
     private static Boolean parseBoolean(String s) {
         switch (s) {
@@ -113,7 +141,7 @@ public class CSVReader {
     }
 
     private static List<Horario> crearListaHorarios(String[] split) throws ParseException {
-        List<Horario> result=new ArrayList<>();
+        List<Horario> result = new ArrayList<>();
         for (int i = 9; i < split.length; i++) {
             result.add(horarioProvider(split[i]));
         }
@@ -125,9 +153,8 @@ public class CSVReader {
         char dia = diaIntervalo[0].charAt(0);
         String[] horas = diaIntervalo[1].split("-");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        Date parsedDate1 = dateFormat.parse(horas[0]);
-        Date parsedDate2 = dateFormat.parse(horas[1]);
+        Date parsedDate1 = Horario.horaFormat.parse(horas[0]);
+        Date parsedDate2 = Horario.horaFormat.parse(horas[1]);
         Timestamp timestamp1 = new java.sql.Timestamp(parsedDate1.getTime());
         Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 

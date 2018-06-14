@@ -13,30 +13,33 @@ public class Profesor {
     private float capacidad;
     private boolean bilingue;
     private String area; // solo puede tener un área
+    private Horario disponibilidad;
+
 
     // ASIGNACIONES
     private List<Grupo> asignadas;
 
-    public Profesor(Integer id, String nombre, Float capacidad, Boolean bilingue, String area) {
+    public Profesor(Integer id, String nombre, Float capacidad, Boolean bilingue, String area, Horario disponibilidad) {
         this.id = id;
-        inicializar(nombre, capacidad, bilingue, area);
+        inicializar(nombre, capacidad, bilingue, area, disponibilidad);
     }
 
-    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area) {
+    public Profesor(String nombre, Float capacidad, Boolean bilingue, String area, Horario disponibilidad) {
         this.id = contador++;
-        inicializar(nombre, capacidad, bilingue, area);
+        inicializar(nombre, capacidad, bilingue, area, disponibilidad);
     }
 
     public static Integer getUltimoId() {
         return contador;
     }
 
-    private void inicializar(String nombre, Float capacidad, Boolean bilingue, String area) {
+    private void inicializar(String nombre, Float capacidad, Boolean bilingue, String area, Horario disponibilidad) {
         this.nombre = nombre;
         this.capacidad = capacidad;
         this.capacidadInicial = capacidad;
         this.bilingue = bilingue;
         this.area = area;
+        this.disponibilidad=disponibilidad;
 
         asignadas = new ArrayList<>();
     }
@@ -56,7 +59,7 @@ public class Profesor {
     }
 
     public Profesor clone() {
-        Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area);
+        Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area, disponibilidad);
         for (Grupo g : getAsignadas())
             result.asignarGrupo(g.clone());
         return result;
@@ -104,6 +107,14 @@ public class Profesor {
 
     public List<Grupo> getAsignadas() {
         return asignadas;
+    }
+
+    public Horario getDisponibilidad() {
+        return disponibilidad;
+    }
+
+    public void setDisponibilidad(Horario disponibilidad) {
+        this.disponibilidad = disponibilidad;
     }
 
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static main.java.model.Horario.horaFormat;
 import static org.junit.Assert.*;
 
 public class DecodificarTest {
@@ -46,22 +47,18 @@ public class DecodificarTest {
 
     @Test
     public void checkSolapamientoTest() throws ParseException {
-        Profesor profe1 = new Profesor(1, "Profe1", 200f, true, "A");
-        Profesor profe2 = new Profesor(2, "Profe2", 200f, true, "A");
+        Profesor profe1 = new Profesor(1, "Profe1", 200f, true, "A", Horario.disponibilidadTotal);
+        Profesor profe2 = new Profesor(2, "Profe2", 200f, true, "A", Horario.disponibilidadTotal);
 
-        // importante: H mayuscula para indicarla en formato 24 horas
-        // en caso contrario las 12:00 las contaria por las 12 de la noche (pm)
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-
-        Timestamp t12 = new Timestamp(dateFormat.parse("12:00").getTime());
-        Timestamp t13 = new Timestamp(dateFormat.parse("13:00").getTime());
-        Timestamp t14 = new Timestamp(dateFormat.parse("14:00").getTime());
-        Timestamp t14_30 = new Timestamp(dateFormat.parse("14:30").getTime());
-        Timestamp t15 = new Timestamp(dateFormat.parse("15:00").getTime());
-        Timestamp t18 = new Timestamp(dateFormat.parse("18:00").getTime());
-        Timestamp t10 = new Timestamp(dateFormat.parse("10:00").getTime());
-        Timestamp t11_30 = new Timestamp(dateFormat.parse("11:30").getTime());
-        Timestamp t11_50 = new Timestamp(dateFormat.parse("11:50").getTime());
+        Timestamp t12 =     new Timestamp(horaFormat.parse("12:00").getTime());
+        Timestamp t13 =     new Timestamp(horaFormat.parse("13:00").getTime());
+        Timestamp t14 =     new Timestamp(horaFormat.parse("14:00").getTime());
+        Timestamp t14_30 =  new Timestamp(horaFormat.parse("14:30").getTime());
+        Timestamp t15 =     new Timestamp(horaFormat.parse("15:00").getTime());
+        Timestamp t18 =     new Timestamp(horaFormat.parse("18:00").getTime());
+        Timestamp t10 =     new Timestamp(horaFormat.parse("10:00").getTime());
+        Timestamp t11_30 =  new Timestamp(horaFormat.parse("11:30").getTime());
+        Timestamp t11_50 =  new Timestamp(horaFormat.parse("11:50").getTime());
 
         List<Horario> h1 = new ArrayList<>();
         h1.add(new Horario('L', t12, t14));

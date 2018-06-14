@@ -42,7 +42,7 @@ public class Util {
         List<Profesor> res = new ArrayList<>();
         for (int i = 0; i < ts.size(); i++) {
             res.add(new Profesor(ts.get(i).getId(), ts.get(i).getNombre(), ts.get(i).getCapacidadInicial(),
-                    ts.get(i).getBilingue(), ts.get(i).getArea()));
+                    ts.get(i).getBilingue(), ts.get(i).getArea(), ts.get(i).getDisponibilidad()));
         }
         return res;
     }

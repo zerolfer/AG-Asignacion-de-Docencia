@@ -124,11 +124,25 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
     Profesor getProfesor(Grupo a) {
         for (Profesor p : this.profesores) {
-            if (checkCapacidad(a, p) && checkBilingue(a, p) && checkArea(p, a))
+            if (checkCapacidad(a, p) && checkBilingue(a, p) && checkArea(p, a) && checkDisponibilidad(a, p))
                 if (checkSolapamiento(p, a))
                     return p;
         }
         return null; // en caso de no haber profesoresa cubrir se le asignará un fitness infinito
+    }
+
+    private boolean checkDisponibilidad(Grupo a, Profesor p) {
+        for (Horario horario : a.getHorarios()) {
+            // la unica opcion es que el horario sea o igual o subconjunto de la disponibilidad
+            // es decir, la hora de inicio sea posterior o igual a la hora de inicio de disponibilidad
+            // y que la hora de fin de la clase sea anterior o igual a la de fin de disponibilidad
+            if (p.getDisponibilidad().getHoraInicio().compareTo(horario.getHoraInicio())<=0
+                    && p.getDisponibilidad().getHoraFin().compareTo(horario.getHoraFin())>=0)
+                continue;
+            else // las demas opciones no son validas, y no es necesario seguir iterando
+                return false;
+        }
+        return true; // si se ha llegado hasta aqui es porque todos cumplian la restriccion
     }
 
     boolean checkArea(Profesor p, Grupo a) {
@@ -161,7 +175,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                                     return false;
                             }
 
-                        // si comienzo de la actual es posterior al final de la nueva a asignar
+                            // si comienzo de la actual es posterior al final de la nueva a asignar
                         } else if (inicioActualFinNueva >= 0) {
                             if (!asignatura.getEscuela().equals(a.getEscuela()))
                                 if (Math.abs(
@@ -176,6 +190,17 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             }
         }
         return true;
+
+        // posible mejora:
+        /*
+        if (p.getDisponibilidad().getHoraInicio().after(horario.getHoraFin()))
+                continue;
+            else if(p.getDisponibilidad().getHoraFin().before(horario.getHoraInicio()))
+                continue;
+            //otherwise
+            else
+                return false;
+         */
     }
 
     boolean checkBilingue(Grupo a, Profesor p) {
