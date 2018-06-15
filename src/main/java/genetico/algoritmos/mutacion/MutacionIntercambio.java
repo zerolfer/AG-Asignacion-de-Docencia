@@ -8,6 +8,7 @@ import main.java.util.Util;
  */
 public class MutacionIntercambio extends AbstractMutacion {
 
+    public MutacionIntercambio(){super();}
     public MutacionIntercambio(final float probabilidad) {
         super(probabilidad);
     }

@@ -3,6 +3,7 @@ package main.java.genetico.algoritmos.cruce;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
+import main.java.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,12 @@ public abstract class AbstractCruce implements AlgoritmoCruce {
     protected static final boolean debug = false;
     protected float probabilidad = 1f;
 
+    public AbstractCruce() {
+        this.probabilidad=AlgoritmoGenetico.probabilidadCruce;
+    }
+
     public AbstractCruce(float probabilidad) {
+        Util.checkProbabilidadValida(probabilidad);
         this.probabilidad = probabilidad;
         AlgoritmoGenetico.probabilidadCruce=probabilidad;
     }

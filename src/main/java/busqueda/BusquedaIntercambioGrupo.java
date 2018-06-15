@@ -1,5 +1,6 @@
 package main.java.busqueda;
 
+import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
@@ -7,12 +8,15 @@ import main.java.model.Profesor;
 import java.util.*;
 
 public class BusquedaIntercambioGrupo
-        extends StandardBusquedaLocal {
+        extends AbstractBusquedaLocal {
     private Individuo original;
     private Comparator<BusquedaIntercambioGrupo.GrupoAux> comparatorAsignatura;
     private String asignaturaAnterior;
     private Profesor profesorAnterior;
 
+    public BusquedaIntercambioGrupo() {
+        this(AlgoritmoGenetico.probabilidadBusqueda);
+    }
     public BusquedaIntercambioGrupo(float probabilidad) {
         super(probabilidad);
         this.comparatorAsignatura = new Comparator<BusquedaIntercambioGrupo.GrupoAux>() {
@@ -48,6 +52,7 @@ public class BusquedaIntercambioGrupo
         }
     }
 
+    @Override
     public Individuo buscar(Individuo individuo) {
         if(debug) System.out.println(individuo.hashCode()+" -> "+individuo.toString());
         this.original = individuo.clone();

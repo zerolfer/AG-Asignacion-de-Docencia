@@ -76,4 +76,9 @@ public class Util {
 
 
     }
+
+    public static void checkProbabilidadValida(float probabilidad) {
+        if (probabilidad < 0 || probabilidad > 1)
+            throw new RuntimeException("introducida probabilidad de busqueda local inválida");
+    }
 }

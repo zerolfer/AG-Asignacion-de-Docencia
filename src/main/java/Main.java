@@ -1,19 +1,12 @@
 package main.java;
 
+import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
-import main.java.genetico.algoritmos.cruce.CruceOrderBased;
 import main.java.genetico.algoritmos.cruce.CrucePositionBased;
 import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
-import main.java.genetico.algoritmos.mutacion.MutacionInversion;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepeticion;
 import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
-import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
-import main.java.genetico.algoritmos.seleccion.SeleccionRuletaAntiguo;
-import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
 import main.java.util.writer.CSVWriter;
 import main.java.util.writer.DatosGlobalesEjecuciones;
 
@@ -22,9 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static main.java.genetico.AlgoritmoGenetico.probabilidadCruce;
-import static main.java.genetico.AlgoritmoGenetico.probabilidadMutacion;
-
 public class Main {
 
     private static final int NUM_EJECUCIONES = 10; // TODO reestablecer valor a 10
@@ -32,17 +22,19 @@ public class Main {
     private static CSVWriter printer1 =
             new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
 
-    private static float probabilidadCruce08=0.8f;
-    private static float probabilidadCruce09=0.9f;
-    private static float probabilidadCruce1=1f;
+    //private static float probabilidadMutacion005=0.05f;
+    //private static float probabilidadMutacion010=0.10f;
+    //private static float probabilidadMutacion020=0.20f;
 
     public static void main(String args[]) {
-        new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existir
+        new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existi
 
-        lanzarAlgoritmo("AP6_mutacionInversion", genetico1());
-        lanzarAlgoritmo("AP6_mutacionIntercambio", genetico2());
-        //lanzarAlgoritmo("AP5_probabilidadCruce1", genetico3());
-        //lanzarAlgoritmo("AP5_probabilidadCruce09SinRepeticion", genetico4());
+
+        lanzarAlgoritmo("AP8_BusquedaLocal0", genetico1());
+        lanzarAlgoritmo("AP8_BusquedaLocal025", genetico2());
+        lanzarAlgoritmo("AP8_BusquedaLocal050", genetico3());
+        lanzarAlgoritmo("AP8_BusquedaLocal075", genetico4());
+        lanzarAlgoritmo("AP8_BusquedaLocal1", genetico5());
 
         printer1.close();
         /*printer3.close();*/
@@ -77,35 +69,50 @@ public class Main {
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
-                new CrucePositionBased(probabilidadCruce08),
-                new MutacionIntercambio(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepeticion());
+                new CrucePositionBased(),
+                new MutacionIntercambio(),
+                new ReemplazoTorneoPHSinRepeticion(),
+                new BusquedaIntercambioGrupo(0));
     }
+
     private static AlgoritmoGenetico genetico2() {
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
-                new CrucePositionBased(probabilidadCruce09),
-                new MutacionIntercambio(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepeticion());
+                new CrucePositionBased(),
+                new MutacionIntercambio(),
+                new ReemplazoTorneoPHSinRepeticion(),
+                new BusquedaIntercambioGrupo(0.25f));
     }
 
     private static AlgoritmoGenetico genetico3() {
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
-                new CrucePositionBased(probabilidadCruce1),
-                new MutacionIntercambio(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepeticion());
+                new CrucePositionBased(),
+                new MutacionIntercambio(),
+                new ReemplazoTorneoPHSinRepeticion(),
+                new BusquedaIntercambioGrupo(0.50f));
     }
 
     private static AlgoritmoGenetico genetico4() {
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
-                new CrucePositionBased(probabilidadCruce),
-                new MutacionIntercambio(probabilidadMutacion),
-                new ReemplazoTorneoPHSinRepeticion());
+                new CrucePositionBased(),
+                new MutacionIntercambio(),
+                new ReemplazoTorneoPHSinRepeticion(),
+                new BusquedaIntercambioGrupo(0.75f));
+    }
+
+    private static AlgoritmoGenetico genetico5() {
+        return new AlgoritmoGenetico(
+                new CreacionAleatoria(),
+                new SeleccionParesAleatorios(),
+                new CrucePositionBased(),
+                new MutacionIntercambio(),
+                new ReemplazoTorneoPHSinRepeticion(),
+                new BusquedaIntercambioGrupo(1));
     }
 
 }

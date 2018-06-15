@@ -26,8 +26,8 @@ public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
     public static Integer populationSize = 100;
-    public static Float probabilidadCruce = 0.7f;
-    public static Float probabilidadMutacion = 0.075f;
+    public static Float probabilidadCruce = 0.8f;
+    public static Float probabilidadMutacion = 0.10f;
     public static Integer numeroGeneraciones = 1000;
     public static Float probabilidadBusqueda = 1f; //0.7f;
 
@@ -37,6 +37,7 @@ public class AlgoritmoGenetico {
     AlgoritmoCruce cruce;
     AlgoritmoMutacion mutacion;
     AlgoritmoReemplazo reemplazo;
+
     BusquedaLocal busqueda;
 
     // ESTRUCTURAS AUXILIARES
@@ -45,26 +46,38 @@ public class AlgoritmoGenetico {
     private Stopwatch timer = new Stopwatch();
     private boolean printed = false;
 
-    public void setParameters(int tamPob, float probCruce, float probMuta, int numGen, float probBusq){
-        this.populationSize =tamPob;
-        this.probabilidadCruce =probCruce;
-        this.probabilidadMutacion =probMuta;
-        this.numeroGeneraciones =numGen;
-        this.probabilidadBusqueda =probBusq;
+    public void setParameters(int tamPob, float probCruce, float probMuta, int numGen, float probBusq) {
+        this.populationSize = tamPob;
+        this.probabilidadCruce = probCruce;
+        this.probabilidadMutacion = probMuta;
+        this.numeroGeneraciones = numGen;
+        this.probabilidadBusqueda = probBusq;
     }
 
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
+                             AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo, BusquedaLocal busqueda) {
+        inicializar(creator, seleccion, cruce, mutacion, reemplazo);
+
+        this.busqueda = busqueda;
+
+    }
+
+    public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
+                             AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
+        inicializar(creator, seleccion, cruce, mutacion, reemplazo);
+        this.busqueda = new BusquedaIntercambioGrupo(probabilidadBusqueda);
+    }
+
+    private void inicializar(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
                              AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
         this.creacion = creator;
         this.seleccion = seleccion;
         this.cruce = cruce;
         this.mutacion = mutacion;
         this.reemplazo = reemplazo;
-        this.busqueda = new BusquedaIntercambioGrupo(probabilidadBusqueda);
         // this.decodificacion = new Decodificacion();
         // ordenarAsignaturas();
         ordenarProfesores();
-
     }
 
     public AlgoritmoGenetico() {

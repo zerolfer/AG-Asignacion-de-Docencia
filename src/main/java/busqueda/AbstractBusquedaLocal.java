@@ -1,17 +1,23 @@
 package main.java.busqueda;
 
+import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
 import main.java.util.RandomManager;
+import main.java.util.Util;
 
-public abstract class StandardBusquedaLocal implements BusquedaLocal {
+public abstract class AbstractBusquedaLocal implements BusquedaLocal {
 
     private float probabilidad;
     public boolean debug=false; // imprime por consola el hashCode y el toString de cada iteración
 
-    public StandardBusquedaLocal(float probabilidad) {
-        if (probabilidad < 0 || probabilidad > 1)
-            throw new RuntimeException("introducida probabilidad de busqueda local inválida");
+    public AbstractBusquedaLocal() {
+        this.probabilidad=AlgoritmoGenetico.probabilidadBusqueda;
+    }
+
+    public AbstractBusquedaLocal(float probabilidad) {
+        Util.checkProbabilidadValida(probabilidad);
         this.probabilidad = probabilidad;
+        AlgoritmoGenetico.probabilidadBusqueda=probabilidad;
     }
 
     public float getProbabilidad() {

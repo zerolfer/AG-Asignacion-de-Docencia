@@ -12,6 +12,10 @@ public class CrucePositionBased extends AbstractCruce {
         super(probabilidad);
     }
 
+    public CrucePositionBased() {
+        super();
+    }
+
     @Override
     public Individuo[] aplicar(Individuo padre1, Individuo padre2) {
         int length = padre1.size();

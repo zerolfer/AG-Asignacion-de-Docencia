@@ -1,17 +1,24 @@
 package main.java.genetico.algoritmos.mutacion;
 
+import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
 import main.java.util.RandomManager;
+import main.java.util.Util;
 
 import java.util.List;
 
 public abstract class AbstractMutacion implements AlgoritmoMutacion {
 
-    protected static final boolean debug = true;
+    protected static final boolean debug = false;
     protected final float probabilidad;
 
+    public AbstractMutacion(){
+        this.probabilidad=AlgoritmoGenetico.probabilidadMutacion;
+    }
     public AbstractMutacion(final float probabilidad) {
+        Util.checkProbabilidadValida(probabilidad);
         this.probabilidad = probabilidad;
+        AlgoritmoGenetico.probabilidadMutacion=probabilidad;
     }
 
     @Override
