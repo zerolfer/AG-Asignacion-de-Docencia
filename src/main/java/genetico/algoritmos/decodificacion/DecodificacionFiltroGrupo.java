@@ -12,7 +12,8 @@ public class DecodificacionFiltroGrupo extends Decodificacion {
     Profesor getProfesor(Grupo a) {
         Profesor conMenosHorasClase = null;
         for (Profesor p : this.profesores) {
-            if (super.checkCapacidad(a, p) && super.checkBilingue(a, p) && super.checkArea(p, a))
+            if (super.checkCapacidad(a, p) && super.checkBilingue(a, p)
+                    && super.checkArea(p, a) && super.checkDisponibilidad(a,p))
                 if (super.checkSolapamiento(p, a)) {
                     if (checkImparteAsignatura(p, a)) {
                         return p;

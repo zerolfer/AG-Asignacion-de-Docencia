@@ -131,7 +131,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         return null; // en caso de no haber profesoresa cubrir se le asignará un fitness infinito
     }
 
-    private boolean checkDisponibilidad(Grupo a, Profesor p) {
+    boolean checkDisponibilidad(Grupo a, Profesor p) {
         for (Horario horario : a.getHorarios()) {
             // la unica opcion es que el horario sea o igual o subconjunto de la disponibilidad
             // es decir, la hora de inicio sea posterior o igual a la hora de inicio de disponibilidad
