@@ -17,7 +17,6 @@ public abstract class AbstractBusquedaLocal implements BusquedaLocal {
     public AbstractBusquedaLocal(float probabilidad) {
         Util.checkProbabilidadValida(probabilidad);
         this.probabilidad = probabilidad;
-        AlgoritmoGenetico.probabilidadBusqueda=probabilidad;
     }
 
     public float getProbabilidad() {

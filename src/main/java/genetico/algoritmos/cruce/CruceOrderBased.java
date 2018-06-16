@@ -21,7 +21,6 @@ public class CruceOrderBased extends AbstractCruce {
         return aplicar(padre1, padre2, desde, hasta);
     }
 
-
     public Individuo[] aplicar(Individuo padre1, Individuo padre2, int desde, int hasta) {
         assert padre1.size() == padre2.size();
         int length = padre1.size();

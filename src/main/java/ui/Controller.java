@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import main.java.Main;
+import main.java.busqueda.BusquedaIntercambioGrupo;
+import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
 import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
@@ -142,19 +144,16 @@ public class Controller implements Initializable{
         AlgoritmoGenetico ag = new AlgoritmoGenetico(
                 obtenerOperadorCreacion(), obtenerOperadorSeleccion(),
                 obtenerOperadorCruce(), obtenerOperadorMutacion(),
-                obtenerOperadorReemplazo()
+                obtenerOperadorReemplazo(), obtenerBusquedaLocal()
         );
 
         Integer valor1 = spPopuSize.getValue();
-        Double valor2 = spPropCruce.getValue();
-        Double valor3 = spProbMuta.getValue();
         Integer valor4 = spNumGen.getValue();
-        Double valor5 = spProbBusq.getValue();
 
-        ag.setParameters(valor1, valor2.floatValue(), valor3.floatValue(), valor4, valor5.floatValue());
+        ag.setParameters(valor1, valor4);
         lanzarVentanaEspera();
         for (int i = 0; i < spNumEjecuciones.getValue(); i++) {
-            Main.lanzarAlgoritmo("Vista", ag);//ag.iniciar("Vista" + i, i);
+            ag.lanzarAlgoritmo("Vista", 1);//ag.iniciar("Vista" + i, i);
         }
     }
 
@@ -218,6 +217,10 @@ public class Controller implements Initializable{
             default:
                 return new CreacionAleatoria();
         }
+    }
+
+    private BusquedaLocal obtenerBusquedaLocal() {
+        return new BusquedaIntercambioGrupo(spProbBusq.getValue().floatValue());
     }
 
     ButtonType printButtonType = new ButtonType("Print", ButtonBar.ButtonData.OK_DONE);

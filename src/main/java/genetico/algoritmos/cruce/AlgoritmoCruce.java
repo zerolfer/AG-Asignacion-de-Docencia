@@ -2,6 +2,7 @@ package main.java.genetico.algoritmos.cruce;
 
 import main.java.genetico.Individuo;
 
+import javax.naming.NamingException;
 import java.util.List;
 
 /**
@@ -14,4 +15,6 @@ public interface AlgoritmoCruce {
 //    Individuo[] aplicar(Individuo padre1, Individuo padre2,int desde, int hasta);
 
     List<Individuo[]> aplicar(List<Individuo[]> pares);
+
+    Float getProbabilidad();
 }

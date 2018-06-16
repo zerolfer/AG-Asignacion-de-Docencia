@@ -14,16 +14,16 @@ import java.util.List;
 public abstract class AbstractCruce implements AlgoritmoCruce {
 
     protected static final boolean debug = false;
-    protected float probabilidad = 1f;
+    protected float probabilidad;
 
     public AbstractCruce() {
+        //probabilidad por defecto
         this.probabilidad=AlgoritmoGenetico.probabilidadCruce;
     }
 
     public AbstractCruce(float probabilidad) {
         Util.checkProbabilidadValida(probabilidad);
         this.probabilidad = probabilidad;
-        AlgoritmoGenetico.probabilidadCruce=probabilidad;
     }
 
     @Override
@@ -43,4 +43,10 @@ public abstract class AbstractCruce implements AlgoritmoCruce {
         }
         return result;
     }
+
+    @Override
+    public Float getProbabilidad() {
+        return this.probabilidad;
+    }
+
 }

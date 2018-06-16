@@ -12,7 +12,7 @@ public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
 
     public DatosGlobalesEjecuciones(String path) {
         super(path,true); //NOTE: poner true para no reescribir fichero
-        if (printCabeceras)
+        if (printCabeceras) {
             super.csvWriteData("ejecucion"
                     + SPLITTER + "poblacion"
                     + SPLITTER + "pr. cruce"
@@ -28,7 +28,9 @@ public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
                     + SPLITTER + "tiempo (ms)"
                     + SPLITTER + "semilla"
             );
-        super.csvWriteNewLine();
+            super.csvWriteNewLine();
+            printCabeceras=false;
+        }
 
     }
 

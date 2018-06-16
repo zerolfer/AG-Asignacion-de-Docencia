@@ -18,7 +18,6 @@ public abstract class AbstractMutacion implements AlgoritmoMutacion {
     public AbstractMutacion(final float probabilidad) {
         Util.checkProbabilidadValida(probabilidad);
         this.probabilidad = probabilidad;
-        AlgoritmoGenetico.probabilidadMutacion=probabilidad;
     }
 
     @Override
@@ -66,4 +65,8 @@ public abstract class AbstractMutacion implements AlgoritmoMutacion {
      */
     protected abstract void estrategiaDeMutacion(Individuo individuo, int pos1, int pos2);
 
+    @Override
+    public Float getProbabilidad(){
+        return this.probabilidad;
+    }
 }

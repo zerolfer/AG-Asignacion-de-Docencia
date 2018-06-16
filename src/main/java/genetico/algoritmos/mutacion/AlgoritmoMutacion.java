@@ -2,6 +2,7 @@ package main.java.genetico.algoritmos.mutacion;
 
 import main.java.genetico.Individuo;
 
+import javax.naming.NamingException;
 import java.util.List;
 
 /**
@@ -11,4 +12,6 @@ public interface AlgoritmoMutacion {
     void mutar(List<Individuo[]> individuo);
 
     void mutar(Individuo individuo);
+
+    Float getProbabilidad();
 }

@@ -17,52 +17,23 @@ import java.util.List;
 
 public class Main {
 
-    private static final int NUM_EJECUCIONES = 10; // TODO reestablecer valor a 10
+    private static final int NUM_EJECUCIONES = 1; // TODO reestablecer valor a 10
 
-    private static CSVWriter printer1 =
-            new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
-
-    //private static float probabilidadMutacion005=0.05f;
-    //private static float probabilidadMutacion010=0.10f;
-    //private static float probabilidadMutacion020=0.20f;
+    private static float probabilidadMutacion005 = 0.05f;
+    private static float probabilidadMutacion010 = 0.10f;
+    private static float probabilidadMutacion020 = 0.20f;
 
     public static void main(String args[]) {
-        new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existi
 
+        AlgoritmoGenetico.open(NUM_EJECUCIONES);
 
-        lanzarAlgoritmo("AP8_BusquedaLocal0", genetico1());
-        lanzarAlgoritmo("AP8_BusquedaLocal025", genetico2());
-        lanzarAlgoritmo("AP8_BusquedaLocal050", genetico3());
-        lanzarAlgoritmo("AP8_BusquedaLocal075", genetico4());
-        lanzarAlgoritmo("AP8_BusquedaLocal1", genetico5());
+        genetico1().lanzarAlgoritmo("MAIN_BusquedaLocal0");
+        genetico2().lanzarAlgoritmo("MAIN_BusquedaLocal025");
+        genetico3().lanzarAlgoritmo("MAIN_BusquedaLocal050");
+        genetico4().lanzarAlgoritmo("MAIN_BusquedaLocal075");
+        genetico5().lanzarAlgoritmo("MAIN_BusquedaLocal1");
 
-        printer1.close();
-        /*printer3.close();*/
-
-    }
-
-    public static void lanzarAlgoritmo(String id, AlgoritmoGenetico genetico) {
-
-        List<String> configuracion = new ArrayList<>();
-
-        configuracion.add(id);
-        configuracion.add(AlgoritmoGenetico.populationSize.toString());
-        configuracion.add(AlgoritmoGenetico.probabilidadCruce.toString());
-        configuracion.add(AlgoritmoGenetico.probabilidadMutacion.toString());
-        configuracion.add(AlgoritmoGenetico.numeroGeneraciones.toString());
-        configuracion.addAll(Arrays.asList(genetico.getAlgoritmos()));
-
-        for (int i = 1; i <= NUM_EJECUCIONES; i++) {
-
-            System.out.println("ALGORITMO GENÉTICO - EJECUCIÓN " + id + ":");
-            System.out.print("\tIteracion " + i + "...");
-
-            genetico.iniciar(id, i);
-
-            printer1.csvWriteData(genetico, configuracion);
-
-            System.out.println("Hecho!");
-        }
+        AlgoritmoGenetico.close();
     }
 
     private static AlgoritmoGenetico genetico1() {
