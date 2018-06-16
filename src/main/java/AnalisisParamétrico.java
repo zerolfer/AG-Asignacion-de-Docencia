@@ -156,9 +156,9 @@ public class AnalisisParamétrico {
                 new MutacionIntercambio(0.3f),
                 new ReemplazoTorneoPHSinRepeticion()
         );
-        g1.lanzarAlgoritmo("DEBUG__AP5_probabilidadCruce08");
-        g2.lanzarAlgoritmo("DEBUG__AP5_probabilidadCruce09");
-        g3.lanzarAlgoritmo("DEBUG__AP5_probabilidadCruce1");
+        g1.lanzarAlgoritmo("AP5_probabilidadCruce08");
+        g2.lanzarAlgoritmo("AP5_probabilidadCruce09");
+        g3.lanzarAlgoritmo("AP5_probabilidadCruce1");
     }
 
     private static void paso6() {
