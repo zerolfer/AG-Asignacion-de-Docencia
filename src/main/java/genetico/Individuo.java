@@ -225,8 +225,17 @@ public class Individuo implements Comparable<Individuo> {
         }
     }
 
+    /**
+     * Decide si un individuo es mejor que otro segun se
+     * describe en el metodo
+     * {@link Individuo#compareTo(Individuo)}
+     * <br/><b>En caso de ser iguales, se retonará false</b>
+     * @param vecino
+     * @return false en caso de ser peor o igual que el
+     * otro individuo
+     */
     public boolean esMejor(Individuo vecino) {
-        return this.compareTo(vecino) < 0 ? false : true;
+        return this.compareTo(vecino) <= 0 ? false : true;
     }
 
     public void asignarFitnessPorFenotipo(Profesor profesor1, Profesor profesor2) {
