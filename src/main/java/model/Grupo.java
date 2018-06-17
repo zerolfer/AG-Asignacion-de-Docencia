@@ -74,7 +74,7 @@ public class Grupo {
     public float getHorasComputables(Profesor profesor) {
         float coeficiente = 1f; // inicialmente es el mismo
         //if (this.getBilingue()) TODO: descomentar esto
-        //    coeficiente = 1.5f; //si ingles cuenta el doble;
+        //    coeficiente = 1.5f; //si ingles, contabilizan como mas horas
         return coeficiente * this.getHoras();
     }
 

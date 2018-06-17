@@ -86,4 +86,14 @@ public class Main {
                 new BusquedaIntercambioGrupo(1));
     }
 
+    private static AlgoritmoGenetico configuracionOptima() {
+        return new AlgoritmoGenetico(
+                new CreacionAleatoria(),
+                new SeleccionParesAleatorios(),
+                new CrucePositionBased(),
+                new MutacionIntercambio(),
+                new ReemplazoTorneoPHSinRepeticion(),
+                new BusquedaIntercambioGrupo(1));
+    }
+
 }
