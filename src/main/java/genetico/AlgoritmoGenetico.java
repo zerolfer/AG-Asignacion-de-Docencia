@@ -29,12 +29,11 @@ import java.util.List;
 public class AlgoritmoGenetico {
 
     // VARIABLES DE ENTRADA DEL GENÉTICO
+
     /**
-     * Variable estatica accesible por todo el sistema.<br/>
-     * Representa el tamaño de la población en el algoritmo
-     * evolutivo
+     * Ver {@link #getPopulationSize()}
      */
-    public static Integer populationSize = 100;
+    private static Integer populationSize = 100;
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -56,12 +55,20 @@ public class AlgoritmoGenetico {
      */
     public static final Float probabilidadMutacion = 0.10f;
 
+
     /**
-     * Variable estatica accesible por todo el sistema.<br/>
+     * Variable accesible por todo el sistema.<br/>
      * Representa el numero de generaciones que sean generadas
      * en total durante la ejecucion del algoritmo
+     *
+     *
      */
-    public static Integer numeroGeneraciones = 1000;
+    private Integer numeroMaximoGeneraciones = 1000;
+
+    /**
+     *
+     */
+    private Integer numMaxGeneracionesSinMejora = 25;
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -125,14 +132,6 @@ public class AlgoritmoGenetico {
     }
 
     public void lanzarAlgoritmo(String id, int NUM_EJECUCIONES) {
-        List<String> configuracion = new ArrayList<>();
-
-        configuracion.add(id);
-        configuracion.add(this.populationSize.toString());
-        configuracion.add(this.cruce.getProbabilidad().toString());
-        configuracion.add(this.mutacion.getProbabilidad().toString());
-        configuracion.add(this.numeroGeneraciones.toString());
-        configuracion.addAll(Arrays.asList(this.getAlgoritmos()));
 
         for (int i = 1; i <= NUM_EJECUCIONES; i++) {
             if (debug) {
@@ -141,9 +140,20 @@ public class AlgoritmoGenetico {
             }
             this.iniciar(id, i);
 
-            if (printer1 != null)
-                printer1.csvWriteData(this, configuracion);
+            if (printer1 != null) {
+                List<String> configuracion = new ArrayList<>();
 
+                configuracion.add(id);
+                configuracion.add(this.populationSize.toString());
+                configuracion.add(this.cruce.getProbabilidad().toString());
+                configuracion.add(this.mutacion.getProbabilidad().toString());
+                configuracion.add(getNumeroMaximoGeneraciones().toString());
+                configuracion.add(Integer.toString(getNumMaxGeneracionesSinMejora()));
+                configuracion.add(Integer.toString(this.numGeneraciones-1));
+                configuracion.addAll(Arrays.asList(this.getAlgoritmos()));
+
+                printer1.csvWriteData(this, configuracion);
+            }
             if (debug)
                 System.out.println("Hecho!");
         }
@@ -164,9 +174,10 @@ public class AlgoritmoGenetico {
     }
 
 
-    public void setParameters(int tamPob, int numGen) {
+    public void setParameters(int tamPob, int numGen, int maxSinMejora) {
         this.populationSize = tamPob;
-        this.numeroGeneraciones = numGen;
+        this.numeroMaximoGeneraciones = numGen;
+        this.numMaxGeneracionesSinMejora=maxSinMejora;
     }
 
     public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
@@ -214,7 +225,7 @@ public class AlgoritmoGenetico {
         BD.getAsignaturas().sort(BD.comparatorGrupos);
     }
 
-
+    private int numGeneraciones=0;
     private void genetico(String ejecucion) {
 
         CSVWriter printer2 = null;
@@ -228,10 +239,11 @@ public class AlgoritmoGenetico {
         }
 
         Generacion generacion = creacion.createPopulation(populationSize);
-        int numGeneraciones = 1;
+        numGeneraciones = 1;
         timer.start();
-
-            generacion.evaluar();
+        Individuo mejor=null;
+        int numGeneracionesSinMejora = 0; // es la condicion de parada
+        generacion.evaluar();
         do {
 
             List<Individuo[]> padres = seleccion.aplicar(generacion);
@@ -248,8 +260,15 @@ public class AlgoritmoGenetico {
             assert sizeAnterior == generacion.size();
 
             timer.newLap(numGeneraciones);
+
+            if(mejor==null)
+                mejor = obtenerMejor(generacion);
+            else {
+                Individuo mejorAnterior = mejor;
+                mejor = obtenerMejor(generacion);
+                numGeneracionesSinMejora = mejor.esMejor(mejorAnterior)?0:++numGeneracionesSinMejora ;
+            }
             if (!printed) {
-                Individuo mejor = obtenerMejor(generacion);
                 float[] fitnessMedio = generacion.obtenerFitnessMedio();
                 printer2.csvWriteData(this,
                         Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
@@ -257,7 +276,7 @@ public class AlgoritmoGenetico {
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
             numGeneraciones++;
-        } while (numGeneraciones <= numeroGeneraciones);
+        } while (numGeneraciones <= numeroMaximoGeneraciones || numGeneracionesSinMejora>=numMaxGeneracionesSinMejora);
 
         mejorIndividuo = obtenerMejor(generacion);
         if (!printed)
@@ -334,4 +353,48 @@ public class AlgoritmoGenetico {
     public Stopwatch getTimer() {
         return timer;
     }
+
+
+    /**
+     * <p>Variable estatica accesible por todo el sistema,
+     * lo que implica que es comun a todas las instancias,
+     * por lo que no es modificable en tiempo de ejecución.</p>
+     * <p>Representa el tamaño de la población en el algoritmo
+     * evolutivo y es utilizado por los diferentes operadores
+     * del genético.</p>
+     */
+    public static Integer getPopulationSize() {
+        return populationSize;
+    }
+
+    /**
+     * <p>Variable accesible por todo el sistema.<br/>
+     * Representa el numero de generaciones maximo
+     * que ejecutará el algoritmo.<p/>
+     * <p>Conforma junto con {@link #getNumMaxGeneracionesSinMejora()}
+     * las condiciones de parada del genético</p>
+     *
+     * @see #getNumMaxGeneracionesSinMejora()
+     */
+    public Integer getNumeroMaximoGeneraciones() {
+        return numeroMaximoGeneraciones;
+    }
+
+    /**
+     * <p>Variable accesible por todo el sistema.<br/>
+     * Representa el numero maximo de generaciones que
+     * se ejecutarán en caso de que no haya mejora con
+     * respecto a la generación anterior. De esta
+     * forma, si el genetico converje demasiado pronto,
+     * se evitarán iteraciones (generaciones)
+     * innecesarias.<p/>
+     * <p>Conforma junto con {@link #getNumeroMaximoGeneraciones()}
+     * las condiciones de parada del genético</p>
+     *
+     * @see #getNumeroMaximoGeneraciones()
+     */
+    public int getNumMaxGeneracionesSinMejora() {
+        return numMaxGeneracionesSinMejora;
+    }
+
 }

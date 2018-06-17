@@ -17,7 +17,9 @@ public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
                     + SPLITTER + "poblacion"
                     + SPLITTER + "pr. cruce"
                     + SPLITTER + "pr. mutacion"
-                    + SPLITTER + "num generaciones"
+                    + SPLITTER + "num max generaciones"
+                    + SPLITTER + "num max generaciones sin mejora"
+                    + SPLITTER + "num generaciones ejecutadas"
                     + SPLITTER + "creacion"
                     + SPLITTER + "seleccion"
                     + SPLITTER + "cruce"
@@ -31,7 +33,6 @@ public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
             super.csvWriteNewLine();
             printCabeceras=false;
         }
-
     }
 
     @Override

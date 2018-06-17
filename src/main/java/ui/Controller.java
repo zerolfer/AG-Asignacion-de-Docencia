@@ -150,7 +150,7 @@ public class Controller implements Initializable{
         Integer valor1 = spPopuSize.getValue();
         Integer valor4 = spNumGen.getValue();
 
-        ag.setParameters(valor1, valor4);
+        ag.setParameters(valor1, valor4, 25); //TODO: añadir numMaxGeneracionesSinMejora a la UI
         lanzarVentanaEspera();
         for (int i = 0; i < spNumEjecuciones.getValue(); i++) {
             ag.lanzarAlgoritmo("Vista", 1);//ag.iniciar("Vista" + i, i);
