@@ -3,6 +3,7 @@ package main.java.util.writer;
 import main.java.genetico.AlgoritmoGenetico;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,8 +23,13 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         try {
             br = new BufferedWriter(new FileWriter(path, append));
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existi
+            try {
+                br = new BufferedWriter(new FileWriter(path, append));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+                System.exit(1);
+            }
         }
 
     }

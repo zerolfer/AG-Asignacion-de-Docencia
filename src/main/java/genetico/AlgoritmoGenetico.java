@@ -55,20 +55,19 @@ public class AlgoritmoGenetico {
      */
     public static final Float probabilidadMutacion = 0.10f;
 
-
     /**
-     * Variable accesible por todo el sistema.<br/>
+     *
      * Representa el numero de generaciones que sean generadas
      * en total durante la ejecucion del algoritmo
-     *
+     * @see #getNumeroMaximoGeneraciones()
      *
      */
-    private Integer numeroMaximoGeneraciones = 1000;
+    private Integer numeroMaximoGeneraciones = 500;
 
     /**
-     *
+     * @see #getNumMaxGeneracionesSinMejora()
      */
-    private Integer numMaxGeneracionesSinMejora = 25;
+    private Integer numMaxGeneracionesSinMejora = 500;
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -100,7 +99,10 @@ public class AlgoritmoGenetico {
      * Indica si el output ya ha sido impreso,
      * evita que todas las ejecuciones del
      * algoritmo sean impresas, y que solamente
-     * se imprima la primera
+     * se imprima la primera.
+     *
+     * Es una variable auxiliar para el writer,
+     * no se deberia cambiar su valor
      *
      */
     private boolean printed = false;
@@ -108,19 +110,42 @@ public class AlgoritmoGenetico {
     private static CSVWriter printer1;
 
     /**
+     * <p>
      * Realiza las operaciones oportunas de inicializacion que
      * permiten ofrecer la salida del algoritmo.
-     * los ficheros de informacion de los
+     * </p><p>
+     * en caso de no ejecutarse este método previamente a la
+     * ejecucion del método {@link #lanzarAlgoritmo(String)},
+     * {@link #lanzarAlgoritmo(String, int)}, o
+     * {@link #iniciar(String, int)}, no se obtendrá salida alguna
+     * </p>
+     * <br/>
+     * <p>Si no se especifica, el numero de ejeciones configurado
+     * por defecto es de 1</p>
+     * @see #open(int)
      */
     public static void open() {
         open(1);
     }
 
+    /**
+     * Realiza las operaciones oportunas de inicializacion que
+     * permiten ofrecer la salida del algoritmo.
+     * <br/>
+     * en caso de no ejecutarse este método previamente a la
+     * ejecucion del método {@link #lanzarAlgoritmo(String)},
+     * {@link #lanzarAlgoritmo(String, int)}, o
+     * {@link #iniciar(String, int)}, no se obtendrá un
+     * fichero con el histótico de todas las ejecuciones
+     *
+     * @param numEjecuciones numero de ejecuciones que se van a
+     *                       realizar en todas las instancias que
+     *                       se ejecuten a partir de ese momento
+     */
     public static void open(int numEjecuciones) {
         AlgoritmoGenetico.NUM_EJECUCIONES = numEjecuciones;
             printer1 =
                 new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
-        new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existi
     }
 
     /**
@@ -170,7 +195,8 @@ public class AlgoritmoGenetico {
      * @see #lanzarAlgoritmo(String)
      */
     public static void close() {
-        printer1.close();
+        if(printer1!=null)
+            printer1.close();
     }
 
 
@@ -217,6 +243,12 @@ public class AlgoritmoGenetico {
         RandomManager.destroyInstance();
     }
 
+    /**
+     * Este método permite al genético ejecutarse correctamente,
+     * pues al estar ordenados los profesores <b>por idiomas
+     * de docencia, estando primero los que pueden impartir en
+     * ingles</b>
+     */
     private void ordenarProfesores() {
         BD.getProfesores().sort(BD.comparatorProfesores);
     }
@@ -276,7 +308,7 @@ public class AlgoritmoGenetico {
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
             numGeneraciones++;
-        } while (numGeneraciones <= numeroMaximoGeneraciones || numGeneracionesSinMejora>=numMaxGeneracionesSinMejora);
+        } while (numGeneraciones <= numeroMaximoGeneraciones || numGeneracionesSinMejora<=numMaxGeneracionesSinMejora);
 
         mejorIndividuo = obtenerMejor(generacion);
         if (!printed)

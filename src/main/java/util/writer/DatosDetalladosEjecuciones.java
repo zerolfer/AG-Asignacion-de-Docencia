@@ -14,7 +14,7 @@ public class DatosDetalladosEjecuciones extends AbstractCSVWriter {
 
         List<String> cabeceras = new ArrayList<>();
         cabeceras.add("Generacion");
-        cabeceras.add("tiempo");
+        cabeceras.add("tiempo (ms)");
         cabeceras.add("fitness1");
         cabeceras.add("fitness2");
         cabeceras.add("fitness1 avg");
