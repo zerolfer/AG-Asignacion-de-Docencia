@@ -1,4 +1,4 @@
-package main.java.util;
+package main.java.io;
 
 import main.java.model.Grupo;
 import main.java.model.Horario;

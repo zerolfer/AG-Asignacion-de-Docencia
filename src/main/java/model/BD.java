@@ -1,6 +1,6 @@
 package main.java.model;
 
-import main.java.util.CSVReader;
+import main.java.io.CSVReader;
 
 import java.util.Comparator;
 import java.util.List;

@@ -16,12 +16,11 @@ import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
 import main.java.model.BD;
 import main.java.util.RandomManager;
 import main.java.util.Stopwatch;
-import main.java.util.writer.CSVWriter;
-import main.java.util.writer.DatosDetalladosEjecuciones;
-import main.java.util.writer.DatosFenotipoEjecuciones;
-import main.java.util.writer.DatosGlobalesEjecuciones;
+import main.java.io.writer.CSVWriter;
+import main.java.io.writer.DatosDetalladosEjecuciones;
+import main.java.io.writer.DatosFenotipoEjecuciones;
+import main.java.io.writer.DatosGlobalesEjecuciones;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -309,7 +308,7 @@ public class AlgoritmoGenetico {
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
             numGeneraciones++;
-        } while (numGeneraciones <= numeroMaximoGeneraciones && numGeneracionesSinMejora<=numMaxGeneracionesSinMejora);
+        } while (numGeneraciones <= numeroMaximoGeneraciones /*&& numGeneracionesSinMejora<=numMaxGeneracionesSinMejora*/);
 
         mejorIndividuo = obtenerMejor(generacion);
         if (!printed)

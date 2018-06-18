@@ -7,13 +7,6 @@ import main.java.genetico.algoritmos.cruce.CrucePositionBased;
 import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepeticion;
 import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
-import main.java.util.writer.CSVWriter;
-import main.java.util.writer.DatosGlobalesEjecuciones;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
 

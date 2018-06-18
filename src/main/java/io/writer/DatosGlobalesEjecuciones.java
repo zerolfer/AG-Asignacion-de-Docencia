@@ -1,4 +1,4 @@
-package main.java.util.writer;
+package main.java.io.writer;
 
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
