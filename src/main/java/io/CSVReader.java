@@ -14,13 +14,15 @@ import java.util.Date;
 import java.util.List;
 
 public class CSVReader {
-    private static final String SPLITTER = ";";
-    private static final String AREA_SPLITTER = "/";
+    private static final String SPLITTER = Settings.get("csv.splitter");
+    private static final String AREA_SPLITTER = Settings.get("csv.area.spliter");
+    private static final String HORARIO_SPLITTER = Settings.get("csv.horario.splitter");
 
-    private static final String PROFESORES_PATH = "files/Profesores.csv";
-    private static final String ASIGNATURAS_PATH = "files/Asignaturas.csv";
+    private static final String PROFESORES_PATH = Settings.get("path.profesores");
+    private static final String ASIGNATURAS_PATH = Settings.get("path.asignaturas");
 
     private static final boolean debug = false;
+    private static final String DIA_SPLITER = Settings.get("csv.dia.spliter");
 
     public static List<Profesor> CsvLoadProfesores() {
         BufferedReader br = null;
@@ -66,7 +68,7 @@ public class CSVReader {
 
     private static Horario DisponibilidadProvider(String string) throws ParseException {
 
-        String[] horas = string.split("-");
+        String[] horas = string.split(HORARIO_SPLITTER);
 
         /* en caso de que el profesor no sea asociado, la columna podra ser vacia,
          * con la palabra total o la palabra ilimitada y creará un intervalo
@@ -149,9 +151,9 @@ public class CSVReader {
     }
 
     private static Horario horarioProvider(String string) throws ParseException {
-        String[] diaIntervalo = string.split(" ");
+        String[] diaIntervalo = string.split(DIA_SPLITER);
         char dia = diaIntervalo[0].charAt(0);
-        String[] horas = diaIntervalo[1].split("-");
+        String[] horas = diaIntervalo[1].split(HORARIO_SPLITTER);
 
         Date parsedDate1 = Horario.horaFormat.parse(horas[0]);
         Date parsedDate2 = Horario.horaFormat.parse(horas[1]);

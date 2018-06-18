@@ -1,6 +1,7 @@
 package main.java.io.writer;
 
 import main.java.genetico.AlgoritmoGenetico;
+import main.java.io.Settings;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractCSVWriter implements CSVWriter {
-    public final char SPLITTER = ';';
+    public final String SPLITTER = Settings.get("csv.splitter");
     public final String LINE_SEP = System.getProperty("line.separator");
 
     BufferedWriter getBr() {
@@ -23,7 +24,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         try {
             br = new BufferedWriter(new FileWriter(path, append));
         } catch (IOException e) {
-            new File("files/ejecuciones/").mkdirs(); // crea la ruta en caso de no existi
+            new File(Settings.get("file.nombre.globales")).mkdirs(); // crea la ruta en caso de no existir
             try {
                 br = new BufferedWriter(new FileWriter(path, append));
             } catch (IOException e1) {

@@ -1,15 +1,10 @@
 package main.java.ui;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -26,7 +21,7 @@ public class MainWindow extends Application {
         this.stage=primaryStage;
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("../../resources/mainWindow.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../../resources/ui/mainWindow.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

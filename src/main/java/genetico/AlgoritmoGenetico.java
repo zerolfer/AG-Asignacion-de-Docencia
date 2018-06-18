@@ -13,6 +13,7 @@ import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
 import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
 import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
+import main.java.io.Settings;
 import main.java.model.BD;
 import main.java.util.RandomManager;
 import main.java.util.Stopwatch;
@@ -143,8 +144,9 @@ public class AlgoritmoGenetico {
      */
     public static void open(int numEjecuciones) {
         AlgoritmoGenetico.NUM_EJECUCIONES = numEjecuciones;
-            printer1 =
-                new DatosGlobalesEjecuciones("files/DatosGlobalesEjecuciones.csv");
+        printer1 =
+                new DatosGlobalesEjecuciones(Settings.get("path.output.globales") +
+                        Settings.get("file.nombre.globales") + ".csv");
     }
 
     /**
@@ -263,11 +265,12 @@ public class AlgoritmoGenetico {
         CSVWriter printer2 = null;
         CSVWriter printer3 = null;
         if (!printed) {
-            printer2 = new DatosDetalladosEjecuciones(
-                    "files/ejecuciones/DatosDetalladosEjecucion" + ejecucion + ".csv",
+            printer2 = new DatosDetalladosEjecuciones(Settings.get("path.output.detalles") +
+                    Settings.get("file.nombre.detalles") + ejecucion + ".csv",
                     getAlgoritmos());
             printer3 = new DatosFenotipoEjecuciones(
-                    "files/DatosFenotipoEjecuciones.csv", ejecucion);
+                    Settings.get("path.output.fenotipo") + Settings.get("file.nombre.fenotipo") +
+                            ".csv", ejecucion);
         }
 
         numGeneraciones = 1;
