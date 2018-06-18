@@ -67,7 +67,7 @@ public class AlgoritmoGenetico {
     /**
      * @see #getNumMaxGeneracionesSinMejora()
      */
-    private Integer numMaxGeneracionesSinMejora = 500;
+    private Integer numMaxGeneracionesSinMejora = 80;
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -258,6 +258,7 @@ public class AlgoritmoGenetico {
     }
 
     private int numGeneraciones=0;
+
     private void genetico(String ejecucion) {
 
         CSVWriter printer2 = null;
@@ -270,8 +271,8 @@ public class AlgoritmoGenetico {
                     "files/DatosFenotipoEjecuciones.csv", ejecucion);
         }
 
-        Generacion generacion = creacion.createPopulation(populationSize);
         numGeneraciones = 1;
+        Generacion generacion = creacion.createPopulation(populationSize);
         timer.start();
         Individuo mejor=null;
         int numGeneracionesSinMejora = 0; // es la condicion de parada
@@ -308,7 +309,7 @@ public class AlgoritmoGenetico {
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
             numGeneraciones++;
-        } while (numGeneraciones <= numeroMaximoGeneraciones || numGeneracionesSinMejora<=numMaxGeneracionesSinMejora);
+        } while (numGeneraciones <= numeroMaximoGeneraciones && numGeneracionesSinMejora<=numMaxGeneracionesSinMejora);
 
         mejorIndividuo = obtenerMejor(generacion);
         if (!printed)
