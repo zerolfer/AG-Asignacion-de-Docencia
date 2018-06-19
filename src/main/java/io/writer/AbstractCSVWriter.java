@@ -24,7 +24,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         try {
             br = new BufferedWriter(new FileWriter(path, append));
         } catch (IOException e) {
-            new File(Settings.get("file.nombre.globales")).mkdirs(); // crea la ruta en caso de no existir
+            new File(Settings.get("path.output.detalles")).mkdirs(); // crea la ruta en caso de no existir
             try {
                 br = new BufferedWriter(new FileWriter(path, append));
             } catch (IOException e1) {

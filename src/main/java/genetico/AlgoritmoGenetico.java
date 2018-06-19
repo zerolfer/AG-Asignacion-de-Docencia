@@ -231,6 +231,8 @@ public class AlgoritmoGenetico {
         // this.decodificacion = new Decodificacion();
         // ordenarAsignaturas();
         ordenarProfesores();
+//        BD.getProfesores(); // inicializa
+        System.out.println();
     }
 
     public AlgoritmoGenetico() {
@@ -251,11 +253,11 @@ public class AlgoritmoGenetico {
      * ingles</b>
      */
     private void ordenarProfesores() {
-        BD.getProfesores().sort(BD.comparatorProfesores);
+        BD.getProfesores().sort(BD.getComparatorProfesores());
     }
 
     private void ordenarAsignaturas() {
-        BD.getAsignaturas().sort(BD.comparatorGrupos);
+        BD.getAsignaturas().sort(BD.getComparatorGrupos());
     }
 
     private int numGeneraciones=0;

@@ -1,6 +1,7 @@
 package main.java.model;
 
 import main.java.io.CSVReader;
+import sun.security.jca.GetInstance;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,41 +11,68 @@ import java.util.List;
  */
 public class BD {
 
-    public static final Comparator<Profesor> comparatorProfesores = new Comparator<Profesor>() {
-        @Override
-        public int compare(Profesor o1, Profesor o2) {
-            if (o1.getBilingue() == true && o2.getBilingue() == false)
-                return 1;
-            if (o1.getBilingue() == false && o2.getBilingue() == true)
-                return -1;
-            else return 0;
-        }
-    };
+    private static BD instance;
 
-    public static final Comparator<Grupo> comparatorGrupos = new Comparator<Grupo>() {
-        @Override
-        public int compare(Grupo o1, Grupo o2) {
-            if (o1.getBilingue() == true && o2.getBilingue() == false)
-                return -1;
-            if (o1.getBilingue() == false && o2.getBilingue() == true)
-                return 1;
-            else return 0;
-        }
-    };
+    private BD(){
+        profesores = CSVReader.CsvLoadProfesores();
+        asignaturas = CSVReader.CsvLoadAsignaturas();
 
-    private static final List<Profesor> profesores = CSVReader.CsvLoadProfesores();
-    private static final List<Grupo> asignaturas = CSVReader.CsvLoadAsignaturas();
+        comparatorProfesores = new Comparator<Profesor>() {
+            @Override
+            public int compare(Profesor o1, Profesor o2) {
+                if (o1.getBilingue() == true && o2.getBilingue() == false)
+                    return 1;
+                if (o1.getBilingue() == false && o2.getBilingue() == true)
+                    return -1;
+                else return 0;
+            }
+        };
+
+        comparatorGrupos = new Comparator<Grupo>() {
+            @Override
+            public int compare(Grupo o1, Grupo o2) {
+                if (o1.getBilingue() == true && o2.getBilingue() == false)
+                    return -1;
+                if (o1.getBilingue() == false && o2.getBilingue() == true)
+                    return 1;
+                else return 0;
+            }
+        };
+    }
+
+    private static BD getInstance() {
+        if (instance == null) {
+            instance = new BD();
+        }
+        return instance;
+    }
+
+
+    private static Comparator<Profesor> comparatorProfesores;
+    private static Comparator<Grupo> comparatorGrupos;
+
+    private static List<Profesor> profesores;
+    private static List<Grupo> asignaturas;
+
+    public static Comparator<Profesor> getComparatorProfesores() {
+        return getInstance().comparatorProfesores;
+    }
+
+    public static Comparator<Grupo> getComparatorGrupos() {
+        return getInstance().comparatorGrupos;
+    }
+
 
     public static List<Profesor> getProfesores() {
-        return profesores;
+        return getInstance().profesores;
     }
 
     public static List<Grupo> getAsignaturas() {
-        return asignaturas;
+        return getInstance().asignaturas;
     }
 
     public static Profesor getProfesorById(int id) {
-        for (Profesor profe : profesores) {
+        for (Profesor profe : getInstance().profesores) {
             if (profe.getId() == id)
                 return profe;
         }
@@ -52,7 +80,7 @@ public class BD {
     }
 
     public static Grupo getGrupoById(int id) {
-        for (Grupo grupo : asignaturas) {
+        for (Grupo grupo : getInstance().asignaturas) {
             if (grupo.getId() == id)
                 return grupo;
         }
