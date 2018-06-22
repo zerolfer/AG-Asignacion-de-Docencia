@@ -134,7 +134,7 @@ public class Individuo implements Comparable<Individuo> {
         return false;
     }
 
-    int getNumeroGrupos() {
+    public int getNumeroGrupos() {
         int i = 0;
         for (Profesor key : fenotipo2.keySet()) { // profesores
             Set<Grupo> asignadas = fenotipo2.get(key);
@@ -156,6 +156,7 @@ public class Individuo implements Comparable<Individuo> {
         result.setFitnessAsigProfesor(getFitnessAsigProfesor());
         result.setFitnessNumHoras(getFitnessNumHoras());
         result.setYaEvaluado(yaEvaluado);
+        result.noAsignadas=this.noAsignadas;
 //        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
         if (getFenotipo2() != null) result.fenotipo2 = clonarFenotipo2();
         return result;

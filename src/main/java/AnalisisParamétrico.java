@@ -24,13 +24,13 @@ public class AnalisisParamétrico {
     public static void main(String args[]) {
 
         AlgoritmoGenetico.open(NUM_EJECUCIONES);
-//        paso1();
-//        paso2();
-//        paso3();
-//        paso4();
-//        paso5();
-//        paso6();
-//        paso7();
+        paso1();
+        paso2();
+        paso3();
+        paso4();
+        paso5();
+        paso6();
+        paso7();
         paso8();
         AlgoritmoGenetico.close();
     }
@@ -274,11 +274,11 @@ public class AnalisisParamétrico {
                 new ReemplazoTorneoPHSinRepeticion(),
                 new BusquedaIntercambioGrupo(1)
         );
-//        g1.lanzarAlgoritmo("AP8_BusquedaLocal0",1);
-//        g2.lanzarAlgoritmo("AP8_BusquedaLocal025");
-//        g3.lanzarAlgoritmo("AP8_BusquedaLocal050");
-//        g4.lanzarAlgoritmo("AP8_BusquedaLocal075",1);
-        g5.lanzarAlgoritmo("AP8_BusquedaLocal1",1);
+        g1.lanzarAlgoritmo("AP8_BusquedaLocal0");
+        g2.lanzarAlgoritmo("AP8_BusquedaLocal025");
+        g3.lanzarAlgoritmo("AP8_BusquedaLocal050");
+        g4.lanzarAlgoritmo("AP8_BusquedaLocal075");
+        g5.lanzarAlgoritmo("AP8_BusquedaLocal1");
     }
 
 

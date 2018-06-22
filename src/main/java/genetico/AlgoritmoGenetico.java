@@ -232,7 +232,6 @@ public class AlgoritmoGenetico {
         // ordenarAsignaturas();
         ordenarProfesores();
 //        BD.getProfesores(); // inicializa
-        System.out.println();
     }
 
     public AlgoritmoGenetico() {
@@ -289,6 +288,7 @@ public class AlgoritmoGenetico {
             mutar(hijos);
 
             evaluar(hijos);
+
             busquedaLocal(hijos);
 
             int sizeAnterior = generacion.size();
@@ -305,7 +305,7 @@ public class AlgoritmoGenetico {
                 mejor = obtenerMejor(generacion);
                 numGeneracionesSinMejora = mejor.esMejor(mejorAnterior)?0:++numGeneracionesSinMejora ;
             }
-                assert mejor.getNumeroGrupos()==84 ;
+
             if (!printed) {
                 float[] fitnessMedio = generacion.obtenerFitnessMedio();
                 printer2.csvWriteData(this,
@@ -332,7 +332,6 @@ public class AlgoritmoGenetico {
         Individuo[] genotipo = generacion.getGenotipo();
         Individuo mejor = genotipo[0];
         for (Individuo indi : genotipo) {
-            System.out.println(indi.getNumeroGrupos());
             if (mejor.getFitnessAsigProfesor() == indi.getFitnessAsigProfesor()) {
                 if (indi.getFitnessNumHoras() > mejor.getFitnessNumHoras())
                     mejor = indi;
