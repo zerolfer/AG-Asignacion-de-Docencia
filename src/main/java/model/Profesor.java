@@ -126,9 +126,9 @@ public class Profesor {
                 ", capacidad=" + capacidad +
                 ", bilingue=" + bilingue +
                 ", area='" + area + '\'';
-        if (!asignadas.isEmpty())
-            s += ", asignadas{ " + asignadas.stream().map(Grupo::getId).collect(Collectors.toList());
-        ;
+//        if (!asignadas.isEmpty())
+//            s += ", asignadas{ " + asignadas.stream().map(Grupo::getId).collect(Collectors.toList());
+//        ;
         //Arrays.toString(asignadas.toArray(new Grupo[asignadas.size()])) + " }";
         s += '}';
         return s;

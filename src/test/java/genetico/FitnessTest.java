@@ -11,7 +11,7 @@ import org.junit.Test;
  */
 public class FitnessTest {
 
-    @Test
+    @Test //TODO restest c
     public void tetst1() {
         Individuo v = new Individuo(new int[]{2, 52, 0, 36, 24, 1, 12, 80, 4, 82, 59, 64, 39, 41, 45, 3, 15, 43, 63, 28, 66, 11, 21, 81, 8, 14, 33, 58, 34, 35, 61, 18, 60, 42, 50, 20, 79, 16, 48, 22, 74, 26, 71, 19, 49, 75, 40, 5, 7, 65, 51, 70, 30, 55, 54, 10, 9, 56, 73, 6, 76, 68, 67, 44, 29, 25, 69, 78, 77, 37, 27, 32, 17, 38, 23, 31, 57, 62, 72, 53, 47, 13, 46});
         AlgoritmoDecodificacion decoder = new Decodificacion();
@@ -25,7 +25,7 @@ public class FitnessTest {
                         "5=[5, 6, 56, 9, 73, 25, 10, 27, 76, 44, 77, 30], " +
                         "6=[32, 68, 69, 37, 53, 38, 57, 29, 78, 31], " +
                         "7=[72, 13, 62, 46, 47]}",
-                v.getFenotipo().toString());
+                v.getFenotipo2().toString());
         /* // Version anterior: lista de asignaturas = profesor
         Assert.assertEquals("{0=0, 1=0, 2=0, 3=1, 4=1, 5=5, 6=5, 7=4, 8=3, 9=5, 10=5, 11=3, 12=0, 13=7, 14=2," +
                 " 15=1, 16=2, 17=3, 18=2, 19=3, 20=2, 21=2, 22=2, 23=1, 24=0, 25=5, 26=0, 27=5, 28=2, 29=6," +

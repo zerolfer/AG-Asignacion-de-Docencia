@@ -305,6 +305,7 @@ public class AlgoritmoGenetico {
                 mejor = obtenerMejor(generacion);
                 numGeneracionesSinMejora = mejor.esMejor(mejorAnterior)?0:++numGeneracionesSinMejora ;
             }
+                assert mejor.getNumeroGrupos()==84 ;
             if (!printed) {
                 float[] fitnessMedio = generacion.obtenerFitnessMedio();
                 printer2.csvWriteData(this,
@@ -316,10 +317,9 @@ public class AlgoritmoGenetico {
         } while (numGeneraciones <= numeroMaximoGeneraciones /*&& numGeneracionesSinMejora<=numMaxGeneracionesSinMejora*/);
 
         mejorIndividuo = obtenerMejor(generacion);
-        if (!printed)
-            printer3.csvWriteData(this);
 
         if (!printed) {
+            printer3.csvWriteData(this);
             printer2.close();
             printer3.close();
             printed = true;
@@ -332,6 +332,7 @@ public class AlgoritmoGenetico {
         Individuo[] genotipo = generacion.getGenotipo();
         Individuo mejor = genotipo[0];
         for (Individuo indi : genotipo) {
+            System.out.println(indi.getNumeroGrupos());
             if (mejor.getFitnessAsigProfesor() == indi.getFitnessAsigProfesor()) {
                 if (indi.getFitnessNumHoras() > mejor.getFitnessNumHoras())
                     mejor = indi;

@@ -2,6 +2,7 @@ package main.java.genetico;
 
 
 import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
+import main.java.genetico.algoritmos.decodificacion.Decodificacion;
 import main.java.genetico.algoritmos.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.BD;
 import main.java.model.Grupo;
@@ -15,21 +16,21 @@ import java.util.*;
  */
 public class Individuo implements Comparable<Individuo> {
 
-    AlgoritmoDecodificacion decodificacion;
+    static AlgoritmoDecodificacion decodificacion;
     private int[] cromosoma; // cada elemento representa el id de una asignatura
     // los valores de fitness
     private int fitnessAsigProfesor;
     private float fitnessNumHoras;
 
-    private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
-    public Map<Profesor, Set<Grupo>> fenotipo2;
+    //    private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
+    public Map<Profesor, Set<Grupo>> fenotipo2; // TODO hacer private
     public int noAsignadas;
 
-    private boolean yaEvaluado =false; // inicialmente no evaluado
+    private boolean yaEvaluado = false; // inicialmente no evaluado
 
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
-        this.decodificacion = new DecodificacionFiltroGrupo();
+        decodificacion = new DecodificacionFiltroGrupo();
     }
 
 
@@ -59,7 +60,7 @@ public class Individuo implements Comparable<Individuo> {
 
     @Override
     public String toString() {
-        return "Individuo:{ fitness: ("+ yaEvaluado + ", " + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
+        return "Individuo:{ fitness: (" + yaEvaluado + ", " + fitnessAsigProfesor + ", " + fitnessNumHoras + "), "
                 + "Codigo cromosoma: " + cromosomaToString() + " }";
         //super.toString();//Arrays.toString(cromosoma);
     }
@@ -85,17 +86,17 @@ public class Individuo implements Comparable<Individuo> {
         return this.cromosoma.length;
     }
 
-    public Map<Integer, Set<Integer>> getFenotipo() {
-        return fenotipo;
-    }
+//    public Map<Integer, Set<Integer>> getFenotipo() {
+//        return fenotipo;
+//    }
 
     public Map<Profesor, Set<Grupo>> getFenotipo2() {
         return fenotipo2;
     }
 
-    public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
-        this.fenotipo = fenotipo;
-    }
+//    public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
+//        this.fenotipo = fenotipo;
+//    }
 
     public boolean contains(int integer) {
         return contains(0, cromosoma.length - 1, integer);
@@ -133,6 +134,17 @@ public class Individuo implements Comparable<Individuo> {
         return false;
     }
 
+    int getNumeroGrupos() {
+        int i = 0;
+        for (Profesor key : fenotipo2.keySet()) { // profesores
+            Set<Grupo> asignadas = fenotipo2.get(key);
+            for (Grupo grupo : asignadas) {
+                i++;
+            }
+        }
+        return i;
+    }
+
     @Override
     public int hashCode() {
         return Arrays.hashCode(cromosoma);
@@ -144,37 +156,37 @@ public class Individuo implements Comparable<Individuo> {
         result.setFitnessAsigProfesor(getFitnessAsigProfesor());
         result.setFitnessNumHoras(getFitnessNumHoras());
         result.setYaEvaluado(yaEvaluado);
-        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
+//        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
         if (getFenotipo2() != null) result.fenotipo2 = clonarFenotipo2();
         return result;
     }
 
     private Map<Profesor, Set<Grupo>> clonarFenotipo2() {
-        Map<Profesor, Set<Grupo>>result = new HashMap<>();
+        Map<Profesor, Set<Grupo>> result = new HashMap<>();
         for (Map.Entry<Profesor, Set<Grupo>> e : fenotipo2.entrySet()) {
             Profesor key = e.getKey();
             Set<Grupo> value = e.getValue();
             Set<Grupo> nuevoValue = new HashSet<Grupo>();
             for (Grupo as : value)
                 nuevoValue.add(as.clone());
-            Profesor nuevoKey= key.clone();
-            result.put(nuevoKey,nuevoValue);
+            Profesor nuevoKey = key.clone();
+            result.put(nuevoKey, nuevoValue);
         }
         return result;
     }
 
     public String toStringFull() {
         StringBuilder sb = new StringBuilder("Individuo:{ \n\tfitness: (" + fitnessAsigProfesor +
-                ", " + fitnessNumHoras + ", "+yaEvaluado+"), "
+                ", " + fitnessNumHoras + ", " + yaEvaluado + "), "
                 + "Codigo cromosoma: " + cromosomaToString() + "\n");
-        for (Integer key : fenotipo.keySet()) { // profesores
-            sb.append(BD.getProfesorById(key) + " asignadas: [ ");
+        for (Profesor key : fenotipo2.keySet()) { // profesores
+            sb.append(key + " asignadas: [ ");
 
-            Set<Integer> asignadas = fenotipo.get(key);
+            Set<Grupo> asignadas = fenotipo2.get(key);
             int i = 0;
-            for (Integer grupo : asignadas) {
+            for (Grupo grupo : asignadas) {
                 i++;
-                sb.append(BD.getGrupoById(grupo).getId());
+                sb.append(grupo.getId());
                 if (i < asignadas.size())
                     sb.append(", ");
 
@@ -219,7 +231,7 @@ public class Individuo implements Comparable<Individuo> {
     }
 
     public void evaluar() {
-        if(!yaEvaluado) { // si ya estaba evaluado no es necesario volver a hacerlo
+        if (!yaEvaluado) { // si ya estaba evaluado no es necesario volver a hacerlo
             decodificacion.aplicar(this);
             this.yaEvaluado = true;
         }
@@ -230,6 +242,7 @@ public class Individuo implements Comparable<Individuo> {
      * describe en el metodo
      * {@link Individuo#compareTo(Individuo)}
      * <br/><b>En caso de ser iguales, se retonará false</b>
+     *
      * @param vecino
      * @return false en caso de ser peor o igual que el
      * otro individuo
@@ -251,7 +264,7 @@ public class Individuo implements Comparable<Individuo> {
                 // FITNESS 1
                 int numAsignaturas;
                 if (profesor.equals(profesor1) || profesor.equals(profesor2))
-                     numAsignaturas = profesor.getNumAsignaturas(true);
+                    numAsignaturas = profesor.getNumAsignaturas(true);
                 else numAsignaturas = profesor.getNumAsignaturas();
                 if (numAsignaturas > max)
                     max = numAsignaturas;

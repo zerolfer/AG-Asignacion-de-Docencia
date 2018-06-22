@@ -83,7 +83,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
         asignarFitness(individuo, noAsignadas, this.profesores, this.asignaturas);
 
-        individuo.setFenotipo(fenotipo);
+//        individuo.setFenotipo2(fenotipo);
         individuo.fenotipo2 = fenotipo2;
 
         if (debug) {

@@ -1,5 +1,7 @@
 package main.java.model;
 
+import main.java.io.Settings;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -73,8 +75,8 @@ public class Grupo {
      */
     public float getHorasComputables(Profesor profesor) {
         float coeficiente = 1f; // inicialmente es el mismo
-        //if (this.getBilingue()) TODO: descomentar esto
-        //    coeficiente = 1.5f; //si ingles, contabilizan como mas horas
+            if (this.getBilingue())
+                coeficiente = 1.5f; // si ingles, contabilizan como mas horas
         return coeficiente * this.getHoras();
     }
 

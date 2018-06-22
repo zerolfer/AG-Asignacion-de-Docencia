@@ -24,6 +24,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
     public void csvWriteData(AlgoritmoGenetico genetico) {
         //Map<Integer, Set<Integer>> fenotipo = genetico.getMejorIndividuo().getFenotipo();
         Map<Profesor, Set<Grupo>> fenotipo = genetico.getMejorIndividuo().fenotipo2;
+        System.out.println(genetico.getMejorIndividuo().toStringFull());
         Date d = new Date();
         super.csvWriteData("ejecucion" + SPLITTER + ejecucion + SPLITTER
                 + "hora" + SPLITTER +
