@@ -1,25 +1,30 @@
 package main.java;
 
 import main.java.busqueda.BusquedaIntercambioGrupo;
+import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
+import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
 import main.java.genetico.algoritmos.cruce.CruceOrderBased;
 import main.java.genetico.algoritmos.cruce.CrucePositionBased;
 import main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion;
 import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
 import main.java.genetico.algoritmos.mutacion.MutacionInversion;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneo;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPH;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoTorneoPHSinRepeticion;
-import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
-import main.java.genetico.algoritmos.seleccion.SeleccionRuleta;
-import main.java.genetico.algoritmos.seleccion.SeleccionRuletaAntiguo;
-import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
+import main.java.genetico.algoritmos.reemplazo.*;
+import main.java.genetico.algoritmos.seleccion.*;
 
 public class AnalisisParamétrico {
     private static final int NUM_EJECUCIONES = 10;
-    private static final float pMutacion=0.15f;
+
+    private static final float pMutacion=0.30f;
+    private static final float pCruce=0.7f;
+
+    private static AlgoritmoSeleccion selector = new SeleccionRuleta();
+    private static AlgoritmoReemplazo reemplazo = new ReemplazoTorneoPH();
+    private static AlgoritmoCruce cruce = new CrucePositionBased(pCruce);
+    private static AlgoritmoMutacion mutador = new MutacionIntercambio(pMutacion);
+    private static BusquedaLocal busqueda = new BusquedaIntercambioGrupo(1);
+
 
     public static void main(String args[]) {
 
@@ -85,28 +90,28 @@ public class AnalisisParamétrico {
     private static void paso3() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CruceOrderBased(0.7f),
                 new MutacionIntercambio(0.3f),
                 new ReemplazoGeneracional()
         );
         AlgoritmoGenetico g2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CruceOrderBased(0.7f),
                 new MutacionIntercambio(0.3f),
                 new ReemplazoTorneo()
         );
         AlgoritmoGenetico g3 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CruceOrderBased(0.7f),
                 new MutacionIntercambio(0.3f),
                 new ReemplazoTorneoPH()
         );
         AlgoritmoGenetico g4 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CruceOrderBased(0.7f),
                 new MutacionIntercambio(0.3f),
                 new ReemplazoTorneoPHSinRepeticion()
@@ -120,17 +125,17 @@ public class AnalisisParamétrico {
     private static void paso4() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CruceOrderBased(0.7f),
                 new MutacionIntercambio(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CrucePositionBased(0.7f),
                 new MutacionIntercambio(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         g1.lanzarAlgoritmo("AP4_cruceOBX");
         g2.lanzarAlgoritmo("AP4_crucePBX");
@@ -139,44 +144,52 @@ public class AnalisisParamétrico {
     private static void paso5() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CrucePositionBased(0.8f),
                 new MutacionIntercambio(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
+                selector,
                 new CrucePositionBased(0.9f),
                 new MutacionIntercambio(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g3 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(1),
+                selector,
+                new CrucePositionBased(0.7f),
                 new MutacionIntercambio(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
+        );
+        AlgoritmoGenetico g4 = new AlgoritmoGenetico(
+                new CreacionAleatoria(),
+                selector,
+                new CrucePositionBased(0.6f),
+                new MutacionIntercambio(0.3f),
+                reemplazo
         );
         g1.lanzarAlgoritmo("AP5_probabilidadCruce08");
         g2.lanzarAlgoritmo("AP5_probabilidadCruce09");
-        g3.lanzarAlgoritmo("AP5_probabilidadCruce1");
+        g3.lanzarAlgoritmo("AP5_probabilidadCruce07");
+        g4.lanzarAlgoritmo("AP5_probabilidadCruce06");
     }
 
     private static void paso6() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionInversion(0.3f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         g1.lanzarAlgoritmo("AP6_mutacionIntercambio");
         g2.lanzarAlgoritmo("AP6_mutacionInversion");
@@ -185,45 +198,45 @@ public class AnalisisParamétrico {
     private static void paso7() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.05f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.10f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g3 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.20f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g4 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.30f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g5 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.25f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         AlgoritmoGenetico g6 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
+                selector,
+                cruce,
                 new MutacionIntercambio(0.15f),
-                new ReemplazoTorneoPHSinRepeticion()
+                reemplazo
         );
         g1.lanzarAlgoritmo("AP7_probabilidadMutacion005");
         g2.lanzarAlgoritmo("AP7_probabilidadMutacion010");
@@ -236,42 +249,42 @@ public class AnalisisParamétrico {
     private static void paso8() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
-                new MutacionIntercambio(pMutacion),
-                new ReemplazoTorneoPHSinRepeticion(),
+                selector,
+                cruce,
+                mutador,
+                reemplazo,
                 new BusquedaIntercambioGrupo(0)
         );
         AlgoritmoGenetico g2 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
-                new MutacionIntercambio(pMutacion),
-                new ReemplazoTorneoPHSinRepeticion(),
+                selector,
+                cruce,
+                mutador,
+                reemplazo,
                 new BusquedaIntercambioGrupo(0.25f)
         );
         AlgoritmoGenetico g3 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
-                new MutacionIntercambio(pMutacion),
-                new ReemplazoTorneoPHSinRepeticion(),
+                selector,
+                cruce,
+                mutador,
+                reemplazo,
                 new BusquedaIntercambioGrupo(0.50f)
         );
         AlgoritmoGenetico g4 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
-                new MutacionIntercambio(pMutacion),
-                new ReemplazoTorneoPHSinRepeticion(),
+                selector,
+                cruce,
+                mutador,
+                reemplazo,
                 new BusquedaIntercambioGrupo(0.75f)
         );
         AlgoritmoGenetico g5 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.8f),
-                new MutacionIntercambio(pMutacion),
-                new ReemplazoTorneoPHSinRepeticion(),
+                selector,
+                cruce,
+                mutador,
+                reemplazo,
                 new BusquedaIntercambioGrupo(1)
         );
         g1.lanzarAlgoritmo("AP8_BusquedaLocal0");
