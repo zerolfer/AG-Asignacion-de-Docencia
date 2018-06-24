@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.reemplazo;
+package main.java.genetico.operadores.reemplazo;
 
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class ReemplazoGeneracional implements AlgoritmoReemplazo {
+public class ReemplazoGeneracional implements OperadorReemplazo {
     @Override
     public Generacion aplicar(List<Individuo[]> padres, List<Individuo[]> hijos) {
         List<Individuo> generacion = new ArrayList<>();

@@ -2,13 +2,16 @@ package main.java.io.writer;
 
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
+import main.java.io.Settings;
 import main.java.util.RandomManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatosGlobalesEjecuciones extends AbstractCSVWriter {
-    boolean printCabeceras = true; // NOTE: true para imprimer cabeceras de tabla
+
+    // true; // NOTE: true para imprimer cabeceras de tabla
+    private boolean printCabeceras = Settings.getBoolean("output.incluirCabeceras");
 
     public DatosGlobalesEjecuciones(String path) {
         super(path,true); //NOTE: poner true para no reescribir fichero

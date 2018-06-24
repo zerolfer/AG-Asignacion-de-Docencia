@@ -3,16 +3,16 @@ package main.java.genetico;
 
 import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.busqueda.BusquedaLocal;
-import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
-import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
-import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
-import main.java.genetico.algoritmos.cruce.CruceOrderBased;
-import main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion;
-import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
-import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
-import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
-import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
+import main.java.genetico.operadores.creacion.CreacionAleatoria;
+import main.java.genetico.operadores.cruce.OperadorCruce;
+import main.java.genetico.operadores.cruce.CruceOrderBased;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.mutacion.MutacionIntercambio;
+import main.java.genetico.operadores.reemplazo.OperadorReemplazo;
+import main.java.genetico.operadores.reemplazo.ReemplazoGeneracional;
+import main.java.genetico.operadores.seleccion.OperadorSeleccion;
+import main.java.genetico.operadores.seleccion.SeleccionParesAleatorios;
 import main.java.io.Settings;
 import main.java.model.BD;
 import main.java.util.RandomManager;
@@ -33,7 +33,8 @@ public class AlgoritmoGenetico {
     /**
      * Ver {@link #getPopulationSize()}
      */
-    private static Integer populationSize = 100;
+    private static Integer populationSize =
+            Settings.getInteger("genetico.global.populationSize");
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -43,7 +44,8 @@ public class AlgoritmoGenetico {
      * INSTANCIA, ES MERAMENTE UNA VARIABLE POR DEFECTO POR SI
      * NO SE ESPECIFICAN DATOS DE INSTANCIA CONCRETOS</code>
      */
-    public static final Float probabilidadCruce = 0.8f;
+    public static final Float PROBABILIDAD_CRUCE =
+            Settings.getFloat("genetico.predeterminados.probabilidadCruce");
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -53,21 +55,8 @@ public class AlgoritmoGenetico {
      * * INSTANCIA, ES MERAMENTE UNA VARIABLE POR DEFECTO POR SI
      * * NO SE ESPECIFICAN DATOS DE INSTANCIA CONCRETOS</code>
      */
-    public static final Float probabilidadMutacion = 0.10f;
-
-    /**
-     *
-     * Representa el numero de generaciones que sean generadas
-     * en total durante la ejecucion del algoritmo
-     * @see #getNumeroMaximoGeneraciones()
-     *
-     */
-    private Integer numeroMaximoGeneraciones = 500;
-
-    /**
-     * @see #getNumMaxGeneracionesSinMejora()
-     */
-    private Integer numMaxGeneracionesSinMejora = 80;
+    public static final Float PROBABILIDAD_MUTACION =
+            Settings.getFloat("genetico.predeterminados.probabilidadMutacion");
 
     /**
      * Variable estatica accesible por todo el sistema.<br/>
@@ -78,22 +67,38 @@ public class AlgoritmoGenetico {
      * * INSTANCIA, ES MERAMENTE UNA VARIABLE POR DEFECTO POR SI
      * * NO SE ESPECIFICAN DATOS DE INSTANCIA CONCRETOS</code>
      */
-    public static final Float probabilidadBusqueda = 1f; //0.7f;
+    public static final Float PROBABILIDAD_BUSQUEDA =
+            Settings.getFloat("genetico.predeterminados.probabilidadBusqueda");
+
+    /**
+     * Representa el numero de generaciones que sean generadas
+     * en total durante la ejecucion del algoritmo
+     * @see #getNumeroMaximoGeneraciones()
+     */
+    private Integer numeroMaximoGeneraciones =
+            Settings.getInteger("genetico.global.numeroMaximoGeneraciones");
+
+    /**
+     * @see #getNumMaxGeneracionesSinMejora()
+     */
+    private Integer numMaxGeneracionesSinMejora =
+            Settings.getInteger("genetico.global.numMaxGeneracionesSinMejora");
+
 
     // ALGORITMOS
-    private AlgoritmoCreacion creacion;
-    private AlgoritmoSeleccion seleccion;
-    private AlgoritmoCruce cruce;
-    private AlgoritmoMutacion mutacion;
-    private AlgoritmoReemplazo reemplazo;
+    private OperadorCreacion creacion;
+    private OperadorSeleccion seleccion;
+    private OperadorCruce cruce;
+    private OperadorMutacion mutacion;
+    private OperadorReemplazo reemplazo;
 
     BusquedaLocal busqueda;
 
     // ESTRUCTURAS AUXILIARES
     private Individuo mejorIndividuo;
-    private static boolean debug = true;
+    private static boolean debug = Settings.getBoolean("genetico.debug.mensajes");
     private Stopwatch timer = new Stopwatch();
-    private static int NUM_EJECUCIONES=1;
+    private static int numeroEjecuciones = Settings.getInteger("genetico.predeterminados.numeroEjecuciones");
 
     /**
      * Indica si el output ya ha sido impreso,
@@ -103,7 +108,6 @@ public class AlgoritmoGenetico {
      *
      * Es una variable auxiliar para el writer,
      * no se deberia cambiar su valor
-     *
      */
     private boolean printed = false;
 
@@ -143,7 +147,7 @@ public class AlgoritmoGenetico {
      *                       se ejecuten a partir de ese momento
      */
     public static void open(int numEjecuciones) {
-        AlgoritmoGenetico.NUM_EJECUCIONES = numEjecuciones;
+        AlgoritmoGenetico.numeroEjecuciones = numEjecuciones;
         printer1 =
                 new DatosGlobalesEjecuciones(Settings.get("path.output.globales") +
                         Settings.get("file.nombre.globales") + ".csv");
@@ -154,7 +158,7 @@ public class AlgoritmoGenetico {
      * @param id
      */
     public void lanzarAlgoritmo(String id) {
-        lanzarAlgoritmo(id, NUM_EJECUCIONES); // por defecto se lanza el numero de veces indicadas
+        lanzarAlgoritmo(id, numeroEjecuciones); // por defecto se lanza el numero de veces indicadas
     }
 
     public void lanzarAlgoritmo(String id, int NUM_EJECUCIONES) {
@@ -186,7 +190,7 @@ public class AlgoritmoGenetico {
     }
 
     /**
-     * Metodo estatico a invocar tras ejecutar los algoritmos
+     * Metodo estatico a invocar tras ejecutar los operadores
      * requeridos empleando el metodo
      * {@link #lanzarAlgoritmo(String, int)}
      * <br/>
@@ -207,22 +211,22 @@ public class AlgoritmoGenetico {
         this.numMaxGeneracionesSinMejora=maxSinMejora;
     }
 
-    public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
-                             AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo, BusquedaLocal busqueda) {
+    public AlgoritmoGenetico(OperadorCreacion creator, OperadorSeleccion seleccion, OperadorCruce cruce,
+                             OperadorMutacion mutacion, OperadorReemplazo reemplazo, BusquedaLocal busqueda) {
         inicializar(creator, seleccion, cruce, mutacion, reemplazo);
 
         this.busqueda = busqueda;
 
     }
 
-    public AlgoritmoGenetico(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
-                             AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
+    public AlgoritmoGenetico(OperadorCreacion creator, OperadorSeleccion seleccion, OperadorCruce cruce,
+                             OperadorMutacion mutacion, OperadorReemplazo reemplazo) {
         inicializar(creator, seleccion, cruce, mutacion, reemplazo);
-        this.busqueda = new BusquedaIntercambioGrupo(probabilidadBusqueda);
+        this.busqueda = new BusquedaIntercambioGrupo(PROBABILIDAD_BUSQUEDA);
     }
 
-    private void inicializar(AlgoritmoCreacion creator, AlgoritmoSeleccion seleccion, AlgoritmoCruce cruce,
-                             AlgoritmoMutacion mutacion, AlgoritmoReemplazo reemplazo) {
+    private void inicializar(OperadorCreacion creator, OperadorSeleccion seleccion, OperadorCruce cruce,
+                             OperadorMutacion mutacion, OperadorReemplazo reemplazo) {
         this.creacion = creator;
         this.seleccion = seleccion;
         this.cruce = cruce;
@@ -235,8 +239,8 @@ public class AlgoritmoGenetico {
     }
 
     public AlgoritmoGenetico() {
-        this(new CreacionAleatoria(), new SeleccionParesAleatorios(), new CruceOrderBased(probabilidadCruce),
-                new MutacionIntercambio(probabilidadMutacion), new ReemplazoGeneracional());
+        this(new CreacionAleatoria(), new SeleccionParesAleatorios(), new CruceOrderBased(PROBABILIDAD_CRUCE),
+                new MutacionIntercambio(PROBABILIDAD_MUTACION), new ReemplazoGeneracional());
     }
 
     public void iniciar(String ejecucion, int seed) {
@@ -313,7 +317,7 @@ public class AlgoritmoGenetico {
                         Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
                         Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
-            numGeneraciones++;
+            numGeneraciones++; // TODO: reactivar esta condicion de parada
         } while (numGeneraciones <= numeroMaximoGeneraciones /*&& numGeneracionesSinMejora<=numMaxGeneracionesSinMejora*/);
 
         mejorIndividuo = obtenerMejor(generacion);

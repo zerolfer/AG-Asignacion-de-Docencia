@@ -1,6 +1,6 @@
 package main.java.genetico;
 
-import main.java.genetico.algoritmos.decodificacion.Decodificacion;
+import main.java.genetico.operadores.decodificacion.Decodificacion;
 import main.java.util.RandomManager;
 
 import java.util.Arrays;

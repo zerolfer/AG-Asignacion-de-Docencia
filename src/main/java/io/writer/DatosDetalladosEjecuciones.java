@@ -10,7 +10,7 @@ public class DatosDetalladosEjecuciones extends AbstractCSVWriter {
     public DatosDetalladosEjecuciones(String s,String[] algoritmos) {
         super(s, false);
 
-        //super.csvWriteDataCollection(Arrays.asList(algoritmos));
+        //super.csvWriteDataCollection(Arrays.asList(operadores));
 
         List<String> cabeceras = new ArrayList<>();
         cabeceras.add("Generacion");

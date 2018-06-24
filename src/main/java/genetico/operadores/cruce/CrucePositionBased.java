@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.cruce;
+package main.java.genetico.operadores.cruce;
 
 import main.java.genetico.Individuo;
 import main.java.util.RandomManager;

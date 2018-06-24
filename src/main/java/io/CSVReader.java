@@ -83,6 +83,7 @@ public class CSVReader {
         Timestamp timestamp1 = new java.sql.Timestamp(parsedDate1.getTime());
         Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
+//        if(timestamp1.after(timestamp2)) throw new RuntimeException("Las hora no se corresponden");
         return new Horario(timestamp1, timestamp2);
 
 

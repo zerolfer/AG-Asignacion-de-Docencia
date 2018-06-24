@@ -1,7 +1,6 @@
-package main.java.genetico.algoritmos.cruce;
+package main.java.genetico.operadores.cruce;
 
 import main.java.genetico.AlgoritmoGenetico;
-import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
 import main.java.util.Util;
 
@@ -11,14 +10,14 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 25/03/2018.
  */
-public abstract class AbstractCruce implements AlgoritmoCruce {
+public abstract class AbstractCruce implements OperadorCruce {
 
     protected static final boolean debug = false;
     protected float probabilidad;
 
     public AbstractCruce() {
         //probabilidad por defecto
-        this.probabilidad=AlgoritmoGenetico.probabilidadCruce;
+        this.probabilidad=AlgoritmoGenetico.PROBABILIDAD_CRUCE;
     }
 
     public AbstractCruce(float probabilidad) {

@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.reemplazo;
+package main.java.genetico.operadores.reemplazo;
 
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class ReemplazoTorneo implements AlgoritmoReemplazo {
+public class ReemplazoTorneo implements OperadorReemplazo {
 
     private int torneoSize;
 

@@ -1,8 +1,8 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion;
-import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.mutacion.MutacionIntercambio;
 import main.java.util.Util;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class MutacionTest {
 
-    private AlgoritmoMutacion mutador;
+    private OperadorMutacion mutador;
 
     @Test
     public void intercambioTest() {

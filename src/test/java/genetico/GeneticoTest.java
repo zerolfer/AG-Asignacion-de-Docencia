@@ -3,16 +3,16 @@ package test.java.genetico;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
-import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
-import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
-import main.java.genetico.algoritmos.cruce.CruceOrderBased;
-import main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion;
-import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
-import main.java.genetico.algoritmos.reemplazo.AlgoritmoReemplazo;
-import main.java.genetico.algoritmos.reemplazo.ReemplazoGeneracional;
-import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
-import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
+import main.java.genetico.operadores.creacion.CreacionAleatoria;
+import main.java.genetico.operadores.cruce.OperadorCruce;
+import main.java.genetico.operadores.cruce.CruceOrderBased;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.mutacion.MutacionIntercambio;
+import main.java.genetico.operadores.reemplazo.OperadorReemplazo;
+import main.java.genetico.operadores.reemplazo.ReemplazoGeneracional;
+import main.java.genetico.operadores.seleccion.OperadorSeleccion;
+import main.java.genetico.operadores.seleccion.SeleccionParesAleatorios;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
 import main.java.util.RandomManager;
@@ -42,11 +42,11 @@ public class GeneticoTest {
 
     @Test
     public void algortimoHastaElCruce() {
-        AlgoritmoCreacion creacion = new CreacionAleatoria();
-        AlgoritmoSeleccion seleccion = new SeleccionParesAleatorios();
-        AlgoritmoCruce cruce = new CruceOrderBased(1);
-        AlgoritmoMutacion mutacion = new MutacionIntercambio(1);
-        AlgoritmoReemplazo reemplazo = new ReemplazoGeneracional();
+        OperadorCreacion creacion = new CreacionAleatoria();
+        OperadorSeleccion seleccion = new SeleccionParesAleatorios();
+        OperadorCruce cruce = new CruceOrderBased(1);
+        OperadorMutacion mutacion = new MutacionIntercambio(1);
+        OperadorReemplazo reemplazo = new ReemplazoGeneracional();
 
         for (int idx = 0; idx < 30; idx++) {
             Generacion generacion = creacion.createPopulation(20);

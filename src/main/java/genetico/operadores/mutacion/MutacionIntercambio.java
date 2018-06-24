@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.mutacion;
+package main.java.genetico.operadores.mutacion;
 
 import main.java.genetico.Individuo;
 import main.java.util.Util;

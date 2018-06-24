@@ -1,17 +1,15 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
-import main.java.genetico.algoritmos.decodificacion.Decodificacion;
+import main.java.genetico.operadores.decodificacion.AlgoritmoDecodificacion;
+import main.java.genetico.operadores.decodificacion.Decodificacion;
 import main.java.model.Grupo;
 import main.java.model.Horario;
 import main.java.model.Profesor;
 import org.junit.Test;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;

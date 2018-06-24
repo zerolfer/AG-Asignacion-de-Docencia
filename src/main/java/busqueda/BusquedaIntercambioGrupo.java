@@ -7,15 +7,15 @@ import main.java.model.Profesor;
 
 import java.util.*;
 
-public class BusquedaIntercambioGrupo
-        extends AbstractBusquedaLocal {
+public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
+
     private Individuo original;
     private Comparator<BusquedaIntercambioGrupo.GrupoAux> comparatorAsignatura;
     private String asignaturaAnterior;
     private Profesor profesorAnterior;
 
     public BusquedaIntercambioGrupo() {
-        this(AlgoritmoGenetico.probabilidadBusqueda);
+        this(AlgoritmoGenetico.PROBABILIDAD_BUSQUEDA);
     }
     public BusquedaIntercambioGrupo(float probabilidad) {
         super(probabilidad);

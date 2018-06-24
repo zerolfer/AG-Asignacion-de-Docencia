@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.mutacion;
+package main.java.genetico.operadores.mutacion;
 
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
@@ -7,13 +7,13 @@ import main.java.util.Util;
 
 import java.util.List;
 
-public abstract class AbstractMutacion implements AlgoritmoMutacion {
+public abstract class AbstractMutacion implements OperadorMutacion {
 
     protected static final boolean debug = false;
     protected final float probabilidad;
 
     public AbstractMutacion(){
-        this.probabilidad=AlgoritmoGenetico.probabilidadMutacion;
+        this.probabilidad=AlgoritmoGenetico.PROBABILIDAD_MUTACION;
     }
     public AbstractMutacion(final float probabilidad) {
         Util.checkProbabilidadValida(probabilidad);

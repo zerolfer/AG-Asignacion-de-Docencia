@@ -10,20 +10,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import main.java.Main;
 import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.AlgoritmoGenetico;
-import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
-import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
-import main.java.genetico.algoritmos.cruce.AlgoritmoCruce;
-import main.java.genetico.algoritmos.cruce.CruceOrderBased;
-import main.java.genetico.algoritmos.cruce.CrucePositionBased;
-import main.java.genetico.algoritmos.mutacion.AlgoritmoMutacion;
-import main.java.genetico.algoritmos.mutacion.MutacionIntercambio;
-import main.java.genetico.algoritmos.mutacion.MutacionInversion;
-import main.java.genetico.algoritmos.reemplazo.*;
-import main.java.genetico.algoritmos.seleccion.*;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
+import main.java.genetico.operadores.creacion.CreacionAleatoria;
+import main.java.genetico.operadores.cruce.OperadorCruce;
+import main.java.genetico.operadores.cruce.CruceOrderBased;
+import main.java.genetico.operadores.cruce.CrucePositionBased;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.mutacion.MutacionIntercambio;
+import main.java.genetico.operadores.mutacion.MutacionInversion;
+import main.java.genetico.operadores.reemplazo.*;
+import main.java.genetico.operadores.seleccion.*;
 
 import java.io.File;
 import java.net.URL;
@@ -157,7 +156,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private AlgoritmoReemplazo obtenerOperadorReemplazo() {
+    private OperadorReemplazo obtenerOperadorReemplazo() {
         switch (cmbReemplazo.getValue()) {
             case "Generacional":
                 return new ReemplazoGeneracional();
@@ -172,7 +171,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private AlgoritmoMutacion obtenerOperadorMutacion() {
+    private OperadorMutacion obtenerOperadorMutacion() {
         switch (cmbMutacion.getValue()) {
             case "Inversion":
                 return new MutacionInversion(spProbMuta.getValue().floatValue());
@@ -183,7 +182,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private AlgoritmoCruce obtenerOperadorCruce() {
+    private OperadorCruce obtenerOperadorCruce() {
         switch (cmbCruce.getValue()) {
             case "OBX":
                 return new CruceOrderBased(spPropCruce.getValue().floatValue());
@@ -195,7 +194,7 @@ public class Controller implements Initializable{
 
     }
 
-    private AlgoritmoSeleccion obtenerOperadorSeleccion() {
+    private OperadorSeleccion obtenerOperadorSeleccion() {
         switch (cmbSeleccion.getValue()) {
             case "Aleatoria":
                 return new SeleccionParesAleatorios();
@@ -210,7 +209,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private AlgoritmoCreacion obtenerOperadorCreacion() {
+    private OperadorCreacion obtenerOperadorCreacion() {
         switch (cmbCreacion.getValue()) {
             case "Aleatoria":
                 return new CreacionAleatoria();

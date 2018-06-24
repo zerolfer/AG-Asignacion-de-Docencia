@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.decodificacion;
+package main.java.genetico.operadores.decodificacion;
 
 import main.java.model.Grupo;
 import main.java.model.Profesor;

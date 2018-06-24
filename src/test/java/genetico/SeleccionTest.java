@@ -2,9 +2,9 @@ package test.java.genetico;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.seleccion.AlgoritmoSeleccion;
-import main.java.genetico.algoritmos.seleccion.SeleccionParesAleatorios;
-import main.java.genetico.algoritmos.seleccion.SeleccionTorneo;
+import main.java.genetico.operadores.seleccion.OperadorSeleccion;
+import main.java.genetico.operadores.seleccion.SeleccionParesAleatorios;
+import main.java.genetico.operadores.seleccion.SeleccionTorneo;
 import main.java.util.Util;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class SeleccionTest {
 
-    private AlgoritmoSeleccion selector;
+    private OperadorSeleccion selector;
 
 /*
     @Before

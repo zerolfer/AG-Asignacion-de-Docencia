@@ -1,8 +1,8 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.creacion.AlgoritmoCreacion;
-import main.java.genetico.algoritmos.creacion.CreacionAleatoria;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
+import main.java.genetico.operadores.creacion.CreacionAleatoria;
 import main.java.model.BD;
 import main.java.util.RandomManager;
 import org.junit.Assert;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class CreacionTest {
 
-    AlgoritmoCreacion creator = new CreacionAleatoria();
+    OperadorCreacion creator = new CreacionAleatoria();
 
     @Test
     public void semillaTest() {

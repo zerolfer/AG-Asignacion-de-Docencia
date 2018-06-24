@@ -1,6 +1,7 @@
-package main.java.genetico.algoritmos.decodificacion;
+package main.java.genetico.operadores.decodificacion;
 
 import main.java.genetico.Individuo;
+import main.java.io.Settings;
 import main.java.model.BD;
 import main.java.model.Grupo;
 import main.java.model.Horario;
@@ -34,7 +35,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
     private static final int minutosIntervaloDistintaCiudad = 60;
 
 
-    public static boolean debug = false;
+    public static boolean debug = Settings.getBoolean("decodificador.debug.mensajes");
     List<Profesor> profesores;
     List<Grupo> asignaturas;
 
@@ -53,7 +54,7 @@ public class Decodificacion implements AlgoritmoDecodificacion {
 
         int noAsignadas = 0;
         for (int idAsignatura : individuo.getCromosoma()) { // O(n^3)
-            Grupo asignatura = getAsignaturaById(idAsignatura);
+            Grupo asignatura = getGrupoById(idAsignatura);
             Profesor profesor = getProfesor(asignatura);
             if (profesor == null) {
                 noAsignadas++;
@@ -190,17 +191,6 @@ public class Decodificacion implements AlgoritmoDecodificacion {
             }
         }
         return true;
-
-        // posible mejora:
-        /*
-        if (p.getDisponibilidad().getHoraInicio().after(horario.getHoraFin()))
-                continue;
-            else if(p.getDisponibilidad().getHoraFin().before(horario.getHoraInicio()))
-                continue;
-            //otherwise
-            else
-                return false;
-         */
     }
 
     boolean checkBilingue(Grupo a, Profesor p) {
@@ -211,12 +201,22 @@ public class Decodificacion implements AlgoritmoDecodificacion {
         return p.getCapacidad() >= a.getHorasComputables(p);
     }
 
-    Grupo getAsignaturaById(int idAsignatura) {
+    /**
+     * Obtiene un grupo a partir de su id
+     * No se emplea el de la clase BD debido
+     * a la necesidad de tratar con copias de
+     * los datos, para no modificar los reales
+     *
+     * @param idGrupo
+     *      identificador de la asignatura
+     * @return Grupo
+     */
+    Grupo getGrupoById(int idGrupo) {
         for (Grupo a : this.asignaturas) {
-            if (a.getId() == idAsignatura)
+            if (a.getId() == idGrupo)
                 return a;
         }
-        throw new RuntimeException("No existe ID de asignatura " + idAsignatura);
+        throw new RuntimeException("No existe ID de asignatura " + idGrupo);
     }
 
 }

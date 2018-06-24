@@ -11,7 +11,7 @@ public abstract class AbstractBusquedaLocal implements BusquedaLocal {
     public boolean debug=false; // imprime por consola el hashCode y el toString de cada iteración
 
     public AbstractBusquedaLocal() {
-        this.probabilidad=AlgoritmoGenetico.probabilidadBusqueda;
+        this.probabilidad=AlgoritmoGenetico.PROBABILIDAD_BUSQUEDA;
     }
 
     public AbstractBusquedaLocal(float probabilidad) {

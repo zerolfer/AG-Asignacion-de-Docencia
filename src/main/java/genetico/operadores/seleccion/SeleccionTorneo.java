@@ -1,8 +1,7 @@
-package main.java.genetico.algoritmos.seleccion;
+package main.java.genetico.operadores.seleccion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
-import test.java.genetico.SeleccionTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class SeleccionTorneo implements AlgoritmoSeleccion {
+public class SeleccionTorneo implements OperadorSeleccion {
 
     private int torneoSize;
 

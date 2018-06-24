@@ -1,8 +1,8 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.cruce.CruceOrderBased;
-import main.java.genetico.algoritmos.cruce.CrucePositionBased;
+import main.java.genetico.operadores.cruce.CruceOrderBased;
+import main.java.genetico.operadores.cruce.CrucePositionBased;
 import main.java.util.RandomManager;
 import main.java.util.Util;
 import org.junit.Assert;

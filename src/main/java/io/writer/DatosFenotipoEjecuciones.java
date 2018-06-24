@@ -38,7 +38,6 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
                 "______________________________________________"
                 + LINE_SEP);
 
-
     }
 
     private String fenotipoToString(Map<Profesor, Set<Grupo>> fenotipo) {

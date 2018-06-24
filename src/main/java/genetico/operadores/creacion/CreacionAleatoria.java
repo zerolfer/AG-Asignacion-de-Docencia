@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.creacion;
+package main.java.genetico.operadores.creacion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 09/03/2018.
  */
-public class CreacionAleatoria implements AlgoritmoCreacion {
+public class CreacionAleatoria implements OperadorCreacion {
 
     @Override
     public Individuo generateIndividual() {

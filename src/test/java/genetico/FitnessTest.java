@@ -1,8 +1,8 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.algoritmos.decodificacion.AlgoritmoDecodificacion;
-import main.java.genetico.algoritmos.decodificacion.Decodificacion;
+import main.java.genetico.operadores.decodificacion.AlgoritmoDecodificacion;
+import main.java.genetico.operadores.decodificacion.Decodificacion;
 import org.junit.Assert;
 import org.junit.Test;
 

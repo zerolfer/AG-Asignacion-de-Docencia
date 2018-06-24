@@ -1,4 +1,4 @@
-package main.java.genetico.algoritmos.seleccion;
+package main.java.genetico.operadores.seleccion;
 
 import main.java.genetico.Generacion;
 import main.java.genetico.Individuo;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Sergio Florez on 15/03/2018.
  */
-public class SeleccionRuletaAntiguo implements AlgoritmoSeleccion {
+public class SeleccionRuletaAntiguo implements OperadorSeleccion {
     @Override
     public List<Individuo[]> aplicar(Generacion generacion) {
         List<Individuo[]> result = new ArrayList<>();
@@ -23,7 +23,7 @@ public class SeleccionRuletaAntiguo implements AlgoritmoSeleccion {
         return result;
     }
 
-    private Individuo seleccionar(Generacion generacion, float total) {
+    private Individuo seleccionar(Generacion generacion, float total) { //TODO verificar que no tienen por que estar ordenados
         float random = RandomManager.getInstance().getFloatRandomNumber(0, total);
         float acumulado = 0;
         for (Individuo individuo : generacion.getGenotipo()) {
