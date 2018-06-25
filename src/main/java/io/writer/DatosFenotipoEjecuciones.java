@@ -96,7 +96,9 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
             sb.append(SPLITTER + "horarios");
             sb.append(LINE_SEP);
 
+            int suma = 0; // TODO: eliminar esto
             for (Grupo grupo : fenotipo.get(key)) {
+                suma += grupo.getHorasComputables(key);
                 //sb.append(SPLITTER);
                 sb.append(grupo.getId());
                 sb.append(SPLITTER);
@@ -136,6 +138,8 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
 
             }
             sb.append(LINE_SEP);
+
+            assert key.getCapacidadInicial() - suma == key.getCapacidad() : "no cuadran las horas de " + key;
         }
         return sb.toString();
     }
