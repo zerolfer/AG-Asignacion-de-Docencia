@@ -362,6 +362,7 @@ public class AlgoritmoGenetico {
             for (int i = 0; i < par.length; i++) {
                 Individuo mejorado = busqueda.aplicar(par[i]);
                 par[i]=mejorado;
+//                System.out.println();
             }
 
     }

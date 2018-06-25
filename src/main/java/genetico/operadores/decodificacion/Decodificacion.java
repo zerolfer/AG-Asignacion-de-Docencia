@@ -11,6 +11,9 @@ import main.java.util.Util;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static main.java.busqueda.BusquedaIntercambioGrupo.getProfesorFromFenotipo;
+import static main.java.busqueda.BusquedaIntercambioGrupo.noHayRepetidos;
+
 /**
  * Created by Sergio Florez on 09/03/2018.
  */
@@ -60,32 +63,43 @@ public class Decodificacion implements AlgoritmoDecodificacion {
                 noAsignadas++;
                 continue;
             }
+//            assert noHayRepetidos(profesor):individuo;
+//            assert noHayRepetidos(profesor,profesores);
+
             profesor.asignarGrupo(asignatura);
 
+//            assert noHayRepetidos(profesor):individuo;
+//            assert noHayRepetidos(profesor,profesores);
+//
+/*
             if (fenotipo.containsKey(profesor.getId())) {
                 Set<Integer> asignadas = fenotipo.get(profesor.getId());
-                asignadas.add(asignatura.getId());
+                boolean b = asignadas.add(asignatura.getId());
+                assert b;
             } else {
                 Set<Integer> nuevoSet = new HashSet<>();
                 nuevoSet.add(asignatura.getId());
                 fenotipo.put(profesor.getId(), nuevoSet);
             }
-
+*/
 
             if (fenotipo2.containsKey(profesor)) {
                 Set<Grupo> asignadas = fenotipo2.get(profesor);
-                asignadas.add(asignatura);
+                boolean b = asignadas.add(asignatura);
+                assert b;
             } else {
                 Set<Grupo> nuevoSet = new HashSet<>();
-                nuevoSet.add(asignatura);
+                boolean b =nuevoSet.add(asignatura);
+                assert b;
                 fenotipo2.put(profesor, nuevoSet);
             }
         }
 
         asignarFitness(individuo, noAsignadas, this.profesores, this.asignaturas);
 
-//        individuo.setFenotipo2(fenotipo);
+
         individuo.fenotipo2 = fenotipo2;
+        assert noHayRepetidos(individuo):individuo;
 
         if (debug) {
             if (individuo.getFitnessAsigProfesor() >= Integer.MAX_VALUE)
