@@ -35,6 +35,25 @@ public class Horario {
         this.horaFin = horaFin;
     }
 
+    public Horario() {
+        this.dia = SIN_DIA_CHAR;
+        this.horaInicio = disponibilidadTotal.getHoraInicio();
+        this.horaFin = disponibilidadTotal.getHoraFin();
+    }
+
+    public Horario(String horaInicio, String horaFin) {
+        this(SIN_DIA_CHAR, horaInicio, horaFin);
+    }
+    public Horario(char dia, String horaInicio, String horaFin) {
+        this.dia = dia;
+        try {
+            this.horaInicio = new Timestamp(horaFormat.parse(horaInicio).getTime());
+            this.horaFin = new Timestamp(horaFormat.parse(horaFin).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     public char getDia() {
         return dia;
     }
@@ -68,19 +87,20 @@ public class Horario {
                 '}';
     }
 
-    public String toFormatedString(){
+    public String toFormatedString() {
         StringBuilder sb = new StringBuilder();
-        sb.append((dia!= SIN_DIA_CHAR ?dia+" ":"")+getHoraInicio().toString().substring(11, 16));
-        sb.append("-"+getHoraFin().toString().substring(11, 16));
+        sb.append((dia != SIN_DIA_CHAR ? dia + " " : "") + getHoraInicio().toString().substring(11, 16));
+        sb.append("-" + getHoraFin().toString().substring(11, 16));
 
         return sb.toString();
     }
 
-    public static Horario disponibilidadTotal;
 
     // importante: H mayuscula para indicarla en formato 24 horas
     // en caso contrario las 12:00 las contaria por las 12 de la noche (pm)
     public static SimpleDateFormat horaFormat = new SimpleDateFormat("HH:mm");
+    public static Horario disponibilidadTotal;
+
     static {
         try {
             disponibilidadTotal = crearDisponibilidadTotal();
@@ -93,8 +113,8 @@ public class Horario {
     private static Horario crearDisponibilidadTotal() throws ParseException {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            return new Horario(new Timestamp(dateFormat.parse("00:00").getTime()),
-                    new Timestamp(dateFormat.parse("23:59").getTime()));
+        return new Horario(new Timestamp(dateFormat.parse("00:00").getTime()),
+                new Timestamp(dateFormat.parse("23:59").getTime()));
 
     }
 }

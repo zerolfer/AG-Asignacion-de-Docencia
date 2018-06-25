@@ -19,22 +19,17 @@ public class HorarioTest {
 
         Horario total = Horario.disponibilidadTotal;
 
-        Horario h1 = new Horario('-', hora("00:00"), hora("2:00"));
-        Horario h2 = new Horario('-', hora("02:00"), hora("14:00"));
-        Horario h3 = new Horario('-', hora("14:00"), hora("23:59"));
-        Horario h4 = new Horario('-', hora("23:59"), hora("00:00"));
-        Horario h5 = new Horario('-', hora("00:00"), hora("23:59"));
+        Horario h1 = new Horario( "00:00","2:00");
+        Horario h2 = new Horario( "02:00","14:00");
+        Horario h3 = new Horario( "14:00","23:59");
+        Horario h4 = new Horario( "23:59","00:00");
+        Horario h5 = new Horario( "00:00","23:59");
 
         assertTrue(estaEnRango(total, h1));
         assertTrue(estaEnRango(total, h2));
         assertTrue(estaEnRango(total, h3));
         assertTrue(estaEnRango(total, h4));
         assertTrue(estaEnRango(total, h5));
-    }
-
-    private Timestamp hora(String s) throws ParseException {
-        return new Timestamp(formatter.parse(s).getTime());
-
     }
 
     /**

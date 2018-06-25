@@ -264,6 +264,7 @@ public class AlgoritmoGenetico {
     }
 
     private int numGeneraciones=0;
+    public float[] fitnessMedio;
 
     private void genetico(String ejecucion) {
 
@@ -311,7 +312,7 @@ public class AlgoritmoGenetico {
             }
 
             if (!printed) {
-                float[] fitnessMedio = generacion.obtenerFitnessMedio();
+                fitnessMedio = generacion.obtenerFitnessMedio();
                 printer2.csvWriteData(this,
                         Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
                         Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
@@ -321,6 +322,7 @@ public class AlgoritmoGenetico {
         } while (numGeneraciones <= numeroMaximoGeneraciones /*&& numGeneracionesSinMejora<=numMaxGeneracionesSinMejora*/);
 
         mejorIndividuo = obtenerMejor(generacion);
+        if(printed)fitnessMedio = generacion.obtenerFitnessMedio();
 
         if (!printed) {
             printer3.csvWriteData(this);

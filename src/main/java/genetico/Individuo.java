@@ -23,7 +23,7 @@ public class Individuo implements Comparable<Individuo> {
 
     //    private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
     public Map<Profesor, Set<Grupo>> fenotipo2; // TODO hacer private
-    public int noAsignadas;
+    public int noAsignadas=-1;
 
     private boolean yaEvaluado = false; // inicialmente no evaluado
 
@@ -155,7 +155,7 @@ public class Individuo implements Comparable<Individuo> {
         result.setFitnessAsigProfesor(getFitnessAsigProfesor());
         result.setFitnessNumHoras(getFitnessNumHoras());
         result.setYaEvaluado(yaEvaluado);
-        result.noAsignadas=this.noAsignadas;
+        result.noAsignadas=-1;//this.noAsignadas;
 //        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
         if (getFenotipo2() != null) result.fenotipo2 = clonarFenotipo2();
         return result;
@@ -252,6 +252,9 @@ public class Individuo implements Comparable<Individuo> {
     }
 
     public void asignarFitnessPorFenotipo(Profesor profesor1, Profesor profesor2) {
+
+        if(noAsignadas<=-1) noAsignadas=cromosoma.length-getNumeroGrupos();
+
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
             setFitnessAsigProfesor(Integer.MAX_VALUE);

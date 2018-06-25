@@ -65,7 +65,7 @@ public class Profesor {
     public Profesor clone() {
         Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area, disponibilidad);
         for (Grupo g : getAsignadas())
-            result.asignarGrupo(g.clone());
+            if(!result.asignarGrupo(g.clone())) throw new RuntimeException("Situacion ilegal");
         return result;
     }
 
@@ -73,13 +73,14 @@ public class Profesor {
         return getCapacidadInicial() - this.getCapacidad();
     }
 
-    public float getHorasClaseAsignadas2(){
-        float suma=0;
-        for (Grupo g :asignadas) {
-            suma+=g.getHorasComputables(this);
+    public float getHorasClaseAsignadas2() {
+        float suma = 0;
+        for (Grupo g : asignadas) {
+            suma += g.getHorasComputables(this);
         }
         return suma;
     }
+
     public String getNombre() {
         return nombre;
     }
@@ -118,6 +119,10 @@ public class Profesor {
 
     public Set<Grupo> getAsignadas() {
         return asignadas;
+    }
+
+    public void setAsignadas(Set<Grupo> asignadas) {
+        this.asignadas = asignadas;
     }
 
     public Horario getDisponibilidad() {
