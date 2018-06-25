@@ -17,7 +17,7 @@ public class Profesor {
 
 
     // ASIGNACIONES
-    private List<Grupo> asignadas;
+    private Set<Grupo> asignadas;
 
     public Profesor(Integer id, String nombre, Float capacidad, Boolean bilingue, String area, Horario disponibilidad) {
         this.id = id;
@@ -39,22 +39,26 @@ public class Profesor {
         this.capacidadInicial = capacidad;
         this.bilingue = bilingue;
         this.area = area;
-        this.disponibilidad=disponibilidad;
+        this.disponibilidad = disponibilidad;
 
-        asignadas = new ArrayList<>();
+        asignadas = new HashSet<>();
     }
 
     public boolean asignarGrupo(Grupo asignatura) {
         if (this.getCapacidad() - asignatura.getHorasComputables(this) < 0)
             return false;
-        this.getAsignadas().add(asignatura);
-        this.setCapacidad(this.getCapacidad() - asignatura.getHorasComputables(this));
-        return true;
+        if (this.getAsignadas().add(asignatura)) {
+            this.setCapacidad(this.getCapacidad() - asignatura.getHorasComputables(this));
+            return true;
+        }
+        return false;
     }
 
     public boolean eliminarGrupo(Grupo asignatura) {
         boolean result = this.getAsignadas().remove(asignatura);
-        this.setCapacidad(this.getCapacidad() + asignatura.getHorasComputables(this));
+        if (result) {
+            this.setCapacidad(this.getCapacidad() + asignatura.getHorasComputables(this));
+        }
         return result;
     }
 
@@ -105,7 +109,7 @@ public class Profesor {
         this.area = area;
     }
 
-    public List<Grupo> getAsignadas() {
+    public Set<Grupo> getAsignadas() {
         return asignadas;
     }
 

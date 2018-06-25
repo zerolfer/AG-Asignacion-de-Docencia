@@ -15,7 +15,7 @@ import java.util.Properties;
 public class Settings {
 
 	private static final Path CONF_FILE =
-            Paths.get("src","main","resources","genetico");//configuracion.properties";
+            Paths.get("src","main","resources","genetico", "configuracion.properties");
 
 	
 	private static Settings instance;

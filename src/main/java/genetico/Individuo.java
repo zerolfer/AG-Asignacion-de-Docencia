@@ -3,6 +3,7 @@ package main.java.genetico;
 
 import main.java.genetico.operadores.decodificacion.AlgoritmoDecodificacion;
 import main.java.genetico.operadores.decodificacion.Decodificacion;
+import main.java.genetico.operadores.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
 
@@ -28,7 +29,7 @@ public class Individuo implements Comparable<Individuo> {
 
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
-        decodificacion = new Decodificacion/*FiltroGrupo*/();
+        decodificacion = new DecodificacionFiltroGrupo();
     }
 
 

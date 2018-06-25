@@ -4,6 +4,7 @@ import main.java.io.Settings;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Grupo {
 
@@ -131,6 +132,20 @@ public class Grupo {
 
     public String[] getAreas() {
         return areas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Grupo grupo = (Grupo) o;
+        return Objects.equals(id, grupo.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 
     @Override
