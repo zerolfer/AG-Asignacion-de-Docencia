@@ -4,6 +4,7 @@ import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
+import org.omg.SendingContext.RunTime;
 
 import java.util.*;
 
@@ -56,7 +57,7 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
     public Individuo buscar(Individuo individuo) {
         if(debug) System.out.println(individuo.hashCode()+" -> "+individuo.toString());
         this.original = individuo.clone();
-        Profesor profesor1 = this.profesorConMenosAsignaturas(individuo.getFenotipo2());
+        Profesor profesor1 = this.profesorConMasAsignaturas(individuo.getFenotipo2());
         List<GrupoAux> grupos = new ArrayList<GrupoAux>();
         for (Grupo ga : profesor1.getAsignadas()) {
             grupos.add(new GrupoAux(profesor1, ga));
@@ -73,9 +74,28 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
             }
             grupos2.sort(this.comparatorAsignatura);
             for (GrupoAux grupo2:grupos2) {
-                if (this.verificar(individuo, profesor1, grupo1, profesor2, grupo2))
+                Profesor profesor1Copia=profesor1.clone();
+                Profesor profesor2Copia=profesor2.clone();
+                if (this.verificar(individuo, profesor1Copia, grupo1, profesor2Copia, grupo2)) {
+                    profesor1=profesor1Copia; profesor2=profesor2Copia;
                     return this.buscar(individuo);
-                else individuo = original;
+                }
+                else{
+
+                    assert noHayRepetidos(individuo):individuo;
+                    assert noHayRepetidos(profesor1):individuo;
+                    assert noHayRepetidos(profesor2):individuo;
+                    individuo.fenotipo2.get(profesor1).remove(grupo2.grupo);
+                    individuo.fenotipo2.get(profesor1).add(grupo1.grupo);
+                    individuo.fenotipo2.get(profesor2).remove(grupo1.grupo);
+                    individuo.fenotipo2.get(profesor2).add(grupo2.grupo);
+
+                    individuo = original.clone();
+                    assert noHayRepetidos(individuo):individuo;
+                    assert noHayRepetidos(profesor1):individuo;
+                    assert noHayRepetidos(profesor2):individuo;
+
+                }
             }
         }
         return individuo;
@@ -83,6 +103,7 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 
     private boolean verificar(Individuo individuo, Profesor profesor1, GrupoAux grupo1,
                               Profesor profesor2, GrupoAux grupo2) {
+        if(grupo1.grupo.equals(grupo2.grupo)) throw new RuntimeException("situacion ilegal");
         if (grupo1.grupo.getCodigoAsignatura().equals(grupo2.grupo.getCodigoAsignatura())
                 && grupo1.grupo.getHorasComputables(profesor1)==grupo2.grupo.getHorasComputables(profesor2)) {
             return false;
@@ -90,22 +111,64 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 
         //Individuo original = original.clone();
 
+        assert profesor1.getCapacidadInicial() - suma(profesor1) == profesor1.getCapacidad() : profesor1;
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):individuo;
+        assert noHayRepetidos(profesor2):individuo;
 
         boolean b1 = profesor1.eliminarGrupo(grupo1.grupo);
+        if (b1 == false) return false;
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):individuo;
+        assert noHayRepetidos(profesor2):individuo;
+
         boolean b2 = profesor1.asignarGrupo(grupo2.grupo);
+        if (b2 == false) return false;
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):profesor1+grupo1.toString()+grupo2;
+        assert noHayRepetidos(profesor2):individuo;
+
 
         boolean b3 = profesor2.eliminarGrupo(grupo2.grupo);
-        boolean b4 = profesor2.asignarGrupo(grupo1.grupo);
+        if (b3 == false) return false;
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):individuo;
+        assert noHayRepetidos(profesor2):individuo;
 
-        if (!b1 || !b2 || !b3 || !b4) {
+        boolean b4 = profesor2.asignarGrupo(grupo1.grupo);
+        if (b4 == false) return false;
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):individuo;
+        assert noHayRepetidos(profesor2):individuo;
+
+        individuo.fenotipo2.get(profesor1).remove(grupo1.grupo);
+        individuo.fenotipo2.get(profesor1).add(grupo2.grupo);
+        individuo.fenotipo2.get(profesor2).remove(grupo2.grupo);
+        individuo.fenotipo2.get(profesor2).add(grupo1.grupo);
+
+//        if (!b1 || !b2 || !b3 || !b4) {
             //individuo = this.original;// no se puede realizar el cambio
-            return false;
-        }
+//            return false;
+//        }
+
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):individuo;
+        assert noHayRepetidos(profesor2):individuo;
+        assert profesor1.getCapacidadInicial() - suma(profesor1) == profesor1.getCapacidad() : profesor1+grupo1.toString()+grupo2;
+        assert sumaFenotipo(individuo, profesor1) == suma(profesor1) : profesor1+grupo1.toString()+grupo2;
 
         int fitness1 = individuo.getFitnessAsigProfesor();
         float fitness2 = individuo.getFitnessNumHoras();
 
         individuo.asignarFitnessPorFenotipo(profesor1, profesor2);
+
+        assert profesor1.getCapacidadInicial() - suma(profesor1) == profesor1.getCapacidad() : profesor1;
+        assert sumaFenotipo(individuo, profesor1) == suma(profesor1) : profesor1;
+
+        assert noHayRepetidos(individuo):individuo;
+        assert noHayRepetidos(profesor1):profesor1;
+        assert noHayRepetidos(profesor2):profesor2;
+
         if (individuo.esMejor(fitness1, fitness2))
             return true;
 
@@ -121,11 +184,48 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
         return false;
     }
 
+    private boolean noHayRepetidos(Individuo individuo) {
+        Set<Integer> cuenta = new HashSet<>();
+        for (Profesor p : individuo.fenotipo2.keySet()) {
+            for (Grupo g : p.getAsignadas()) {
+                boolean r = cuenta.add(g.getId());
+                if (!r) return false;
+            }
+        }
+        return true;
+    }
+        private boolean noHayRepetidos(Profesor profesor) {
+            Set<Integer> cuenta = new HashSet<>();
+            for (Grupo g : profesor.getAsignadas()) {
+            boolean r = cuenta.add(g.getId());
+            if (!r) return false;
+        }
+        return true;
+    }
+
+
+    private float sumaFenotipo(Individuo individuo, Profesor profesor1) {
+        float suma = 0;
+        for (Grupo g : individuo.fenotipo2.get(profesor1)) {
+            suma += g.getHorasComputables(profesor1);
+        }
+        return suma;
+    }
+
+    private Float suma(Profesor profesor1) {
+        float suma=0;
+        for (Grupo grupo:profesor1.getAsignadas()) {
+            suma+=grupo.getHorasComputables(profesor1);
+        }
+        return suma;
+    }
+
     private Profesor buscarProfeQueImparta(Profesor profesor1, Map<Profesor, Set<Grupo>> fenotipo, String codigoAsignatura) {
-        if (this.asignaturaAnterior == null || this.profesorAnterior == null || !this.asignaturaAnterior.equals(codigoAsignatura)) {
+        if (this.asignaturaAnterior == null || this.profesorAnterior == null || !this.asignaturaAnterior.equals(codigoAsignatura)
+                || this.profesorAnterior.equals(profesor1)) {
             this.asignaturaAnterior = codigoAsignatura;
             for (Profesor p : fenotipo.keySet()) {
-                if (!p.imparte(codigoAsignatura) || p.equals((Object) profesor1)) continue;
+                if (!p.imparte(codigoAsignatura) || p.equals(profesor1)) continue;
                 this.profesorAnterior = p;
                 return this.profesorAnterior;
             }
@@ -143,5 +243,15 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
             min = p;
         }
         return min;
+    }
+
+
+    private Profesor profesorConMasAsignaturas(Map<Profesor, Set<Grupo>> fenotipo) {
+        Profesor max = null;
+        for (Profesor p : fenotipo.keySet()) {
+            if (max != null && p.getNumAsignaturas() <= max.getNumAsignaturas()) continue;
+            max = p;
+        }
+        return max;
     }
 }
