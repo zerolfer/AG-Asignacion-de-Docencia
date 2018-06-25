@@ -121,12 +121,16 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
         assert noHayRepetidos(individuo):individuo;
         assert noHayRepetidos(profesor1):individuo;
         assert noHayRepetidos(profesor2):individuo;
+        assert profesor1.getHorasClaseAsignadas2()==profesor1.getHorasClaseAsignadas();
+        assert getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas2()==getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas();
 
         boolean b2 = profesor1.asignarGrupo(grupo2.grupo);
         if (b2 == false) return false;
         assert noHayRepetidos(individuo):individuo;
         assert noHayRepetidos(profesor1):profesor1+grupo1.toString()+grupo2;
         assert noHayRepetidos(profesor2):individuo;
+        assert profesor1.getHorasClaseAsignadas2()==profesor1.getHorasClaseAsignadas();
+        assert getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas2()==getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas();
 
 
         boolean b3 = profesor2.eliminarGrupo(grupo2.grupo);
@@ -134,12 +138,16 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
         assert noHayRepetidos(individuo):individuo;
         assert noHayRepetidos(profesor1):individuo;
         assert noHayRepetidos(profesor2):individuo;
+        assert profesor1.getHorasClaseAsignadas2()==profesor1.getHorasClaseAsignadas();
+        assert getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas2()==getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas();
 
         boolean b4 = profesor2.asignarGrupo(grupo1.grupo);
         if (b4 == false) return false;
         assert noHayRepetidos(individuo):individuo;
         assert noHayRepetidos(profesor1):individuo;
         assert noHayRepetidos(profesor2):individuo;
+        assert profesor1.getHorasClaseAsignadas2()==profesor1.getHorasClaseAsignadas();
+        assert getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas2()==getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas();
 
         individuo.fenotipo2.get(profesor1).remove(grupo1.grupo);
         individuo.fenotipo2.get(profesor1).add(grupo2.grupo);
@@ -155,6 +163,8 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
         assert noHayRepetidos(profesor1):individuo;
         assert noHayRepetidos(profesor2):individuo;
         assert profesor1.getCapacidadInicial() - suma(profesor1) == profesor1.getCapacidad() : profesor1+grupo1.toString()+grupo2;
+        assert profesor1.getHorasClaseAsignadas2()==profesor1.getHorasClaseAsignadas();
+        assert getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas2()==getProfesorFromFenotipo(individuo,profesor1).getHorasClaseAsignadas();
         assert sumaFenotipo(individuo, profesor1) == suma(profesor1) : profesor1+grupo1.toString()+grupo2;
 
         int fitness1 = individuo.getFitnessAsigProfesor();
@@ -182,6 +192,14 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
         original.setFitnessNumHoras(fitness2);*/
         //individuo = this.original;
         return false;
+    }
+
+    private Profesor getProfesorFromFenotipo(Individuo i, Profesor aBuscar){
+        for (Profesor p:i.getFenotipo2().keySet()) {
+            if(p.equals(aBuscar))
+                return p;
+        }
+        return null;
     }
 
     private boolean noHayRepetidos(Individuo individuo) {

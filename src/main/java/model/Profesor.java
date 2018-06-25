@@ -73,6 +73,13 @@ public class Profesor {
         return getCapacidadInicial() - this.getCapacidad();
     }
 
+    public float getHorasClaseAsignadas2(){
+        float suma=0;
+        for (Grupo g :asignadas) {
+            suma+=g.getHorasComputables(this);
+        }
+        return suma;
+    }
     public String getNombre() {
         return nombre;
     }

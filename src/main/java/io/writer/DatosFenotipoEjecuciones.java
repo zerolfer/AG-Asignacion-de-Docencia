@@ -96,7 +96,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
             sb.append(SPLITTER + "horarios");
             sb.append(LINE_SEP);
 
-            int suma = 0; // TODO: eliminar esto
+            float suma = 0; // TODO: eliminar esto
             for (Grupo grupo : fenotipo.get(key)) {
                 suma += grupo.getHorasComputables(key);
                 //sb.append(SPLITTER);
