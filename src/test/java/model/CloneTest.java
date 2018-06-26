@@ -7,7 +7,6 @@ import main.java.model.Profesor;
 import main.java.util.Util;
 import org.junit.Test;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.*;
@@ -54,16 +53,18 @@ public class CloneTest {
     public void individuoTest() {
 
         Individuo i = Util.createIndividual(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        i.fenotipo2 = new HashMap<>();
+        i.setFenotipo(new HashMap<>());
         Set<Grupo> grupos = new HashSet<>();
         grupos.add(grupo1);
-        i.fenotipo2.put(profe, grupos);
+        i.getFenotipo().put(profe.getId(), profe);
 
         Individuo clon = i.clone();
         grupos.add(grupo2);
-        clon.fenotipo2.put(profe, grupos);
-        assertTrue(clon.getFenotipo2().get(profe).contains(grupo2));
-        assertFalse(i.getFenotipo2().get(profe).contains(grupo2));
+        Set<Grupo> set=  new HashSet<>();
+        set.addAll(grupos);
+        clon.getFenotipo().put(profe.getId(), profe);
+        assertTrue(clon.getFenotipo().get(profe.getId()).checkImparteAsignatura(grupo2));
+        assertFalse(i.getFenotipo().get(profe.getId()).checkImparteAsignatura(grupo2));
     }
 
 

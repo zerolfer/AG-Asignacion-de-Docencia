@@ -2,7 +2,6 @@ package main.java.genetico;
 
 
 import main.java.genetico.operadores.decodificacion.AlgoritmoDecodificacion;
-import main.java.genetico.operadores.decodificacion.Decodificacion;
 import main.java.genetico.operadores.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
@@ -22,7 +21,7 @@ public class Individuo implements Comparable<Individuo> {
     private float fitnessNumHoras;
 
     //    private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
-    public Map<Profesor, Set<Grupo>> fenotipo2; // TODO hacer private
+    private Map<Integer, Profesor> fenotipo2;
     public int noAsignadas=-1;
 
     private boolean yaEvaluado = false; // inicialmente no evaluado
@@ -89,13 +88,13 @@ public class Individuo implements Comparable<Individuo> {
 //        return fenotipo;
 //    }
 
-    public Map<Profesor, Set<Grupo>> getFenotipo2() {
+    public Map<Integer, Profesor> getFenotipo() {
         return fenotipo2;
     }
 
-//    public void setFenotipo(Map<Integer, Set<Integer>> fenotipo) {
-//        this.fenotipo = fenotipo;
-//    }
+    public void setFenotipo(Map<Integer, Profesor> fenotipo) {
+        this.fenotipo2 = fenotipo;
+    }
 
     public boolean contains(int integer) {
         return contains(0, cromosoma.length - 1, integer);
@@ -135,8 +134,8 @@ public class Individuo implements Comparable<Individuo> {
 
     public int getNumeroGrupos() {
         int i = 0;
-        for (Profesor key : fenotipo2.keySet()) { // profesores
-            Set<Grupo> asignadas = fenotipo2.get(key);
+        for (Profesor key : fenotipo2.values()) { // profesores
+            Set<Grupo> asignadas = key.getAsignadas();
             for (Grupo grupo : asignadas) {
                 i++;
             }
@@ -157,21 +156,22 @@ public class Individuo implements Comparable<Individuo> {
         result.setYaEvaluado(yaEvaluado);
         result.noAsignadas=-1;//this.noAsignadas;
 //        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
-        if (getFenotipo2() != null) result.fenotipo2 = clonarFenotipo2();
+        if (getFenotipo() != null) result.fenotipo2 = clonarFenotipo2();
         return result;
     }
 
-    private Map<Profesor, Set<Grupo>> clonarFenotipo2() {
-        Map<Profesor, Set<Grupo>> result = new HashMap<>();
-        for (Map.Entry<Profesor, Set<Grupo>> e : fenotipo2.entrySet()) {
-            Profesor key = e.getKey();
-            Set<Grupo> value = e.getValue();
-            Set<Grupo> nuevoValue = new HashSet<Grupo>();
-            for (Grupo as : value)
-                nuevoValue.add(as.clone());
-            Profesor nuevoKey = key.clone();
-            result.put(nuevoKey, nuevoValue);
-        }
+    private Map<Integer, Profesor> clonarFenotipo2() {
+        Map<Integer,Profesor> result = new HashMap<>();
+        result.putAll(this.fenotipo2); // TODO: TEST ¿compia las referencias recursivamente? (no deberia ser una shallow copy)
+//        for (Map.Entry<Profesor, Set<Grupo>> e : fenotipo2.entrySet()) {
+//            Profesor key = e.getKey();
+//            Set<Grupo> value = e.getValue();
+//            Set<Grupo> nuevoValue = new HashSet<Grupo>();
+//            for (Grupo as : value)
+//                nuevoValue.add(as.clone());
+//            Profesor nuevoKey = key.clone();
+//            result.put(nuevoKey, nuevoValue);
+//        }
         return result;
     }
 
@@ -179,10 +179,10 @@ public class Individuo implements Comparable<Individuo> {
         StringBuilder sb = new StringBuilder("Individuo:{ \n\tfitness: (" + fitnessAsigProfesor +
                 ", " + fitnessNumHoras + ", " + yaEvaluado + "), "
                 + "Codigo cromosoma: " + cromosomaToString() + "\n");
-        for (Profesor key : fenotipo2.keySet()) { // profesores
+        for (Profesor key : fenotipo2.values()) { // profesores
             sb.append(key + " asignadas: [ ");
 
-            Set<Grupo> asignadas = fenotipo2.get(key);
+            Set<Grupo> asignadas = key.getAsignadas();
             int i = 0;
             for (Grupo grupo : asignadas) {
                 i++;
@@ -263,7 +263,7 @@ public class Individuo implements Comparable<Individuo> {
             int max = 0;
             float min = 1;
 
-            for (Profesor profesor : getFenotipo2().keySet()) {
+            for (Profesor profesor : getFenotipo().values()) {
                 // FITNESS 1
                 int numAsignaturas;
                 if (profesor.equals(profesor1) || profesor.equals(profesor2))

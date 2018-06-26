@@ -4,7 +4,6 @@ import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.Individuo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
-import org.omg.SendingContext.RunTime;
 
 import java.util.*;
 
@@ -58,14 +57,14 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
     public Individuo buscar(Individuo individuo) {
         if (debug) System.out.println(individuo.hashCode() + " -> " + individuo.toString());
         this.original = individuo.clone();
-        Profesor profesor1 = this.profesorConMenosAsignaturas(individuo.getFenotipo2());
+        Profesor profesor1 = this.profesorConMenosAsignaturas(individuo.getFenotipo());
         List<GrupoAux> grupos = new ArrayList<GrupoAux>();
         for (Grupo ga : profesor1.getAsignadas()) {
             grupos.add(new GrupoAux(profesor1, ga));
         }
         grupos.sort(this.comparatorAsignatura);
         for (GrupoAux grupo1 : grupos) {
-            Profesor profesor2 = this.buscarProfeQueImparta(profesor1.getId(), individuo.getFenotipo2(), grupo1.grupo.getCodigoAsignatura());
+            Profesor profesor2 = this.buscarProfeQueImparta(profesor1.getId(), individuo.getFenotipo(), grupo1.grupo.getCodigoAsignatura());
             if (profesor2 == null) {
                 return individuo;
             }
@@ -177,7 +176,7 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 
     private void actualizarFenotipo(Individuo individuo, Profesor profesor1, Profesor profesor2, Grupo grupo, Grupo grupo1) {
 
-        for (Profesor p : individuo.getFenotipo2().keySet()) {
+        for (Profesor p : individuo.getFenotipo().values()) {
             if (p.equals(profesor1)) {
                 p.setCapacidad(profesor1.getCapacidad());
                 p.setAsignadas(profesor1.getAsignadas());
@@ -198,7 +197,7 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
     }
 
     public static Profesor getProfesorFromFenotipo(Individuo i, Profesor aBuscar) {
-        for (Profesor p : i.getFenotipo2().keySet()) {
+        for (Profesor p : i.getFenotipo().values()) {
             if (p.equals(aBuscar))
                 return p;
         }
@@ -238,7 +237,7 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 
     public static boolean noHayRepetidos(Individuo individuo) {
         Set<Integer> cuenta = new HashSet<>();
-        for (Profesor p : individuo.fenotipo2.keySet()) {
+        for (Profesor p : individuo.getFenotipo().values()) {
             for (Grupo g : p.getAsignadas()) {
                 boolean r = cuenta.add(g.getId());
                 if (!r) return false;
@@ -259,7 +258,7 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 
     public static float sumaFenotipo(Individuo individuo, Profesor profesor1) {
         float suma = 0;
-        for (Grupo g : individuo.fenotipo2.get(profesor1)) {
+        for (Grupo g : individuo.getFenotipo().get(profesor1.getId()).getAsignadas()) {
             suma += g.getHorasComputables(profesor1);
         }
         return suma;
@@ -273,12 +272,12 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
         return suma;
     }
 
-    private Profesor buscarProfeQueImparta(int profesor1, Map<Profesor, Set<Grupo>> fenotipo, String codigoAsignatura) {
+    private Profesor buscarProfeQueImparta(int profesor1, Map<Integer, Profesor> fenotipo, String codigoAsignatura) {
 //        if (this.asignaturaAnterior == null || this.profesorAnterior == null || !this.asignaturaAnterior.equals(codigoAsignatura)
 //                || this.profesorAnterior.equals(profesor1)) {
 //            this.asignaturaAnterior = codigoAsignatura;
-        for (Profesor p : fenotipo.keySet()) {
-            if (!p.imparte(codigoAsignatura) || p.getId()==profesor1) continue;
+        for (Profesor p : fenotipo.values()) {
+            if (!p.checkImparteAsignatura(codigoAsignatura) || p.getId()==profesor1) continue;
 //            this.profesorAnterior = p;
             return p;//this.profesorAnterior;
         }
@@ -289,9 +288,9 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 //        return this.profesorAnterior;
     }
 
-    private Profesor profesorConMenosAsignaturas(Map<Profesor, Set<Grupo>> fenotipo) {
+    private Profesor profesorConMenosAsignaturas(Map<Integer, Profesor> fenotipo) {
         Profesor min = null;
-        for (Profesor p : fenotipo.keySet()) {
+        for (Profesor p : fenotipo.values()) {
             if (min != null && p.getNumAsignaturas() >= min.getNumAsignaturas()) continue;
             min = p;
         }

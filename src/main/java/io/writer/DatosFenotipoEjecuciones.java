@@ -23,7 +23,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
     @Override
     public void csvWriteData(AlgoritmoGenetico genetico) {
         //Map<Integer, Set<Integer>> fenotipo = genetico.getMejorIndividuo().getFenotipo();
-        Map<Profesor, Set<Grupo>> fenotipo = genetico.getMejorIndividuo().fenotipo2;
+        Map<Integer, Profesor> fenotipo = genetico.getMejorIndividuo().getFenotipo();
         Date d = new Date();
         super.csvWriteData("ejecucion" + SPLITTER + ejecucion + SPLITTER
                 + "hora" + SPLITTER +
@@ -40,9 +40,9 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
 
     }
 
-    private String fenotipoToString(Map<Profesor, Set<Grupo>> fenotipo) {
+    private String fenotipoToString(Map<Integer, Profesor> fenotipo) {
         StringBuilder sb = new StringBuilder();
-        for (Profesor key : fenotipo.keySet()) { // profesores
+        for (Profesor key : fenotipo.values()) { // profesores
             sb.append("profesor");
             sb.append(SPLITTER + "nombre");
             sb.append(SPLITTER + "bilingue");
@@ -97,7 +97,7 @@ public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
             sb.append(LINE_SEP);
 
             float suma = 0; // TODO: eliminar esto
-            for (Grupo grupo : fenotipo.get(key)) {
+            for (Grupo grupo : key.getAsignadas()) {
                 suma += grupo.getHorasComputables(key);
                 //sb.append(SPLITTER);
                 sb.append(grupo.getId());

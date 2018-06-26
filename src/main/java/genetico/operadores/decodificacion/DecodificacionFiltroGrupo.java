@@ -6,16 +6,16 @@ import main.java.model.Profesor;
 /**
  * Created by Sergio Florez on 09/03/2018.
  */
-public class DecodificacionFiltroGrupo extends Decodificacion {
+public class DecodificacionFiltroGrupo extends AbstractDecodificacion {
 
     @Override
-    Profesor getProfesor(Grupo a) {
+    protected Profesor getProfesor(Grupo a) {
         Profesor conMenosHorasClase = null;
         for (Profesor p : this.profesores) {
-            if (super.checkCapacidad(a, p) && super.checkBilingue(a, p)
-                    && super.checkArea(p, a) && super.checkDisponibilidad(a,p))
-                if (super.checkSolapamiento(p, a)) {
-                    if (checkImparteAsignatura(p, a)) {
+            if (p.checkCapacidad(a) && p.checkBilingue(a)
+                    && p.checkArea(a) && p.checkDisponibilidad(a))
+                if (p.checkSolapamiento(a)) {
+                    if (p.checkImparteAsignatura(a)) {
                         return p;
                     } else {
                         if (conMenosHorasClase == null) conMenosHorasClase = p;
@@ -25,12 +25,5 @@ public class DecodificacionFiltroGrupo extends Decodificacion {
                 }
         }
         return conMenosHorasClase; // en caso de no haber profesores a cubrir se le asignará un fitness infinito
-    }
-
-    private boolean checkImparteAsignatura(Profesor p, Grupo a) {
-        for (Grupo imparte : p.getAsignadas())
-            if (imparte.getCodigoAsignatura().equals(a.getCodigoAsignatura()))
-                return true;
-        return false;
     }
 }

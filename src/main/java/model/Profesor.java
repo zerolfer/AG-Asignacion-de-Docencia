@@ -1,7 +1,10 @@
 package main.java.model;
 
+import main.java.io.Settings;
+import org.omg.SendingContext.RunTime;
+
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
 
 public class Profesor {
 
@@ -18,6 +21,31 @@ public class Profesor {
 
     // ASIGNACIONES
     private Set<Grupo> asignadas;
+
+    ////////////////////////////////
+    // RESTRICCIONES DEL PROBLEMA //
+    ////////////////////////////////
+
+    /**
+     * Mínimo lapso de tiempo en minutos que se deberá dejar
+     * transcurrir como margen en caso de que la docencia a
+     * sea en diferentes escuelas pero sea en la misma ciudad.
+     *
+     * @see #checkSolapamiento(Grupo)
+     */
+    private static final int minutosIntervaloMismaCiudad =
+            Settings.getInteger("dominio.minutosIntervaloMismaCiudad");
+
+    /**
+     * Mínimo lapso de tiempo en minutos que se deberá dejar
+     * transcurrir como margen en caso de que la docencia a
+     * sea en una escuela y una ciudad diferente.
+     *
+     * @see #checkSolapamiento(Grupo)
+     */
+    private static final int minutosIntervaloDistintaCiudad =
+            Settings.getInteger("dominio.minutosIntervaloDistintaCiudad");
+
 
     public Profesor(Integer id, String nombre, Float capacidad, Boolean bilingue, String area, Horario disponibilidad) {
         this.id = id;
@@ -44,12 +72,23 @@ public class Profesor {
         asignadas = new HashSet<>();
     }
 
-    public boolean asignarGrupo(Grupo asignatura) {
-        if (this.getCapacidad() - asignatura.getHorasComputables(this) < 0)
+    /**
+     * Añade un grupo al plan docente del profesor que llama al método.
+     * IMPORTANTE: <b>Este método NO modifica el fenotipo, se deberá hacer
+     * a continuacio<b>
+     *
+     * @param grupo
+     * @return
+     */
+    public boolean asignarGrupo(Grupo grupo) {
+        if (this.getCapacidad() - grupo.getHorasComputables(this) < 0)
             return false;
-        if (this.getAsignadas().add(asignatura)) {
-            this.setCapacidad(this.getCapacidad() - asignatura.getHorasComputables(this));
-            return true;
+        if (checkArea(grupo) && checkBilingue(grupo) && checkCapacidad(grupo) &&
+                checkDisponibilidad(grupo) && checkSolapamiento(grupo)) {
+            if (this.getAsignadas().add(grupo)) {
+                this.setCapacidad(this.getCapacidad() - grupo.getHorasComputables(this));
+                return true;
+            } else throw new RuntimeException("No se puede asignar al profesor " + getId() + " el grupo "+grupo);
         }
         return false;
     }
@@ -65,7 +104,7 @@ public class Profesor {
     public Profesor clone() {
         Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area, disponibilidad);
         for (Grupo g : getAsignadas())
-            if(!result.asignarGrupo(g.clone())) throw new RuntimeException("Situacion ilegal");
+            if (!result.asignarGrupo(g.clone())) throw new RuntimeException("Situacion ilegal");
         return result;
     }
 
@@ -155,7 +194,7 @@ public class Profesor {
     }
 
 
-    private int numAsignaturas = -1;
+    private int numAsignaturas = -1; // TODO: poner a -1 en caso de que la busqueda local haga sus mejoras
 
     public int getNumAsignaturas() {
         return getNumAsignaturas(false);
@@ -178,13 +217,90 @@ public class Profesor {
 
     }
 
+    public boolean checkImparteAsignatura(Grupo a) {
+        return checkImparteAsignatura(a.getCodigoAsignatura());
+    }
 
-    public boolean imparte(String codigoAsignatura) {
+    public boolean checkImparteAsignatura(String codigoAsignatura) {
         for (Grupo grupo : asignadas)
             if (grupo.getCodigoAsignatura().equals(codigoAsignatura))
                 return true;
         return false;
     }
+
+
+    public boolean checkDisponibilidad(Grupo a) {
+        for (Horario horario : a.getHorarios()) {
+            // la unica opcion es que el horario sea o igual o subconjunto de la disponibilidad
+            // es decir, la hora de inicio sea posterior o igual a la hora de inicio de disponibilidad
+            // y que la hora de fin de la clase sea anterior o igual a la de fin de disponibilidad
+            if (getDisponibilidad().getHoraInicio().compareTo(horario.getHoraInicio()) <= 0
+                    && getDisponibilidad().getHoraFin().compareTo(horario.getHoraFin()) >= 0)
+                continue;
+            else // las demas opciones no son validas, y no es necesario seguir iterando
+                return false;
+        }
+        return true; // si se ha llegado hasta aqui es porque todos cumplian la restriccion
+    }
+
+    public boolean checkArea(Grupo a) {
+        return Arrays.binarySearch(a.getAreas(), getArea()) != -1;
+    }
+
+    public boolean checkSolapamiento(Grupo a) {
+        for (Grupo asignatura : getAsignadas()) {
+            for (Horario horariosGrupoActual : asignatura.getHorarios()) { // actual(es)
+                for (Horario horariosGrupoNuevo : a.getHorarios()) { // nuevo(s)
+                    if (horariosGrupoActual.getDia() == horariosGrupoNuevo.getDia()
+                            && asignatura.getSemestre() == a.getSemestre()) {
+                        int finActualInicioNueva =
+                                horariosGrupoActual.getHoraFin().compareTo(horariosGrupoNuevo.getHoraInicio());
+                        int inicioActualFinNueva =
+                                horariosGrupoActual.getHoraInicio().compareTo(horariosGrupoNuevo.getHoraFin());
+
+                        int lapso;
+                        if (asignatura.getCiudad().equals(a.getCiudad())) // misma ciudad pero distinta escuela
+                            lapso = minutosIntervaloMismaCiudad;
+                        else lapso = minutosIntervaloDistintaCiudad;
+
+                        // si el fin de la actual es anterior al comienzo de la nueva a asignar
+                        if (finActualInicioNueva <= 0) {
+                            if (!asignatura.getEscuela().equals(a.getEscuela())) {
+                                if (Math.abs(
+                                        horariosGrupoNuevo.getHoraInicio().getTime() -
+                                                horariosGrupoActual.getHoraFin().getTime()
+                                ) < TimeUnit.MINUTES.toMillis(lapso))
+                                    return false;
+                            }
+
+                            // si comienzo de la actual es posterior al final de la nueva a asignar
+                        } else if (inicioActualFinNueva >= 0) {
+                            if (!asignatura.getEscuela().equals(a.getEscuela()))
+                                if (Math.abs(
+                                        horariosGrupoNuevo.getHoraFin().getTime() -
+                                                horariosGrupoActual.getHoraInicio().getTime()
+                                ) < TimeUnit.MINUTES.toMillis(lapso))
+                                    return false;
+                        } else // en los demas casos hay solapamiento y no es válido
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkBilingue(Grupo a) {
+        return getBilingue() || !a.getBilingue();
+    }
+
+    public boolean checkCapacidad(Grupo a) {
+        return getCapacidad() >= a.getHorasComputables(this);
+    }
+
+    //////////////////////////////////////
+    // Metodos para comparar Profesores //
+    //////////////////////////////////////
 
     @Override
     public boolean equals(Object o) {

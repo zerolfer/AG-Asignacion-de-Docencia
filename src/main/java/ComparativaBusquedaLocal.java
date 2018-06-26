@@ -47,8 +47,8 @@ public class ComparativaBusquedaLocal {
         );
 
         AlgoritmoGenetico.open(NUM_EJECUCIONES);
-//        g1.lanzarAlgoritmo("Comparativa_SIN-BusquedaLocal_NuevooDecoder");
-        g2.lanzarAlgoritmo("Comparativa_CON-BusquedaLocal_ViejoDecoder");
+        g1.lanzarAlgoritmo("Comparativa_SIN-BusquedaLocal_NuevoDecoder_NuevoFenotipo");
+//        g2.lanzarAlgoritmo("Comparativa_CON-BusquedaLocal_NuevoDecoder_NuevoFenotipo");
         AlgoritmoGenetico.close();
     }
 }

@@ -67,7 +67,7 @@ public class Grupo {
 
     /**
      * En funcion de la naturaleza del la asignatura, o bien del profesor
-     * que la imparte, el peso que tienen las horas de trabajo pueden no
+     * que la checkImparteAsignatura, el peso que tienen las horas de trabajo pueden no
      * ser el mismo, por ello este metodo hace el cálculo pertinente y retorna
      * la cantidad de horas a contabilizar en funcion del grupo actual y de:
      *
