@@ -19,24 +19,24 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
 
     public BusquedaIntercambioGrupo(float probabilidad) {
         super(probabilidad);
-        this.comparatorAsignatura = new Comparator<GrupoAux>() {
-            @Override
-            public int compare(GrupoAux o1, GrupoAux o2) {
-                if (o1.grupo.getCodigoAsignatura() == o2.grupo.getCodigoAsignatura()) {
-                    return 0;
-                }
-                if (o1.numGrupos > o2.numGrupos) {
-                    return 1;
-                }
-                return -1;
+        this.comparatorAsignatura = (o1, o2) -> {
+            if (o1.grupo.getCodigoAsignatura().equals(o2.grupo.getCodigoAsignatura())) {
+                return 0;
             }
+            if (o1.numGrupos > o2.numGrupos) {
+                return 1;
+            }
+            return -1;
         };
     }
 
-
+    boolean hayCambio=false;
     @Override
     public Individuo buscar(Individuo original) {
-        if (debug) System.out.println(original.getCromosoma() + " -> " + original.toString());
+        if (debug&& hayCambio) {
+            System.out.println(original.toString());
+            hayCambio=false;
+        }
 
         if (original.noAsignadas > 0) return original; // no hay mejora posible si ni siquiera estamos ante una solucion
 
@@ -75,14 +75,24 @@ public class BusquedaIntercambioGrupo extends AbstractBusquedaLocal {
                     assert sumaFenotipo(cIndividuo, profesor1Copia) == suma(profesor1Copia) : profesor1Copia + grupo1.toString() + grupo2;
             */
                     if (cIndividuo.esMejor(original)) { // si es mejor el individuo nuevo
-                        // en este punto el individuo ha sido modificado, por lo que la llamada es diferente
+                        // en este punto el individuo ha sido modificado, por lo que +"]la llamada es diferente
+                        if (debug&&!huboCambio) System.out.println(original.toString());
+                        if (debug)
+                            System.out.println("swap:" + "[" + profesor1.getId() + "," + grupo1.grupo.getId() + "]" +
+                                    "<-->" + "[" + profesor2.getId() + "," + grupo2.grupo.getId() + "]");
+                        hayCambio=true;
+                        this.huboCambio=true;
                         return buscar(cIndividuo);
+                    } else {
+//                        if (debug) {
+//                            System.out.println(original.toString());
+//                            System.out.println("(No Era Mejor)");
+//                        }
                     }
                 }
                 cIndividuo = original.clone(); // En este punto, es necesario deshacer los cambios
             } // Fin bucle grupo2
         } // Fin blucle grupo1
-
         // En este punto ya se ha intentado hacer todo los intercambios, si no hay mejora no hay nada que hacer
         return original;
     }

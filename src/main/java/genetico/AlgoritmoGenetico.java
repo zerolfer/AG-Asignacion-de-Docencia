@@ -1,6 +1,7 @@
 package main.java.genetico;
 
 
+import main.java.busqueda.AbstractBusquedaLocal;
 import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.operadores.creacion.CreacionAleatoria;
@@ -311,12 +312,14 @@ public class AlgoritmoGenetico {
             }
 
             if (!printed) {
+                float[] fitnessMedio = generacion.obtenerFitnessMedio();
                 printer2.csvWriteData(this,
                         Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
-                        Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()));
+                        Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
+                        Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
             }
-            numGeneraciones++; // TODO: reactivar esta condicion de parada
-        } while (numGeneraciones <= numeroMaximoGeneraciones /*&& numGeneracionesSinMejora<=numMaxGeneracionesSinMejora*/);
+            numGeneraciones++;
+        } while (numGeneraciones <= numeroMaximoGeneraciones && numGeneracionesSinMejora<=numMaxGeneracionesSinMejora);
 
         mejorIndividuo = obtenerMejor(generacion);
 
@@ -356,13 +359,14 @@ public class AlgoritmoGenetico {
     }
 
     private void busquedaLocal(List<Individuo[]> individuos) {
+        if(AbstractBusquedaLocal.debug)
+            System.out.println("\n\nGeneracion "+this.numGeneraciones+" ------------------------------------" +
+                "--------------------------------------------------------------------------------------------\n");
         for (Individuo[] par : individuos)
             for (int i = 0; i < par.length; i++) {
                 Individuo mejorado = busqueda.aplicar(par[i]);
                 par[i]=mejorado;
-//                System.out.println();
             }
-
     }
 
     private String[] getAlgoritmos() {

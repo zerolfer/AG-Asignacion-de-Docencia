@@ -17,7 +17,7 @@ import static main.java.busqueda.BusquedaIntercambioGrupoAntigua.noHayRepetidos;
 public abstract class AbstractDecodificacion implements AlgoritmoDecodificacion {
 
     public static boolean debug = Settings.getBoolean("debug.decodificador.mensajes");
-    protected List<Profesor> profesores;
+    List<Profesor> profesores;
     private List<Grupo> asignaturas;
 
     @Override

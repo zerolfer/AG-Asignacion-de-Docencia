@@ -30,7 +30,7 @@ public class AnalisisParametrico {
 
         AlgoritmoGenetico.open(NUM_EJECUCIONES);
         paso1();
-//        paso2();
+        paso2();
 //        paso3();
 //        paso3yMedio();
 //        paso4();

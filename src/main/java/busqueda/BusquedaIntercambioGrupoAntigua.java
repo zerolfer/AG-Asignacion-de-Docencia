@@ -127,7 +127,7 @@ public class BusquedaIntercambioGrupoAntigua extends AbstractBusquedaLocal {
         if (b1 == false) return false;
         assert noHayRepetidos(profesor1, profesor2) : profesor1 + grupo1.toString() + grupo2;
 
-        boolean b2 = profesor1.asignarGrupo(grupo2.grupo); //TODO: mirar restricciones de horarios y disponibilidad
+        boolean b2 = profesor1.asignarGrupo(grupo2.grupo); // TODO: eliminar esta clase
         if (b2 == false) return false;
 
         boolean b3 = profesor2.eliminarGrupo(grupo2.grupo);
@@ -181,7 +181,7 @@ public class BusquedaIntercambioGrupoAntigua extends AbstractBusquedaLocal {
                 p.setCapacidad(profesor1.getCapacidad());
                 p.setAsignadas(profesor1.getAsignadas());
 //                individuo.fenotipo2.remove(p);
-//                individuo.fenotipo2.put(profesor1, profesor1.getAsignadas()); // TODO: que el fenotipo sea solo una lista profesores, las asignadas son redundantes
+//                individuo.fenotipo2.put(profesor1, profesor1.getAsignadas());
             }
             if (p.equals(profesor2)) {
                 p.setCapacidad(profesor2.getCapacidad());

@@ -91,6 +91,7 @@ public class Profesor {
        /* }*/
         if (this.getAsignadas().add(grupo)) {
             this.setCapacidad(this.getCapacidad() - grupo.getHorasComputables(this));
+            numAsignaturas=-1;
             return true;
         } else throw new RuntimeException("No se puede asignar al profesor " + getId() + " el grupo " + grupo);
     }
@@ -201,7 +202,7 @@ public class Profesor {
     }
 
 
-    private int numAsignaturas = -1; // TODO: poner a -1 en caso de que la busqueda local haga sus mejoras
+    private int numAsignaturas = -1;
 
     public int getNumAsignaturas() {
         return getNumAsignaturas(false);

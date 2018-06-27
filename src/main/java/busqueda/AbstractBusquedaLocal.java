@@ -9,7 +9,8 @@ import main.java.util.Util;
 public abstract class AbstractBusquedaLocal implements BusquedaLocal {
 
     private float probabilidad;
-    public boolean debug=Settings.getBoolean("debug.busqueda.mensajes"); // imprime por consola el hashCode y el toString de cada iteración
+    public static boolean debug=Settings.getBoolean("debug.busqueda.mensajes"); // imprime por consola el hashCode y el toString de cada iteración
+    protected boolean huboCambio=false;
 
     public AbstractBusquedaLocal() {
         this.probabilidad=AlgoritmoGenetico.PROBABILIDAD_BUSQUEDA;
@@ -32,7 +33,10 @@ public abstract class AbstractBusquedaLocal implements BusquedaLocal {
     public Individuo aplicar(Individuo individuo) {
         if (RandomManager.getInstance().getRandomProbability() <= probabilidad) {
             Individuo result = buscar(individuo);
-            if(debug) System.out.println();
+            if (debug&&huboCambio){
+                System.out.println();
+                huboCambio=false;
+            }
             return result;
 
         }
