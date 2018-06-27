@@ -9,13 +9,13 @@ import main.java.model.Profesor;
 public class DecodificacionFiltroGrupo extends AbstractDecodificacion {
 
     @Override
-    protected Profesor getProfesor(Grupo a) {
+    protected Profesor getProfesor(Grupo grupoAsignatura) {
         Profesor conMenosHorasClase = null;
         for (Profesor p : this.profesores) {
-            if (p.checkCapacidad(a) && p.checkBilingue(a)
-                    && p.checkArea(a) && p.checkDisponibilidad(a))
-                if (p.checkSolapamiento(a)) {
-                    if (p.checkImparteAsignatura(a)) {
+            if (p.checkCapacidad(grupoAsignatura) && p.checkBilingue(grupoAsignatura)
+                    && p.checkArea(grupoAsignatura) && p.checkDisponibilidad(grupoAsignatura))
+                if (p.checkSolapamiento(grupoAsignatura)) {
+                    if (p.checkImparteAsignatura(grupoAsignatura)) {
                         return p;
                     } else {
                         if (conMenosHorasClase == null) conMenosHorasClase = p;

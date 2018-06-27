@@ -6,7 +6,10 @@ import main.java.genetico.operadores.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -22,13 +25,15 @@ public class Individuo implements Comparable<Individuo> {
 
     //    private Map<Integer, Set<Integer>> fenotipo; // <ProfesorId, AsignaturaId>
     private Map<Integer, Profesor> fenotipo2;
-    public int noAsignadas=-1;
+    public int noAsignadas;
 
     private boolean yaEvaluado = false; // inicialmente no evaluado
 
     public Individuo(int[] cromosoma) {
         this.cromosoma = cromosoma;
         decodificacion = new DecodificacionFiltroGrupo();
+        this.fenotipo2=new HashMap<>();
+        noAsignadas=-1;
     }
 
 
@@ -154,24 +159,18 @@ public class Individuo implements Comparable<Individuo> {
         result.setFitnessAsigProfesor(getFitnessAsigProfesor());
         result.setFitnessNumHoras(getFitnessNumHoras());
         result.setYaEvaluado(yaEvaluado);
-        result.noAsignadas=-1;//this.noAsignadas;
+        result.noAsignadas=noAsignadas;//this.noAsignadas;
 //        if (getFenotipo() != null) result.setFenotipo(new HashMap<>(getFenotipo()));
-        if (getFenotipo() != null) result.fenotipo2 = clonarFenotipo2();
+        result.fenotipo2 = clonarFenotipo2();
         return result;
     }
 
     private Map<Integer, Profesor> clonarFenotipo2() {
         Map<Integer,Profesor> result = new HashMap<>();
-        result.putAll(this.fenotipo2); // TODO: TEST ¿compia las referencias recursivamente? (no deberia ser una shallow copy)
-//        for (Map.Entry<Profesor, Set<Grupo>> e : fenotipo2.entrySet()) {
-//            Profesor key = e.getKey();
-//            Set<Grupo> value = e.getValue();
-//            Set<Grupo> nuevoValue = new HashSet<Grupo>();
-//            for (Grupo as : value)
-//                nuevoValue.add(as.clone());
-//            Profesor nuevoKey = key.clone();
-//            result.put(nuevoKey, nuevoValue);
-//        }
+        for (Map.Entry<Integer,Profesor> e : fenotipo2.entrySet()) {
+            for (Profesor p: fenotipo2.values())
+                result.put(p.getId(), p.clone());
+        }
         return result;
     }
 
@@ -251,10 +250,11 @@ public class Individuo implements Comparable<Individuo> {
         return this.compareTo(vecino) <= 0 ? false : true;
     }
 
+
     public void asignarFitnessPorFenotipo(Profesor profesor1, Profesor profesor2) {
 
         if(noAsignadas<=-1) noAsignadas=cromosoma.length-getNumeroGrupos();
-
+        else assert  noAsignadas==cromosoma.length-getNumeroGrupos();
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
             setFitnessAsigProfesor(Integer.MAX_VALUE);

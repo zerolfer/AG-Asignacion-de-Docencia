@@ -3,11 +3,9 @@ package test.java.io;
 import main.java.model.Horario;
 import org.junit.Test;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class HorarioTest {

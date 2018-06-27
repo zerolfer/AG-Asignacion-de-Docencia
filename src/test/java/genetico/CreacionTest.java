@@ -1,8 +1,8 @@
 package test.java.genetico;
 
 import main.java.genetico.Individuo;
-import main.java.genetico.operadores.creacion.OperadorCreacion;
 import main.java.genetico.operadores.creacion.CreacionAleatoria;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
 import main.java.model.BD;
 import main.java.util.RandomManager;
 import org.junit.Assert;

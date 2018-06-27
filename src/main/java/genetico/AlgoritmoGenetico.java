@@ -3,24 +3,24 @@ package main.java.genetico;
 
 import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.busqueda.BusquedaLocal;
-import main.java.genetico.operadores.creacion.OperadorCreacion;
 import main.java.genetico.operadores.creacion.CreacionAleatoria;
-import main.java.genetico.operadores.cruce.OperadorCruce;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
 import main.java.genetico.operadores.cruce.CruceOrderBased;
-import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.cruce.OperadorCruce;
 import main.java.genetico.operadores.mutacion.MutacionIntercambio;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
 import main.java.genetico.operadores.reemplazo.OperadorReemplazo;
 import main.java.genetico.operadores.reemplazo.ReemplazoGeneracional;
 import main.java.genetico.operadores.seleccion.OperadorSeleccion;
 import main.java.genetico.operadores.seleccion.SeleccionParesAleatorios;
 import main.java.io.Settings;
-import main.java.model.BD;
-import main.java.util.RandomManager;
-import main.java.util.Stopwatch;
 import main.java.io.writer.CSVWriter;
 import main.java.io.writer.DatosDetalladosEjecuciones;
 import main.java.io.writer.DatosFenotipoEjecuciones;
 import main.java.io.writer.DatosGlobalesEjecuciones;
+import main.java.model.BD;
+import main.java.util.RandomManager;
+import main.java.util.Stopwatch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,11 +92,11 @@ public class AlgoritmoGenetico {
     private OperadorMutacion mutacion;
     private OperadorReemplazo reemplazo;
 
-    BusquedaLocal busqueda;
+    private BusquedaLocal busqueda;
 
     // ESTRUCTURAS AUXILIARES
     private Individuo mejorIndividuo;
-    private static boolean debug = Settings.getBoolean("genetico.debug.mensajes");
+    private static boolean debug = Settings.getBoolean("debug.genetico.mensajes");
     private Stopwatch timer = new Stopwatch();
     private static int numeroEjecuciones = Settings.getInteger("genetico.predeterminados.numeroEjecuciones");
 
@@ -155,7 +155,7 @@ public class AlgoritmoGenetico {
 
     /**
      *
-     * @param id
+     * @param id nombre identificador de la ejecucion a lanzar
      */
     public void lanzarAlgoritmo(String id) {
         lanzarAlgoritmo(id, numeroEjecuciones); // por defecto se lanza el numero de veces indicadas
@@ -174,7 +174,7 @@ public class AlgoritmoGenetico {
                 List<String> configuracion = new ArrayList<>();
 
                 configuracion.add(id);
-                configuracion.add(this.populationSize.toString());
+                configuracion.add(AlgoritmoGenetico.populationSize.toString());
                 configuracion.add(this.cruce.getProbabilidad().toString());
                 configuracion.add(this.mutacion.getProbabilidad().toString());
                 configuracion.add(getNumeroMaximoGeneraciones().toString());
@@ -206,7 +206,7 @@ public class AlgoritmoGenetico {
 
 
     public void setParameters(int tamPob, int numGen, int maxSinMejora) {
-        this.populationSize = tamPob;
+        AlgoritmoGenetico.populationSize = tamPob;
         this.numeroMaximoGeneraciones = numGen;
         this.numMaxGeneracionesSinMejora=maxSinMejora;
     }
@@ -264,7 +264,6 @@ public class AlgoritmoGenetico {
     }
 
     private int numGeneraciones=0;
-    public float[] fitnessMedio;
 
     private void genetico(String ejecucion) {
 
@@ -312,17 +311,14 @@ public class AlgoritmoGenetico {
             }
 
             if (!printed) {
-                fitnessMedio = generacion.obtenerFitnessMedio();
                 printer2.csvWriteData(this,
                         Integer.toString(numGeneraciones), timer.getTimeAtGeneration(numGeneraciones).toString(),
-                        Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()),
-                        Float.toString(fitnessMedio[0]), Float.toString(fitnessMedio[1]));
+                        Integer.toString(mejor.getFitnessAsigProfesor()), Float.toString(mejor.getFitnessNumHoras()));
             }
             numGeneraciones++; // TODO: reactivar esta condicion de parada
         } while (numGeneraciones <= numeroMaximoGeneraciones /*&& numGeneracionesSinMejora<=numMaxGeneracionesSinMejora*/);
 
         mejorIndividuo = obtenerMejor(generacion);
-        if(printed)fitnessMedio = generacion.obtenerFitnessMedio();
 
         if (!printed) {
             printer3.csvWriteData(this);
@@ -369,7 +365,7 @@ public class AlgoritmoGenetico {
 
     }
 
-    public String[] getAlgoritmos() {
+    private String[] getAlgoritmos() {
         return new String[]{
                 /*unir(*/ creacion.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
                 /*unir(*/ seleccion.getClass().getSimpleName() /*.split("(?=\\p{Upper})") )*/,
@@ -379,15 +375,15 @@ public class AlgoritmoGenetico {
         };
     }
 
-    private String unir(String[] split) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < split.length; i++) {
-            sb.append(split[i]);
-            //if(i<split.length-1)
-            //   sb.append(" ");
-        }
-        return sb.toString();
-    }
+//    private String unir(String[] split) {
+//        StringBuilder sb = new StringBuilder();
+//        for (String aSplit : split) {
+//            sb.append(aSplit);
+//            //if(i<split.length-1)
+//            //   sb.append(" ");
+//        }
+//        return sb.toString();
+//    }
 
 
     public Individuo getMejorIndividuo() {

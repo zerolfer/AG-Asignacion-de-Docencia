@@ -4,20 +4,21 @@ import main.java.genetico.Individuo;
 import main.java.io.Settings;
 import main.java.model.BD;
 import main.java.model.Grupo;
-import main.java.model.Horario;
 import main.java.model.Profesor;
 import main.java.util.Util;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static main.java.busqueda.BusquedaIntercambioGrupo.noHayRepetidos;
+import static main.java.busqueda.BusquedaIntercambioGrupoAntigua.noHayRepetidos;
 
 public abstract class AbstractDecodificacion implements AlgoritmoDecodificacion {
 
-    public static boolean debug = Settings.getBoolean("decodificador.debug.mensajes");
-    List<Profesor> profesores;
-    List<Grupo> asignaturas;
+    public static boolean debug = Settings.getBoolean("debug.decodificador.mensajes");
+    protected List<Profesor> profesores;
+    private List<Grupo> asignaturas;
 
     @Override
     public void aplicar(Individuo individuo) {
@@ -92,22 +93,25 @@ public abstract class AbstractDecodificacion implements AlgoritmoDecodificacion 
      * Cada clase que extienda de ésta implementará este
      * método de la forma oportuna
      *
-     * @param asignatura
-     * @return
+     * @param grupoAsignatura grupo que pertenezca a la asignatura de la que se quiere buscar
+     *                        un profesor que impata clase en la misma
+     * @return un posible profesor que pueda impartir la asignatura
+     * a la que pertenece el grupo que se indica por parametro
      */
-    protected abstract Profesor getProfesor(Grupo asignatura);
+    protected abstract Profesor getProfesor(Grupo grupoAsignatura);
 
     /**
      * Recorre los profesores para calcular el fitness en base a la
      * informacion contenida y asigna los resultados a las variables
      * accesibles mediante {@link Individuo#getFitnessAsigProfesor()}
      * y {@link Individuo#getFitnessNumHoras()}.
-     * @param individuo valor en el cual el fitness será asignado
+     *
+     * @param individuo   valor en el cual el fitness será asignado
      * @param noAsignadas numero de asignaturas que no han sido asignadas, este valor se obtiene
      *                    durante la asignacion en {@link AlgoritmoDecodificacion#aplicar(Individuo)}
-     * @param profesores
+     * @param profesores  conjunto de profesores sobre los que iterar
      */
-    void asignarFitness(Individuo individuo, int noAsignadas, Collection<Profesor> profesores) {
+    private void asignarFitness(Individuo individuo, int noAsignadas, Collection<Profesor> profesores) {
         if (noAsignadas != 0) {
             // en caso de no asignarse asignaturas a un profesor
             individuo.setFitnessAsigProfesor(Integer.MAX_VALUE);
@@ -145,11 +149,10 @@ public abstract class AbstractDecodificacion implements AlgoritmoDecodificacion 
      * @param idGrupo identificador de la asignatura
      * @return Grupo
      */
-    Grupo getGrupoById(int idGrupo) {
-        for (Grupo a : this.asignaturas) {
+    private Grupo getGrupoById(int idGrupo) {
+        for (Grupo a : this.asignaturas)
             if (a.getId() == idGrupo)
                 return a;
-        }
         throw new RuntimeException("No existe ID de asignatura " + idGrupo);
     }
 

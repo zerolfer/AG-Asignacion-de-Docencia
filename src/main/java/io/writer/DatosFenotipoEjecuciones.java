@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class DatosFenotipoEjecuciones extends AbstractCSVWriter {
     private String ejecucion;

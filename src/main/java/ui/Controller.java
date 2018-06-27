@@ -13,14 +13,14 @@ import javafx.stage.Window;
 import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.AlgoritmoGenetico;
-import main.java.genetico.operadores.creacion.OperadorCreacion;
 import main.java.genetico.operadores.creacion.CreacionAleatoria;
-import main.java.genetico.operadores.cruce.OperadorCruce;
+import main.java.genetico.operadores.creacion.OperadorCreacion;
 import main.java.genetico.operadores.cruce.CruceOrderBased;
 import main.java.genetico.operadores.cruce.CrucePositionBased;
-import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.cruce.OperadorCruce;
 import main.java.genetico.operadores.mutacion.MutacionIntercambio;
 import main.java.genetico.operadores.mutacion.MutacionInversion;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
 import main.java.genetico.operadores.reemplazo.*;
 import main.java.genetico.operadores.seleccion.*;
 
@@ -222,9 +222,10 @@ public class Controller implements Initializable{
         return new BusquedaIntercambioGrupo(spProbBusq.getValue().floatValue());
     }
 
-    ButtonType printButtonType = new ButtonType("Print", ButtonBar.ButtonData.OK_DONE);
+    private ButtonType printButtonType = new ButtonType("Print", ButtonBar.ButtonData.OK_DONE);
 
-    public void lanzarVentanaEspera(){
+    private void lanzarVentanaEspera(){
+
         Dialog<ButtonType> dialog
                 = getCheckPrintDialog(gp.getScene().getWindow(), "Enter starting check number");
         dialog.showAndWait()

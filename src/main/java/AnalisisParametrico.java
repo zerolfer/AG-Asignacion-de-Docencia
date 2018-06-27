@@ -4,16 +4,16 @@ import main.java.busqueda.BusquedaIntercambioGrupo;
 import main.java.busqueda.BusquedaLocal;
 import main.java.genetico.AlgoritmoGenetico;
 import main.java.genetico.operadores.creacion.CreacionAleatoria;
-import main.java.genetico.operadores.cruce.OperadorCruce;
 import main.java.genetico.operadores.cruce.CruceOrderBased;
 import main.java.genetico.operadores.cruce.CrucePositionBased;
-import main.java.genetico.operadores.mutacion.OperadorMutacion;
+import main.java.genetico.operadores.cruce.OperadorCruce;
 import main.java.genetico.operadores.mutacion.MutacionIntercambio;
 import main.java.genetico.operadores.mutacion.MutacionInversion;
+import main.java.genetico.operadores.mutacion.OperadorMutacion;
 import main.java.genetico.operadores.reemplazo.*;
 import main.java.genetico.operadores.seleccion.*;
 
-public class AnalisisParamétrico {
+public class AnalisisParametrico {
     private static final int NUM_EJECUCIONES = 10;
 
     private static final float pMutacion=0.30f;
@@ -30,14 +30,14 @@ public class AnalisisParamétrico {
 
         AlgoritmoGenetico.open(NUM_EJECUCIONES);
         paso1();
-        paso2();
-        paso3();
-        paso3yMedio();
-        paso4();
-        paso5();
-        paso6();
-        paso7();
-        paso8();
+//        paso2();
+//        paso3();
+//        paso3yMedio();
+//        paso4();
+//        paso5();
+//        paso6();
+//        paso7();
+//        paso8();
         AlgoritmoGenetico.close();
     }
 

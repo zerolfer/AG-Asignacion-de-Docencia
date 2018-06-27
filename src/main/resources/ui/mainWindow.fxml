@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import main.java.genetico.operadores.creacion.CreacionAleatoria?>
-<?import main.java.genetico.operadores.seleccion.SeleccionParesAleatorios?>
-<?import main.java.genetico.operadores.seleccion.SeleccionRuleta?>
-<?import main.java.genetico.operadores.seleccion.SeleccionRuletaAntiguo?>
-<?import main.java.genetico.operadores.seleccion.SeleccionTorneo?>
-<?import main.java.genetico.operadores.cruce.CrucePositionBased?>
-<?import main.java.genetico.operadores.cruce.CruceOrderBased?>
 <GridPane fx:id="gp" prefHeight="620.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.ui.Controller">
     <columnConstraints>

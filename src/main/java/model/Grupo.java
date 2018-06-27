@@ -1,7 +1,5 @@
 package main.java.model;
 
-import main.java.io.Settings;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

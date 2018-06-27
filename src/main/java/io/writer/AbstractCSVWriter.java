@@ -11,16 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractCSVWriter implements CSVWriter {
-    public final String SPLITTER = Settings.get("csv.splitter");
-    public final String LINE_SEP = System.getProperty("line.separator");
+    final String SPLITTER = Settings.get("csv.splitter");
+    final String LINE_SEP = System.getProperty("line.separator");
 
-    BufferedWriter getBr() {
-        return br;
-    }
+    private BufferedWriter br;
 
-    BufferedWriter br;
-
-    public AbstractCSVWriter(String path, boolean append) {
+    AbstractCSVWriter(String path, boolean append) {
         try {
             br = new BufferedWriter(new FileWriter(path, append));
         } catch (IOException e) {
@@ -35,11 +31,12 @@ public abstract class AbstractCSVWriter implements CSVWriter {
 
     }
 
-    public AbstractCSVWriter(String path) {
-        this(path, true);
-    }
+//    public AbstractCSVWriter(String path) {
+//        this(path, true);
+//    }
 
-    public void csvWriteDataCollection(List<String>... dataColection) {
+    @SafeVarargs
+    final void csvWriteDataCollection(List<String>... dataColection) {
         for (List<String> data : dataColection) {
             for (String d : data) {
                 csvWriteData(d);
@@ -49,7 +46,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         csvWriteFlush();
 
     }
-
+/*
     public void csvWriteDataCollection(List<String> data) {
         for (String d : data) {
             csvWriteData(d);
@@ -57,15 +54,15 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         csvWriteNewLine();
         csvWriteFlush();
     }
-
+*/
     public void csvWriteData(AlgoritmoGenetico genetico, String... otros) {
         csvWriteData(genetico, Arrays.asList(otros));
     }
 
 
-    public void csvWriteData(String data) {
+    void csvWriteData(String data) {
         try {
-            br.append(data.toString());
+            br.append(data);
             br.append(SPLITTER);
             // br.flush(); //NOTE for debug
         } catch (IOException e) {

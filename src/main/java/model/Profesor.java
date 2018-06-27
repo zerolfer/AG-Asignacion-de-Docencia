@@ -1,9 +1,10 @@
 package main.java.model;
 
 import main.java.io.Settings;
-import org.omg.SendingContext.RunTime;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Profesor {
@@ -80,17 +81,18 @@ public class Profesor {
      * @param grupo
      * @return
      */
-    public boolean asignarGrupo(Grupo grupo) {
-        if (this.getCapacidad() - grupo.getHorasComputables(this) < 0)
+    public boolean asignarGrupo(Grupo grupo/*, boolean verificar*/) {
+        /*if (!checkCapacidad(grupo))
             return false;
-        if (checkArea(grupo) && checkBilingue(grupo) && checkCapacidad(grupo) &&
-                checkDisponibilidad(grupo) && checkSolapamiento(grupo)) {
-            if (this.getAsignadas().add(grupo)) {
-                this.setCapacidad(this.getCapacidad() - grupo.getHorasComputables(this));
-                return true;
-            } else throw new RuntimeException("No se puede asignar al profesor " + getId() + " el grupo "+grupo);
-        }
-        return false;
+        if (verificar) {*/
+            /*boolean esPosible = */if(!checkArea(grupo) || !checkBilingue(grupo) || !checkCapacidad(grupo) ||
+                    !checkDisponibilidad(grupo) || !checkSolapamiento(grupo))/*;*/
+            /*if (!esPosible)*/ return false;
+       /* }*/
+        if (this.getAsignadas().add(grupo)) {
+            this.setCapacidad(this.getCapacidad() - grupo.getHorasComputables(this));
+            return true;
+        } else throw new RuntimeException("No se puede asignar al profesor " + getId() + " el grupo " + grupo);
     }
 
     public boolean eliminarGrupo(Grupo asignatura) {
@@ -103,8 +105,13 @@ public class Profesor {
 
     public Profesor clone() {
         Profesor result = new Profesor(id, nombre, capacidadInicial, bilingue, area, disponibilidad);
+        result.numAsignaturas=numAsignaturas;
+//        result.setCapacidad(capacidad);
+
         for (Grupo g : getAsignadas())
-            if (!result.asignarGrupo(g.clone())) throw new RuntimeException("Situacion ilegal");
+            // no hace falta clonar las asignaturas en si porque son de solo lectura
+            if (!result.asignarGrupo(g/*.clone()*/)) throw new RuntimeException("Situacion ilegal");
+        assert capacidad==result.getCapacidad();
         return result;
     }
 
@@ -189,7 +196,7 @@ public class Profesor {
         return s;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -244,7 +251,10 @@ public class Profesor {
     }
 
     public boolean checkArea(Grupo a) {
-        return Arrays.binarySearch(a.getAreas(), getArea()) != -1;
+        for (String area : a.getAreas())
+            if (area.equalsIgnoreCase(getArea()))
+                return true;
+        return false;
     }
 
     public boolean checkSolapamiento(Grupo a) {

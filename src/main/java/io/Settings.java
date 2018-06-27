@@ -1,7 +1,5 @@
 package main.java.io;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
