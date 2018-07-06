@@ -24,7 +24,7 @@ public class CSVReader {
     private static final boolean debug = false;
     private static final String DIA_SPLITER = Settings.get("csv.dia.spliter");
 
-    public static List<Profesor> CsvLoadProfesores() {
+    public static List<Profesor> csvLoadProfesores() {
         BufferedReader br = null;
         String line = "";
         List<Profesor> profesores = new ArrayList<>();

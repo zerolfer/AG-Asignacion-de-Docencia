@@ -35,7 +35,7 @@ public class GeneticoTest {
 /*
     @Before
     public void inicializar() {
-        profesores = CSVReader.CsvLoadProfesores();
+        profesores = CSVReader.csvLoadProfesores();
         asignaturas = CSVReader.CsvLoadAsignaturas();
     }
 */

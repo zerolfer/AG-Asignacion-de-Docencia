@@ -46,14 +46,14 @@ public abstract class AbstractBusquedaLocal implements BusquedaLocal {
     protected Individuo buscar(Individuo individuo) {
         Individuo vecino;
         do {
-            vecino = generarVecinos(individuo);
+            vecino = generarVecino(individuo);
             if (vecino.esMejor(individuo))
                 individuo = vecino; // nos quedamos con el mejor
         } while (individuo.equals(vecino));
         return vecino;
     }
 
-    protected Individuo generarVecinos(Individuo individuo) {
+    protected Individuo generarVecino(Individuo individuo) {
         // SOBREESCRIBIR EN LAS CLASES HIJAS
         return individuo;
     }

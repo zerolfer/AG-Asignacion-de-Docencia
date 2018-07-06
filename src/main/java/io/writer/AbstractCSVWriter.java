@@ -43,7 +43,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
             }
         }
         csvWriteNewLine();
-        csvWriteFlush();
+        csvWriterFlush();
 
     }
 /*
@@ -52,7 +52,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
             csvWriteData(d);
         }
         csvWriteNewLine();
-        csvWriteFlush();
+        csvWriterFlush();
     }
 */
     public void csvWriteData(AlgoritmoGenetico genetico, String... otros) {
@@ -78,7 +78,7 @@ public abstract class AbstractCSVWriter implements CSVWriter {
         }
     }
 
-    public void csvWriteFlush() {
+    public void csvWriterFlush() {
         try {
             br.flush();
         } catch (IOException e) {

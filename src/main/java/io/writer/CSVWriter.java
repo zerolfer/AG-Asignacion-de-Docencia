@@ -11,7 +11,7 @@ public interface CSVWriter {
 
     void csvWriteNewLine();
 
-    void csvWriteFlush();
+    void csvWriterFlush();
 
     void close();
 

@@ -8,7 +8,6 @@ import main.java.util.Util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
@@ -42,6 +41,17 @@ public class CruceTest {
         System.out.println("ORDER-BASED CROSSOVER - ALGORITMO DE CRUCE - TEST 1 - RESULTADOS:");
         for (Individuo hijo : hijos) {
             System.out.println(hijo);
+        }
+    }
+
+    private void assertArrayEquals(Individuo[] hijosEsperados, Individuo[] hijos) {
+        for (int i = 0; i < hijos.length; i++) {
+            for (int j = 0; j < hijos[i].size(); j++) {
+                if (hijos[i].getCromosoma()[j] != hijosEsperados[i].getCromosoma()[j])
+                    throw new RuntimeException("No se corresponde el hijo numero "+(i+1)+"en ls posición "+j+" :\n"+
+                            "esperado:\n"+"\t"+hijosEsperados[i]+"\n"+
+                            "obtenido:\n"+"\t"+hijos[i]);
+            }
         }
     }
 
@@ -185,6 +195,27 @@ public class CruceTest {
         System.out.println("ORDER-BASED CROSSOVER - ALGORITMO DE CRUCE - TEST 1 - RESULTADOS:");
         for (Individuo hijo : hijos) {
             System.out.println(hijo);
+            assertFalse(hijo.checkHayRepetidos());
+        }
+    }
+
+    @Test
+    public void positionBasedCrossover2() {
+        Individuo padre1 = Util.createIndividual(2, 0, 1, 5, 7, 6, 4, 3);
+        Individuo padre2 = Util.createIndividual(4, 1, 6, 2, 3, 5, 7, 0);
+        Individuo[] hijosEsperados = new Individuo[]{
+                Util.createIndividual(4,0,1,2,5,6,7,3),
+                Util.createIndividual(2,1,6,7,4,5,3,0)
+        };
+
+        Individuo[] hijos = positionCrossover.aplicar(padre1, padre2,
+                new boolean[]{false, true, true, false, false, true, false, true});
+        assertArrayEquals(hijosEsperados, hijos);
+
+        System.out.println("ORDER-BASED CROSSOVER - ALGORITMO DE CRUCE - TEST 2 - RESULTADOS:");
+        for (Individuo hijo : hijos) {
+            System.out.println(hijo);
+            assertFalse(hijo.checkHayRepetidos());
         }
     }
 

@@ -19,8 +19,8 @@ public class AnalisisParametrico {
     private static final float pMutacion=0.30f;
     private static final float pCruce=0.7f;
 
-    private static OperadorSeleccion selector = new SeleccionRuleta();
-    private static OperadorReemplazo reemplazo = new ReemplazoTorneo(4);
+    private static OperadorSeleccion selector = new SeleccionParesAleatorios();
+    private static OperadorReemplazo reemplazo = new ReemplazoTorneoPH();
     private static OperadorCruce cruce = new CruceOrderBased(pCruce);
     private static OperadorMutacion mutador = new MutacionIntercambio(pMutacion);
     private static BusquedaLocal busqueda = new BusquedaIntercambioGrupo(1);
@@ -29,19 +29,19 @@ public class AnalisisParametrico {
     public static void main(String args[]) {
 
         AlgoritmoGenetico.open(NUM_EJECUCIONES);
-        paso1();
-        paso2();
-//        paso3();
-//        paso3yMedio();
-//        paso4();
-//        paso5();
-//        paso6();
-//        paso7();
-//        paso8();
+        paso1_configBase();
+        paso2_seleccion();
+        paso3_reemplazo();
+        paso3yMedio_reemplazoTorneoSize();
+        paso4_cruce();
+        paso5_probCruce();
+        paso6_mutacion();
+        paso7_probMutacion();
+        paso8_busqueda();
         AlgoritmoGenetico.close();
     }
 
-    private static void paso1() {
+    private static void paso1_configBase() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
@@ -49,10 +49,10 @@ public class AnalisisParametrico {
                 new MutacionIntercambio(0.3f),
                 new ReemplazoTorneo()
         );
-        g1.lanzarAlgoritmo("AP1_ConfiguracionBase");
+        g1.lanzarAlgoritmo("AP1_ConfiguracionBase_DEBUG_COMPROBARDEL_AÑO_PASADO");
     }
 
-    private static void paso2() {
+    private static void paso2_seleccion() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
@@ -88,7 +88,7 @@ public class AnalisisParametrico {
         g4.lanzarAlgoritmo("AP2_seleccionTorneo");
     }
 
-    private static void paso3() {
+    private static void paso3_reemplazo() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 selector,
@@ -123,7 +123,7 @@ public class AnalisisParametrico {
         g4.lanzarAlgoritmo("AP3_reemplazoTorneoPHSinRepeticion");
     }
 
-    private static void paso3yMedio(){
+    private static void paso3yMedio_reemplazoTorneoSize(){
 
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
@@ -153,7 +153,7 @@ public class AnalisisParametrico {
 
     }
 
-    private static void paso4() {
+    private static void paso4_cruce() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 selector,
@@ -172,7 +172,7 @@ public class AnalisisParametrico {
         g2.lanzarAlgoritmo("AP4_crucePBX");
     }
 
-    private static void paso5() {
+    private static void paso5_probCruce() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 selector,
@@ -207,7 +207,7 @@ public class AnalisisParametrico {
         g4.lanzarAlgoritmo("AP5_probabilidadCruce06");
     }
 
-    private static void paso6() {
+    private static void paso6_mutacion() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 selector,
@@ -226,7 +226,7 @@ public class AnalisisParametrico {
         g2.lanzarAlgoritmo("AP6_mutacionInversion");
     }
 
-    private static void paso7() {
+    private static void paso7_probMutacion() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 selector,
@@ -285,7 +285,7 @@ public class AnalisisParametrico {
         g7.lanzarAlgoritmo("AP7_probabilidadMutacion040");
     }
 
-    private static void paso8() {
+    private static void paso8_busqueda() {
         AlgoritmoGenetico g1 = new AlgoritmoGenetico(
                 new CreacionAleatoria(),
                 selector,
@@ -340,6 +340,23 @@ public class AnalisisParametrico {
 
 
 
+    static AlgoritmoGenetico optimoActual(){
+        return new AlgoritmoGenetico(
+                new CreacionAleatoria(),
+                selector,
+                cruce,
+                mutador,
+                reemplazo,
+                busqueda
+        );
+    }
+
+
+
+
+
+
+
 
 
 
@@ -361,14 +378,15 @@ public class AnalisisParametrico {
 
 
     //TODO: confirmar esto con los datos antiguos
+
     static AlgoritmoGenetico optimoDatos2017(){
         return new AlgoritmoGenetico(
-                new CreacionAleatoria(),
+                /*new CreacionAleatoria(),
                 new SeleccionParesAleatorios(),
                 new CrucePositionBased(0.9f),
                 new MutacionInversion(0.20f),
                 new ReemplazoTorneoPHSinRepeticion(),
-                new BusquedaIntercambioGrupo(1)
+                new BusquedaIntercambioGrupo(1)*/
         );
 
     }

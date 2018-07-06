@@ -2,6 +2,7 @@ package main.java.genetico;
 
 
 import main.java.genetico.operadores.decodificacion.AlgoritmoDecodificacion;
+import main.java.genetico.operadores.decodificacion.Decodificacion;
 import main.java.genetico.operadores.decodificacion.DecodificacionFiltroGrupo;
 import main.java.model.Grupo;
 import main.java.model.Profesor;

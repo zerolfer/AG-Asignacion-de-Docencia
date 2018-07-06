@@ -261,7 +261,7 @@ public class AlgoritmoGenetico {
     }
 
     private void ordenarAsignaturas() {
-        BD.getAsignaturas().sort(BD.getComparatorGrupos());
+        BD.getGrupos().sort(BD.getComparatorGrupos());
     }
 
     private int numGeneraciones=0;

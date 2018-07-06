@@ -27,7 +27,7 @@ public abstract class AbstractDecodificacion implements AlgoritmoDecodificacion 
 
         // haciendo copia garantizamos que las referencias sean unicas
         this.profesores = Util.copyOfProfesor(BD.getProfesores());
-        this.asignaturas = Util.copyOfGrupo(BD.getAsignaturas());
+        this.asignaturas = Util.copyOfGrupo(BD.getGrupos());
 
         assert BD.getProfesores() != this.profesores;
         assert BD.getProfesores().get(0) != this.profesores.get(0);

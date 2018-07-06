@@ -13,7 +13,7 @@ public class BD {
     private static BD instance;
 
     private BD(){
-        profesores = CSVReader.CsvLoadProfesores();
+        profesores = CSVReader.csvLoadProfesores();
         asignaturas = CSVReader.CsvLoadAsignaturas();
 
         comparatorProfesores = new Comparator<Profesor>() {
@@ -66,7 +66,7 @@ public class BD {
         return getInstance().profesores;
     }
 
-    public static List<Grupo> getAsignaturas() {
+    public static List<Grupo> getGrupos() {
         return getInstance().asignaturas;
     }
 

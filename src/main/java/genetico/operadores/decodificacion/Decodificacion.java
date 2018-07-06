@@ -11,7 +11,8 @@ public class Decodificacion extends AbstractDecodificacion {
 
     protected Profesor getProfesor(Grupo grupoAsignatura) {
         for (Profesor p : this.profesores) {
-            if (p.checkCapacidad(grupoAsignatura) && p.checkBilingue(grupoAsignatura) && p.checkArea(grupoAsignatura) && p.checkDisponibilidad(grupoAsignatura))
+            if (p.checkCapacidad(grupoAsignatura) && p.checkBilingue(grupoAsignatura) && p.checkArea(grupoAsignatura)
+                    && p.checkDisponibilidad(grupoAsignatura))
                 if (p.checkSolapamiento(grupoAsignatura))
                     return p;
         }
