@@ -114,75 +114,75 @@ public class DecodificarTest {
                 "Quimicas", "Oviedo", 2f, false, new String[]{"A"});
 
         //diferente escuela y ciudad con horario de margen igual a 30 min (pero deberia ser 60)
-        Grupo grupo9 = new Grupo(1, "C", "CCC", "grupo8", 1, h3,
+        Grupo grupo9 = new Grupo(1, "C", "CCC", "grupo9", 1, h3,
                 "EPI", "Gijón", 2f, false, new String[]{"A"});
 
         //diferente escuela y ciudad con horario de margen igual a 60 min
-        Grupo grupo10 = new Grupo(1, "C", "CCC", "grupo8", 1, h6,
+        Grupo grupo10 = new Grupo(1, "C", "CCC", "grupo10", 1, h6,
                 "EPI", "Gijón", 2f, false, new String[]{"A"});
 
 
-        assertFalse ( checkSolapamiento(profe1, grupo2) ); // no valido
-        assertFalse ( checkSolapamiento(profe1, grupo3) ); // no valido
-        assertTrue  ( checkSolapamiento(profe1, grupo4) ); // valido
-        assertFalse ( checkSolapamiento(profe1, grupo5) ); // no valido
-        assertTrue  ( checkSolapamiento(profe1, grupo6) ); // valido
+        assertFalse ( profe1.checkSolapamiento(grupo2) ); // no valido
+        assertFalse ( profe1.checkSolapamiento(grupo3) ); // no valido
+        assertTrue  ( profe1.checkSolapamiento(grupo4) ); // valido
+        assertFalse ( profe1.checkSolapamiento(grupo5) ); // no valido
+        assertTrue  ( profe1.checkSolapamiento(grupo6) ); // valido
 
-        assertTrue  ( checkSolapamiento(profe1, grupo7) ); // valido
-        assertFalse ( checkSolapamiento(profe1, grupo8) ); // no valido
+        assertTrue  ( profe1.checkSolapamiento(grupo7) ); // valido
+        assertFalse ( profe1.checkSolapamiento(grupo8) ); // no valido
 
-        assertFalse  ( checkSolapamiento(profe1, grupo9) ); // valido
-        assertTrue ( checkSolapamiento(profe1, grupo10) ); // no valido
+        assertFalse( profe1.checkSolapamiento(grupo9) ); // valido
+        assertTrue ( profe1.checkSolapamiento(grupo10) ); // no valido
 
 
     }
 
-    /**
-     * para facilitar el test se ha copiado la version actual (13/06/2018) del método
-     * {@link Decodificacion#checkSolapamiento(Profesor, Grupo)}
-     */
-    boolean checkSolapamiento(Profesor p, Grupo a) {
-        for (Grupo asignatura : p.getAsignadas()) {
-            for (Horario horariosGrupoActual : asignatura.getHorarios()) { // actual(es)
-                for (Horario horariosGrupoNuevo : a.getHorarios()) { // nuevo(s)
-                    if (horariosGrupoActual.getDia() == horariosGrupoNuevo.getDia()
-                            && asignatura.getSemestre() == a.getSemestre()) {
-                        int finActualInicioNueva =
-                                horariosGrupoActual.getHoraFin().compareTo(horariosGrupoNuevo.getHoraInicio());
-                        int inicioActualFinNueva =
-                                horariosGrupoActual.getHoraInicio().compareTo(horariosGrupoNuevo.getHoraFin());
-
-                        int lapso;
-                        if (asignatura.getCiudad().equals(a.getCiudad())) // misma ciudad pero distinta escuela
-                            lapso = 30;
-                        else lapso = 60;
-
-                        // si el fin de la actual es anterior al comienzo de la nueva a asignar
-                        if (finActualInicioNueva <= 0) {
-                            if (!asignatura.getEscuela().equals(a.getEscuela())) {
-                                if (Math.abs(
-                                        horariosGrupoNuevo.getHoraInicio().getTime() -
-                                                horariosGrupoActual.getHoraFin().getTime()
-                                ) < TimeUnit.MINUTES.toMillis(lapso))
-                                    return false;
-                            }
-
-                            // si comienzo de la actual es posterior al final de la nueva a asignar
-                        } else if (inicioActualFinNueva >= 0) {
-                            if (!asignatura.getEscuela().equals(a.getEscuela()))
-                                if (Math.abs(
-                                        horariosGrupoNuevo.getHoraFin().getTime() -
-                                                horariosGrupoActual.getHoraInicio().getTime()
-                                ) < TimeUnit.MINUTES.toMillis(lapso))
-                                    return false;
-                        } else // en los demas casos hay solapamiento y no es válido
-                            return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
+//    /**
+//     * para facilitar el test se ha copiado la version actual (13/06/2018) del método
+//     * {@link Profesor#checkSolapamiento(Grupo)}
+//     */
+//    boolean checkSolapamiento(Profesor p, Grupo a) {
+//        for (Grupo asignatura : p.getAsignadas()) {
+//            for (Horario horariosGrupoActual : asignatura.getHorarios()) { // actual(es)
+//                for (Horario horariosGrupoNuevo : a.getHorarios()) { // nuevo(s)
+//                    if (horariosGrupoActual.getDia() == horariosGrupoNuevo.getDia()
+//                            && asignatura.getSemestre() == a.getSemestre()) {
+//                        int finActualInicioNueva =
+//                                horariosGrupoActual.getHoraFin().compareTo(horariosGrupoNuevo.getHoraInicio());
+//                        int inicioActualFinNueva =
+//                                horariosGrupoActual.getHoraInicio().compareTo(horariosGrupoNuevo.getHoraFin());
+//
+//                        int lapso;
+//                        if (asignatura.getCiudad().equals(a.getCiudad())) // misma ciudad pero distinta escuela
+//                            lapso = 30;
+//                        else lapso = 60;
+//
+//                        // si el fin de la actual es anterior al comienzo de la nueva a asignar
+//                        if (finActualInicioNueva <= 0) {
+//                            if (!asignatura.getEscuela().equals(a.getEscuela())) {
+//                                if (Math.abs(
+//                                        horariosGrupoNuevo.getHoraInicio().getTime() -
+//                                                horariosGrupoActual.getHoraFin().getTime()
+//                                ) < TimeUnit.MINUTES.toMillis(lapso))
+//                                    return false;
+//                            }
+//
+//                            // si comienzo de la actual es posterior al final de la nueva a asignar
+//                        } else if (inicioActualFinNueva >= 0) {
+//                            if (!asignatura.getEscuela().equals(a.getEscuela()))
+//                                if (Math.abs(
+//                                        horariosGrupoNuevo.getHoraFin().getTime() -
+//                                                horariosGrupoActual.getHoraInicio().getTime()
+//                                ) < TimeUnit.MINUTES.toMillis(lapso))
+//                                    return false;
+//                        } else // en los demas casos hay solapamiento y no es válido
+//                            return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
 
 }
