@@ -127,7 +127,7 @@ public class BusquedaIntercambioGrupoAntigua extends AbstractBusquedaLocal {
         if (b1 == false) return false;
         assert noHayRepetidos(profesor1, profesor2) : profesor1 + grupo1.toString() + grupo2;
 
-        boolean b2 = profesor1.asignarGrupo(grupo2.grupo); // TODO: eliminar esta clase
+        boolean b2 = profesor1.asignarGrupo(grupo2.grupo);
         if (b2 == false) return false;
 
         boolean b3 = profesor2.eliminarGrupo(grupo2.grupo);

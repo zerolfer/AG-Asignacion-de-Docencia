@@ -3,22 +3,16 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="266.0" y="869.0">main.java.util.Stopwatch</node>
-    <node x="567.0" y="869.0">main.java.genetico.operadores.cruce.OperadorCruce</node>
-    <node x="0.0" y="869.0">main.java.genetico.Generacion</node>
-    <node x="287.0" y="1143.0">main.java.busqueda.BusquedaLocal</node>
-    <node x="909.0" y="869.0">main.java.genetico.operadores.mutacion.OperadorMutacion</node>
-    <node x="704.181818181818" y="-8.181818181818187">main.java.genetico.Individuo</node>
-    <node x="0.0" y="0.0">main.java.genetico.AlgoritmoGenetico</node>
-    <node x="545.0" y="1143.0">main.java.genetico.operadores.decodificacion.AlgoritmoDecodificacion</node>
-    <node x="0.0" y="1143.0">main.java.genetico.operadores.creacion.OperadorCreacion</node>
+    <node x="0.0" y="150.0">main.java.model</node>
+    <node x="0.0" y="225.0">main.java.ui</node>
+    <node x="158.0" y="150.0">main.java.io</node>
+    <node x="0.0" y="0.0">main.java.busqueda</node>
+    <node x="0.0" y="75.0">main.java.genetico</node>
   </nodes>
   <notes />
   <edges />
-  <settings layout="Hierarchic Group" zoom="1.1" x="739.7272727272727" y="163.72727272727272" />
-  <SelectedNodes>
-    <node>main.java.genetico.Individuo</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="1.0" x="462.0" y="202.0" />
+  <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
     <Category>Methods</Category>

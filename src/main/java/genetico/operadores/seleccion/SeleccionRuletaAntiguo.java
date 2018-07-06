@@ -23,7 +23,7 @@ public class SeleccionRuletaAntiguo implements OperadorSeleccion {
         return result;
     }
 
-    private Individuo seleccionar(Generacion generacion, float total) { //TODO verificar que no tienen por que estar ordenados
+    private Individuo seleccionar(Generacion generacion, float total) {
         float random = RandomManager.getInstance().getFloatRandomNumber(0, total);
         float acumulado = 0;
         for (Individuo individuo : generacion.getGenotipo()) {

@@ -334,12 +334,6 @@ public class AnalisisParametrico {
     }
 
 
-
-
-
-
-
-
     static AlgoritmoGenetico optimoActual(){
         return new AlgoritmoGenetico(
                 new CreacionAleatoria(),
@@ -351,43 +345,4 @@ public class AnalisisParametrico {
         );
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //TODO: confirmar esto con los datos antiguos
-
-    static AlgoritmoGenetico optimoDatos2017(){
-        return new AlgoritmoGenetico(
-                /*new CreacionAleatoria(),
-                new SeleccionParesAleatorios(),
-                new CrucePositionBased(0.9f),
-                new MutacionInversion(0.20f),
-                new ReemplazoTorneoPHSinRepeticion(),
-                new BusquedaIntercambioGrupo(1)*/
-        );
-
-    }
 }
